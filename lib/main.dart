@@ -3,7 +3,6 @@ import 'package:movies_app/core/navigation/app_routes.dart';
 import 'package:movies_app/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:movies_app/features/auth/presentation/pages/login_page.dart';
 import 'package:movies_app/features/auth/presentation/pages/register_page.dart';
-import 'package:movies_app/features/home/presentation/pages/home_page.dart';
 import 'package:movies_app/features/onboarding/presentation/pages/onboarding_page.dart';
 
 void main() {
@@ -20,11 +19,8 @@ class MyApp extends StatelessWidget {
       initialRoute: AppRoutes.onboardingRouteName,
 
       routes: {
-        AppRoutes.onboardingRouteName: (context) => OnboardingPage(),
-        AppRoutes.registerRouteName: (context) => RegisterPage(),
         AppRoutes.loginRouteName: (context) => LoginPage(),
         AppRoutes.forgetPasswordRouteName: (context) => ForgetPasswordPage(),
-        AppRoutes.homePageRouteName: (context) => HomePage(),
       },
     );
   }
