@@ -18,9 +18,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.onboardingRouteName,
 
+
       home: LoginPage(),
 
       routes: {},
+
+
     );
   }
 }
