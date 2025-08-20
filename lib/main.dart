@@ -18,12 +18,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.onboardingRouteName,
 
-      routes: {
-        AppRoutes.onboardingRouteName: (context) => OnboardingPage(),
-        AppRoutes.registerRouteName: (context) => RegisterPage(),
-        AppRoutes.loginRouteName: (context) => LoginPage(),
-        AppRoutes.forgetPasswordRouteName: (context) => ForgetPasswordPage(),
-      },
+      home: LoginPage(),
+
+      routes: {},
     );
   }
 }
