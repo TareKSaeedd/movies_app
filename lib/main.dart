@@ -6,6 +6,8 @@ import 'package:movies_app/features/auth/presentation/pages/register_page.dart';
 import 'package:movies_app/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:movies_app/features/update_profile/presentation/page/update_profile_page.dart';
 
+import 'core/constants/app_theme.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -17,7 +19,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.onboardingRouteName,
+      initialRoute: AppRoutes.forgetPasswordRouteName,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.light,
 
       routes: {
         AppRoutes.onboardingRouteName: (context) => OnboardingPage(),

@@ -10,6 +10,7 @@ class CustomTextFormField extends StatelessWidget {
     this.colorBorderSide = AppColors.darkGreyColor,
     this.cursorColor,
     this.hintText,
+    this.fillColor = AppColors.darkGreyColor,
     this.hintStyle,
     this.labelText,
     this.labelStyle,
@@ -25,6 +26,7 @@ class CustomTextFormField extends StatelessWidget {
   });
   Color colorBorderSide;
   Color? cursorColor;
+  Color? fillColor;
   String? hintText;
   String? labelText;
   TextStyle? hintStyle;
@@ -42,6 +44,8 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
+        filled: true,
+        fillColor: fillColor,
         enabledBorder: builtOutlinedInputBorder(colorBorderSide: colorBorderSide),
         focusedBorder: builtOutlinedInputBorder(colorBorderSide: colorBorderSide),
         errorBorder: builtOutlinedInputBorder(colorBorderSide: AppColors.redColor),
@@ -63,6 +67,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: obscureText,
       obscuringCharacter: obscuringCharacter,
+
       maxLines: maxLines,
     );
   }
