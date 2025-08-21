@@ -4,8 +4,6 @@ import 'package:movies_app/features/auth/presentation/pages/forget_password_page
 import 'package:movies_app/features/auth/presentation/pages/login_page.dart';
 import 'package:movies_app/features/auth/presentation/pages/register_page.dart';
 import 'package:movies_app/features/onboarding/presentation/pages/onboarding_page.dart';
-import 'package:movies_app/features/update_profile/presentation/page/update_profile_page.dart';
-
 
 void main() {
   runApp(const MyApp());
@@ -18,11 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-
-
-      initialRoute: AppRoutes.registerRouteName,
-
+      initialRoute: AppRoutes.loginRouteName,
 
       routes: {
         AppRoutes.onboardingRouteName: (context) => OnboardingPage(),
