@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.registerRouteName: (context) => RegisterPage(),
         AppRoutes.loginRouteName: (context) => LoginPage(),
         AppRoutes.forgetPasswordRouteName: (context) => ForgetPasswordPage(),
+        AppRoutes.updateProfileRouteName: (context) => UpdateProfilePage(),
       },
     );
   }
