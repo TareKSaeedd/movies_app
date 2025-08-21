@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.onboardingRouteName,
+      initialRoute: AppRoutes.loginRouteName,
 
       routes: {
         AppRoutes.onboardingRouteName: (context) => OnboardingPage(),
