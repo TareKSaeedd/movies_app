@@ -10,6 +10,7 @@ class CustomTextFormField extends StatelessWidget {
     this.colorBorderSide = AppColors.darkGreyColor,
     this.cursorColor,
     this.hintText,
+    this.fillColor = AppColors.darkGreyColor,
     this.hintStyle,
     this.labelText,
     this.labelStyle,
@@ -36,7 +37,7 @@ class CustomTextFormField extends StatelessWidget {
   bool obscureText;
   String obscuringCharacter;
   int maxLines;
-
+  Color? fillColor;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
