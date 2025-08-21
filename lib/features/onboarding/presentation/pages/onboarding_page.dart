@@ -24,13 +24,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   int currentPage = 0;
 
-
-
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery
-        .of(context)
-        .size;
+    var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.blackColor,
       body: PageView.builder(
@@ -164,7 +160,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               ? "Finish"
                               : "Next",
                           style: AppStyles.interSemiBoldBlack.copyWith(
-                              fontSize: 20),
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                       SizedBox(height: screenSize.height * 0.01),
@@ -174,9 +171,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           onPressed: () => previousPage(),
                           backgroundColor: AppColors.blackColor,
                           borderSideColor: AppColors.yellowColor,
-                          buttonContent: Text("Back",
-                              style: AppStyles.interSemiBoldYellow.copyWith(
-                                  fontSize: 20)
+                          buttonContent: Text(
+                            "Back",
+                            style: AppStyles.interSemiBoldYellow.copyWith(
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                     ],

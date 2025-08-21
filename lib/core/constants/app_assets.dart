@@ -1,23 +1,33 @@
-class AppAssets{
-  static const String registerScreenPic='assets/images/register.png';
-  static const String iconName='assets/images/iconName.png';
-  static const String iconPassword='assets/images/iconPassword.png';
-  static const String iconPhoneNumber='assets/images/iconPhoneNumber.png';
-  static const String iconEmail='assets/images/iconEmail.png';
-  static const String iconEyeOff='assets/images/eyeOff.png';
-  static const String egyptFlag='assets/images/egyptFlag.png';
-  static const String englishFlag='assets/images/englishFlag.png';
+class AppAssets {
+  // Onboarding
   static const String onboarding1 = 'assets/images/onBoarding1.png';
-
   static const String onboarding2 = 'assets/images/onBoarding2.png';
-
   static const String onboarding3 = 'assets/images/onBoarding3.png';
-
   static const String onboarding4 = 'assets/images/onBoarding4.png';
-
   static const String onboarding5 = 'assets/images/onBoarding5.png';
-
   static const String onboarding6 = 'assets/images/onBoarding6.png';
+
+  // Images
+
+  static const String loginScreenLogo = "assets/images/login_screen_logo.png";
+  static const String egyptFlag = "assets/images/egypt_flag.png";
+  static const String englishFlag = "assets/images/english_flag.png";
+  static const String forgetPasswordImage = "assets/images/forgot_password.png";
+
+  // Icons
+
+  static const String gmailIcon = "assets/icons/icon_google.png";
+  static const String registerScreenImg = 'assets/images/register.png';
+  static const String nameIcon = 'assets/icons/icon_name.png';
+  static const String passwordIcon = 'assets/icons/icon_password.png';
+  static const String phoneNumberIcon = 'assets/icons/icon_phone_number.png';
+  static const String emailIcon = 'assets/icons/icon_email.png';
+  static const String eyeoffIcon = 'assets/icons/eye_off_icon.png';
+  static const String personIcon = 'assets/icons/icon_person.png';
+  static const String phoneIcon = 'assets/icons/icon_phone.png';
+  static const String arrowBackIcon = 'assets/icons/icon_arrow_back.png';
+
+  // Avatars
   static const String alexAvatar = 'assets/images/alex_avatar.png';
   static const String chrisAvatar = 'assets/images/chris_avatar.png';
   static const String jackAvatar = 'assets/images/jack_avatar.png';
@@ -27,7 +37,4 @@ class AppAssets{
   static const String monaAvatar = 'assets/images/mona_avatar.png';
   static const String omerAvatar = 'assets/images/omer_avatar.png';
   static const String tomAvatar = 'assets/images/tom_avatar.png';
-  static const String personIcon = 'assets/icons/person_icon.png';
-  static const String phoneIcon = 'assets/icons/phone_icon.png';
-  static const String arrowBackIcon = 'assets/icons/arrow_back_icon.png';
 }
