@@ -7,7 +7,7 @@ import 'package:movies_app/core/widgets/custom_text_form_field.dart';
 import 'package:movies_app/features/update_profile/presentation/widgets/show_avatar_picker.dart';
 
 class UpdateProfilePage extends StatefulWidget {
-  UpdateProfilePage({super.key});
+  const UpdateProfilePage({super.key});
 
   @override
   State<UpdateProfilePage> createState() => _UpdateProfilePageState();
