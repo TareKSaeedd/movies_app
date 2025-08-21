@@ -22,9 +22,11 @@ class CustomTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.obscuringCharacter = '•',
     this.maxLines = 1,
+
   });
   Color colorBorderSide;
   Color? cursorColor;
+  Color? fillColor;
   String? hintText;
   String? labelText;
   TextStyle? hintStyle;
@@ -37,7 +39,6 @@ class CustomTextFormField extends StatelessWidget {
   bool obscureText;
   String obscuringCharacter;
   int maxLines;
-  Color? fillColor;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -55,6 +56,7 @@ class CustomTextFormField extends StatelessWidget {
         prefixIcon: prefixIcon,
         suffixIcon: sufficIcon,
         errorStyle: AppStyles.robotoRegular16White.copyWith(color: AppColors.redColor),
+
       ),
       style: hintStyle,
       cursorColor: cursorColor,
@@ -63,6 +65,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: obscureText,
       obscuringCharacter: obscuringCharacter,
+
       maxLines: maxLines,
     );
   }
