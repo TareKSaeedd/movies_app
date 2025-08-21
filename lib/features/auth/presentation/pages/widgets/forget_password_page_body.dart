@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/core/constants/assets_manger.dart';
+import 'package:movies_app/core/constants/app_assets.dart';
+
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/core/widgets/custom_text_form_field.dart';
 
 import '../../../../../core/constants/app_styles.dart';
 
 class ForgetPasswordPageBody extends StatelessWidget {
-  const ForgetPasswordPageBody({super.key});
+   ForgetPasswordPageBody({super.key});
+  TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +23,20 @@ class ForgetPasswordPageBody extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-        
+
           children: [
-            Image.asset(AssetsManger.forgetPasswordImage,),
-        
+            Image.asset(AppAssets.forgetPasswordImage),
+
             SizedBox(height: height * 0.01),
-        
+
             CustomTextFormField(
               keyboardType: TextInputType.emailAddress,
-              prefixIcon: Image.asset(AssetsManger.emailIcon),
-              controller: TextEditingController(),
+              prefixIcon: Image.asset(AppAssets.emailIcon),
+              controller: emailController,
               hintText: "Email",
             ),
             SizedBox(height: height * 0.02),
-        
+
             CustomElevatedButton(
               onPressed: verifyEmail,
               buttonContent: Text(

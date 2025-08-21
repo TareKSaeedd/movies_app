@@ -30,4 +30,7 @@ class AppAssets{
   static const String personIcon = 'assets/icons/person_icon.png';
   static const String phoneIcon = 'assets/icons/phone_icon.png';
   static const String arrowBackIcon = 'assets/icons/arrow_back_icon.png';
+  static const String forgetPasswordImage =
+      "assets/images/Forgot password-bro 1.png";
+  static const String emailIcon = "assets/images/email_icon.png";
 }
