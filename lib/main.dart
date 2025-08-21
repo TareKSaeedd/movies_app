@@ -19,10 +19,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.onboardingRouteName,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.light,
+      initialRoute: AppRoutes.registerRouteName,
+      // theme: AppTheme.lightTheme,
+      // darkTheme: AppTheme.darkTheme,
+      // themeMode: ThemeMode.light,
 
       routes: {
         AppRoutes.onboardingRouteName: (context) => OnboardingPage(),

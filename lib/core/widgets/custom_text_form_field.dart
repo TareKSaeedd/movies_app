@@ -39,13 +39,12 @@ class CustomTextFormField extends StatelessWidget {
   bool obscureText;
   String obscuringCharacter;
   int maxLines;
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
         filled: true,
-        fillColor: fillColor,
+        fillColor: AppColors.darkGreyColor,
         enabledBorder: builtOutlinedInputBorder(colorBorderSide: colorBorderSide),
         focusedBorder: builtOutlinedInputBorder(colorBorderSide: colorBorderSide),
         errorBorder: builtOutlinedInputBorder(colorBorderSide: AppColors.redColor),
