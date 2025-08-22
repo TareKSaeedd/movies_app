@@ -9,17 +9,18 @@ import '../../../../core/widgets/custom_text_form_field.dart';
 import 'widgets/language_toggle_switch.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  RegisterPage({super.key});
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    TextEditingController nameController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController confirmPasswordController = TextEditingController();
-    TextEditingController phoneNumberController = TextEditingController();
 
     return Scaffold(
       backgroundColor: AppColors.blackColor,
@@ -43,12 +44,14 @@ class RegisterPage extends StatelessWidget {
                 controller: nameController,
                 hintText: 'Name',
                 prefixIcon: Image.asset(AppAssets.nameIcon),
+                hintStyle: AppStyles.robotoRegular16White,
               ),
               SizedBox(height: height * 0.02),
               CustomTextFormField(
                 controller: emailController,
                 hintText: 'Email',
                 prefixIcon: Image.asset(AppAssets.emailIcon),
+                hintStyle: AppStyles.robotoRegular16White,
               ),
               SizedBox(height: height * 0.02),
               CustomTextFormField(
@@ -56,6 +59,8 @@ class RegisterPage extends StatelessWidget {
                 hintText: 'Password',
                 prefixIcon: Image.asset(AppAssets.passwordIcon),
                 sufficIcon: Image.asset(AppAssets.eyeoffIcon),
+                hintStyle: AppStyles.robotoRegular16White,
+                obscureText: true,
               ),
               SizedBox(height: height * 0.02),
               CustomTextFormField(
@@ -63,12 +68,16 @@ class RegisterPage extends StatelessWidget {
                 hintText: 'Confirm Password',
                 prefixIcon: Image.asset(AppAssets.passwordIcon),
                 sufficIcon: Image.asset(AppAssets.eyeoffIcon),
+                hintStyle: AppStyles.robotoRegular16White,
+                obscureText: true,
               ),
               SizedBox(height: height * 0.02),
               CustomTextFormField(
                 controller: phoneNumberController,
                 hintText: 'Phone Number',
                 prefixIcon: Image.asset(AppAssets.phoneNumberIcon),
+                hintStyle: AppStyles.robotoRegular16White,
+                keyboardType: TextInputType.phone,
               ),
               SizedBox(height: height * 0.02),
               CustomElevatedButton(
