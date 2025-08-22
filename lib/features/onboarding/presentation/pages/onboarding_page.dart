@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/core/constants/app_colors.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
-import 'package:movies_app/features/onboarding/model/onboarding_model/onboarding_model.dart';
+import 'package:movies_app/features/onboarding/data/model/onboarding_model/onboarding_model.dart';
 
 import '../../../auth/presentation/pages/login_page.dart';
 
@@ -42,9 +42,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           if (index == 0) {
             return Stack(
               children: [
-                Positioned.fill(
-                  child: Image.asset(page.imagePath, fit: BoxFit.cover),
-                ),
+                Positioned.fill(child: Image.asset(page.imagePath, fit: BoxFit.cover)),
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(
@@ -78,10 +76,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       SizedBox(height: screenSize.height * 0.02),
                       CustomElevatedButton(
                         onPressed: () => nextPage(),
-                        buttonContent: Text(
-                          'Explore Now',
-                          style: AppStyles.interBold20Black,
-                        ),
+                        buttonContent: Text('Explore Now', style: AppStyles.interBold20Black),
                       ),
                     ],
                   ),
@@ -147,21 +142,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           if (index == onBoardingPages.length - 1) {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginPage(),
-                              ),
+                              MaterialPageRoute(builder: (context) => LoginPage()),
                             );
                           } else {
                             nextPage();
                           }
                         },
                         buttonContent: Text(
-                          index == onBoardingPages.length - 1
-                              ? "Finish"
-                              : "Next",
-                          style: AppStyles.interSemiBoldBlack.copyWith(
-                            fontSize: 20,
-                          ),
+                          index == onBoardingPages.length - 1 ? "Finish" : "Next",
+                          style: AppStyles.interSemiBoldBlack.copyWith(fontSize: 20),
                         ),
                       ),
                       SizedBox(height: screenSize.height * 0.01),
@@ -173,9 +162,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           borderSideColor: AppColors.yellowColor,
                           buttonContent: Text(
                             "Back",
-                            style: AppStyles.interSemiBoldYellow.copyWith(
-                              fontSize: 20,
-                            ),
+                            style: AppStyles.interSemiBoldYellow.copyWith(fontSize: 20),
                           ),
                         ),
                     ],
