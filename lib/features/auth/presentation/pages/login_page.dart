@@ -9,15 +9,15 @@ import 'package:movies_app/core/widgets/custom_text_form_field.dart';
 import '../../../../core/widgets/language_toggle_switch.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
 
     return Scaffold(
       backgroundColor: AppColors.blackColor,
@@ -33,28 +33,21 @@ class LoginPage extends StatelessWidget {
 
               CustomTextFormField(
                 controller: emailController,
-                labelText: "Email",
-                labelStyle: AppStyles.robotoRegular16White,
-                prefixIcon: Icon(Icons.email, color: AppColors.whiteColor, size: 24),
+                prefixIcon: Image.asset(AppAssets.emailIcon),
                 hintText: "Enter your email",
-                hintStyle: AppStyles.robotoRegular16White.copyWith(
-                  color: AppColors.whiteColor.withOpacity(0.7),
-                ),
+                hintStyle: AppStyles.robotoRegular16White,
+                keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: height * 0.03),
 
               CustomTextFormField(
                 controller: passwordController,
-                labelText: "Password",
-                labelStyle: AppStyles.robotoRegular16White,
-                prefixIcon: Icon(Icons.lock, color: AppColors.whiteColor, size: 24),
+                prefixIcon: Image.asset(AppAssets.passwordIcon),
+                sufficIcon: Image.asset(AppAssets.eyeoffIcon),
                 hintText: "Enter your password",
-                hintStyle: AppStyles.robotoRegular16White.copyWith(
-                  color: AppColors.whiteColor.withOpacity(0.7),
-                ),
+                hintStyle: AppStyles.robotoRegular16White,
                 obscureText: true,
                 obscuringCharacter: '•',
-                sufficIcon: Icon(Icons.visibility_off, color: AppColors.whiteColor),
               ),
 
               SizedBox(height: height * 0.01),
