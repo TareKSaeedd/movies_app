@@ -27,14 +27,14 @@ class AppAssets {
   static const String phoneIcon = 'assets/icons/icon_phone.png';
   static const String arrowBackIcon = 'assets/icons/icon_arrow_back.png';
 
-  static const String homeTabIconSelected =
-      'assets/icons/icon home tab selected.png';
-  static const String searchTabIconSelected =
-      'assets/icons/icon search tab selected.png';
-  static const String browseTabIconSelected =
-      'assets/icons/icon browse tab selected.png';
-  static const String profileTabIconSelected =
-      'assets/icons/icon profile tab selected.png';
+  static const String homeTabIconUnSelected =
+      'assets/icons/icon home tab unselected.png';
+  static const String searchTabIconUnSelected =
+      'assets/icons/icon search tab unselected.png';
+  static const String browseTabIconUnSelected =
+      'assets/icons/icon browse tab unselected.png';
+  static const String profileTabIconUnSelected =
+      'assets/icons/icon profile tab unselected.png';
 
   // Avatars
   static const String alexAvatar = 'assets/images/alex_avatar.png';
