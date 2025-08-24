@@ -27,6 +27,15 @@ class AppAssets {
   static const String phoneIcon = 'assets/icons/icon_phone.png';
   static const String arrowBackIcon = 'assets/icons/icon_arrow_back.png';
 
+  static const String homeTabIconSelected =
+      'assets/icons/icon home tab selected.png';
+  static const String searchTabIconSelected =
+      'assets/icons/icon search tab selected.png';
+  static const String browseTabIconSelected =
+      'assets/icons/icon browse tab selected.png';
+  static const String profileTabIconSelected =
+      'assets/icons/icon profile tab selected.png';
+
   // Avatars
   static const String alexAvatar = 'assets/images/alex_avatar.png';
   static const String chrisAvatar = 'assets/images/chris_avatar.png';
@@ -38,3 +47,4 @@ class AppAssets {
   static const String omerAvatar = 'assets/images/omer_avatar.png';
   static const String tomAvatar = 'assets/images/tom_avatar.png';
 }
+//
