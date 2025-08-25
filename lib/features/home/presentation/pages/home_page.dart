@@ -19,34 +19,54 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var sizeScreen = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppColors.blackColor,
-        type: BottomNavigationBarType.fixed,
-        unselectedItemColor: AppColors.whiteColor,
-        selectedItemColor: AppColors.yellowColor,
-        currentIndex: selectedIndex,
-        onTap: (index) {
-          selectedIndex = index;
-          setState(() {});
-        },
-        items: [
-          builtBottomNavigationBarItem(
-            iconName: AppAssets.homeTabIconUnSelected,
-          ),
-          builtBottomNavigationBarItem(
-            iconName: AppAssets.searchTabIconUnSelected,
-          ),
-          builtBottomNavigationBarItem(
-            iconName: AppAssets.browseTabIconUnSelected,
-          ),
-          builtBottomNavigationBarItem(
-            iconName: AppAssets.profileTabIconUnSelected,
+      backgroundColor: AppColors.blackColor,
+      body: Stack(
+        children: [
+          tabs[selectedIndex],
+          Positioned(
+            left: sizeScreen.width * 0.02,
+            right: sizeScreen.width * 0.02,
+            bottom: sizeScreen.height * 0.02,
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.darkGreyColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: BottomNavigationBar(
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                type: BottomNavigationBarType.fixed,
+                unselectedItemColor: AppColors.whiteColor,
+                selectedItemColor: AppColors.yellowColor,
+                currentIndex: selectedIndex,
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                onTap: (index) {
+                  setState(() {
+                    selectedIndex = index;
+                  });
+                },
+                items: [
+                  builtBottomNavigationBarItem(
+                    iconName: AppAssets.homeTabIconUnSelected,
+                  ),
+                  builtBottomNavigationBarItem(
+                    iconName: AppAssets.searchTabIconUnSelected,
+                  ),
+                  builtBottomNavigationBarItem(
+                    iconName: AppAssets.browseTabIconUnSelected,
+                  ),
+                  builtBottomNavigationBarItem(
+                    iconName: AppAssets.profileTabIconUnSelected,
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
-      body: tabs[selectedIndex],
     );
   }
 
