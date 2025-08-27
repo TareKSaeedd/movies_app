@@ -1,1 +1,3 @@
-class EndPoints {}
+class EndPoints {
+  static const String profile = "/profile";
+}
