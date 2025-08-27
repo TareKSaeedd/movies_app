@@ -14,7 +14,7 @@ class DialogUtils {
               CircularProgressIndicator(color: AppColors.yellowColor),
               Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Text(loadingText, style: AppStyles.robotoMedium16White),
+                child: Text(loadingText, style: AppStyles.robotoRegular16Yellow),
               ),
             ],
           ),
@@ -46,7 +46,7 @@ class DialogUtils {
             Navigator.pop(context);
             posActionFunction?.call();
           },
-          child: Text(posActionName, style: contentStyle ?? AppStyles.robotoMedium16White),
+          child: Text(posActionName, style: contentStyle ?? AppStyles.robotoRegular16Yellow),
         ),
       );
     }
@@ -58,7 +58,7 @@ class DialogUtils {
             Navigator.pop(context);
             negActionFunction?.call();
           },
-          child: Text(negActionName, style: contentStyle ?? AppStyles.robotoMedium16White),
+          child: Text(negActionName, style: contentStyle ?? AppStyles.robotoRegular16Yellow),
         ),
       );
     }
@@ -67,8 +67,8 @@ class DialogUtils {
       context: context,
       builder: (context) {
         return AlertDialog(
-          content: Text(contentMsg, style: contentStyle ?? AppStyles.robotoMedium16White),
-          title: Text(title ?? '', style: contentStyle ?? AppStyles.robotoMedium16White),
+          content: Text(contentMsg, style: contentStyle ?? AppStyles.robotoRegular16Yellow),
+          title: Text(title ?? '', style: contentStyle ?? AppStyles.robotoRegular16Yellow),
           actions: actions,
         );
       },
