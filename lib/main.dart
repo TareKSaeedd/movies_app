@@ -7,6 +7,8 @@ import 'package:movies_app/features/home/presentation/pages/home_page.dart';
 import 'package:movies_app/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:movies_app/features/update_profile/presentation/page/update_profile_page.dart';
 
+import 'features/auth/presentation/reset_password_page/view/reset_password_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -18,8 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      initialRoute: AppRoutes.updateProfileRouteName,
 
-      initialRoute: AppRoutes.homePageRouteName,
 
 
       routes: {
@@ -28,6 +30,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.loginRouteName: (context) => LoginPage(),
         AppRoutes.forgetPasswordRouteName: (context) => ForgetPasswordPage(),
         AppRoutes.updateProfileRouteName: (context) => UpdateProfilePage(),
+        AppRoutes.resetPasswordRouteName: (context) => ResetPasswordPage(),
         AppRoutes.homePageRouteName: (context) => HomePage()
       },
     );
