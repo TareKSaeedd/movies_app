@@ -5,4 +5,5 @@ class AppRoutes {
   static const forgetPasswordRouteName = 'forget_password_page';
   static const updateProfileRouteName = 'update_profile_page';
   static const resetPasswordRouteName = 'reset_password_page';
+  static const homePageRouteName = 'home_page';
 }
