@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:movies_app/model/movie_response.dart';
 
 class DioApiManager{
-  
+
   final dio=Dio();
   Future<MovieResponse?> getMovies()async{
     try{
