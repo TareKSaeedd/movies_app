@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
+import 'package:movies_app/core/navigation/app_routes.dart';
 
 import '../../../../../../core/constants/app_colors.dart';
 
@@ -18,7 +19,7 @@ class ResetPasswordPage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back,color: AppColors.yellowColor,),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, AppRoutes.updateProfileRouteName);
           },
         ),
       ),
