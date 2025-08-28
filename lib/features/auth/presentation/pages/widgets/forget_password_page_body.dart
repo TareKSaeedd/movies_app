@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/constants/app_assets.dart';
-import 'package:movies_app/core/constants/app_colors.dart';
 
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/core/widgets/custom_text_form_field.dart';
@@ -9,7 +8,7 @@ import '../../../../../core/constants/app_styles.dart';
 
 class ForgetPasswordPageBody extends StatelessWidget {
   ForgetPasswordPageBody({super.key});
-  TextEditingController emailController = TextEditingController();
+ final TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
