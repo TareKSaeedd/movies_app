@@ -4,10 +4,13 @@ import 'package:movies_app/core/navigation/app_routes.dart';
 import 'package:movies_app/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:movies_app/features/auth/presentation/pages/login_page.dart';
 import 'package:movies_app/features/auth/presentation/pages/register_page.dart';
+import 'package:movies_app/features/home/presentation/pages/home_page.dart';
 import 'package:movies_app/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:movies_app/features/update_profile/presentation/page/update_profile_page.dart';
 import 'package:movies_app/home/home_tab.dart';
 import 'core/utils/bloc_observer.dart';
+
+import 'features/auth/presentation/reset_password_page/view/reset_password_page.dart';
 
 void main() {
   Bloc.observer = MyBlocObserver();
@@ -30,6 +33,8 @@ class MyApp extends StatelessWidget {
         AppRoutes.forgetPasswordRouteName: (context) => ForgetPasswordPage(),
         AppRoutes.updateProfileRouteName: (context) => UpdateProfilePage(),
         AppRoutes.homeRouteName: (context) => HomeTab(),
+        AppRoutes.resetPasswordRouteName: (context) => ResetPasswordPage(),
+        AppRoutes.homePageRouteName: (context) => HomePage(),
       },
     );
   }
