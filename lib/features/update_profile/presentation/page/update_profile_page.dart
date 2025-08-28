@@ -21,18 +21,18 @@ class UpdateProfilePage extends StatefulWidget {
 }
 
 class _UpdateProfilePageState extends State<UpdateProfilePage> {
-  TextEditingController nameController = TextEditingController(text: 'Ahmed');
-  TextEditingController phoneController = TextEditingController(text: '+201234567890');
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   late UpdateProfileViewModel viewModel;
   int selectedIndex = 1;
-  
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    viewModel = UpdateProfileViewModel(repository: injectedUpdateProfileRepository());
-    
+    viewModel = UpdateProfileViewModel(
+      repository: injectedUpdateProfileRepository(),
+    );
   }
 
   @override
@@ -53,172 +53,181 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
         ),
       ),
       backgroundColor: AppColors.blackColor,
-       body: BlocListener<UpdateProfileViewModel, UpdateProfileState>(
-  bloc: viewModel,
-  listener: (context, state) {
-    if (state is UpdateProfileSuccess) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(state.response.message ?? "Profile updated")),
-      );
-    } else if (state is UpdateProfileError) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(state.error)),
-      );
-    }
-  },
-  child: BlocBuilder<UpdateProfileViewModel, UpdateProfileState>(
-    bloc: viewModel,
-    builder: (context, state) {
-      return Stack(
-        children: [
-          SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: width * 0.02,
-                vertical: height * 0.03,
+      body: BlocListener<UpdateProfileViewModel, UpdateProfileState>(
+        bloc: viewModel,
+        listener: (context, state) {
+          if (state is UpdateProfileSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.response.message ?? "Profile updated"),
               ),
-              child: Form(
-                key: viewModel.formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    CircleAvatar(
-                      radius: width * 0.17,
-                      child: GestureDetector(
-                        onTap: () async {
-                          final selected = await showAvatarPicker(context,currentIndex: selectedIndex);
-                          if (selected != null) {
-                            selectedIndex = selected;
-                            viewModel.setAvatar(selected);
-                            setState(() {});
-                          }
-                        },
-                        child: Image.asset(
-                          AppAvatars.avatarList[selectedIndex],
-                          fit: BoxFit.contain,
-                          width: width,
-                          height: height,
-                        ),
-                      ),
+            );
+          } else if (state is UpdateProfileError) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.error)));
+          }
+        },
+        child: BlocBuilder<UpdateProfileViewModel, UpdateProfileState>(
+          bloc: viewModel,
+          builder: (context, state) {
+            return Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.02,
+                      vertical: height * 0.03,
                     ),
-                    SizedBox(height: height * 0.02),
-                    CustomTextFormField(
-                      controller: nameController,
-                      cursorColor: AppColors.whiteColor,
-                      fillColor: AppColors.darkGreyColor,
-                      prefixIcon: Image.asset(AppAssets.personIcon),
-                      hintText: 'John Safwat',
-                      hintStyle: AppStyles.robotoRegular20White,
-                      validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Plaese Enter Name';
-                            }
-                            return null;
-                          },
-                    ),
-                    SizedBox(height: height * 0.02),
-                    CustomTextFormField(
-                      controller: phoneController,
-                      cursorColor: AppColors.whiteColor,
-                      fillColor: AppColors.darkGreyColor,
-                      prefixIcon: Image.asset(AppAssets.phoneIcon),
-                      hintText: '+201200000000',
-                      hintStyle: AppStyles.robotoRegular20White,
-                      keyboardType: TextInputType.phone,
-                      
-                      validator: (text) {
-                        final regex = RegExp(r'^\+20[0-9]{9,10}$');
-                            if (text == null || text.isEmpty) {
-                              return 'Plaese enter phone number';
-                            } if(!text.startsWith('+20')){
-                              return 'Phone number must start with +20';
-                            } if(!regex.hasMatch(text)){
-                              return 'Enter a valid phone number';
-                            }
-                            
-                            return null;
-                          },
-                      
-                    ),
-                    SizedBox(height: height * 0.02),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(
-                            context,
-                            AppRoutes.forgetPasswordRouteName,
-                          );
-                        },
-                        child: Text(
-                          'Reset Password',
-                          style: AppStyles.robotoRegular20White,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: height * 0.25),
-                    CustomElevatedButton(
-                      backgroundColor: AppColors.redColor,
-                      onPressed: () {
-                        DialogUtils.showMessage(
-                          context: context,
-                           contentMsg: 'Are you sure, you want to delete profile !!',
-                           title: 'Warning',
-                           posActionName: 'Yes',
-                           posActionFunction: (){
-                            viewModel.deleteProfile();
-                            Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginRouteName, (route) => false,);
-                           },
-                           negActionName: 'Cancel',
-                           negActionFunction: (){
-                            Navigator.pop(context);
-                           }
-                           );
-                      },
-                      borderSideColor: AppColors.redColor,
-                      buttonContent: Text(
-                        'Delete Account',
-                        style: AppStyles.robotoRegular20White,
-                      ),
-                    ),
-                    SizedBox(height: height * 0.02),
-                    CustomElevatedButton(
-                      onPressed: () {
-                        
-                        if (viewModel.formKey.currentState!.validate()) {
-                          viewModel.updateProfile(
-                          name: nameController.text,
-                          phone: phoneController.text,
-                          avaterId: selectedIndex,
-                        );
-                        }
-                        
-                      },
-                      buttonContent: Text(
-                        'Update Data',
-                        style: AppStyles.robotoRegular20Black,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+                    child: Form(
+                      key: viewModel.formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          CircleAvatar(
+                            radius: width * 0.17,
+                            child: GestureDetector(
+                              onTap: () async {
+                                final selected = await showAvatarPicker(
+                                  context,
+                                  currentIndex: selectedIndex,
+                                );
+                                if (selected != null) {
+                                  selectedIndex = selected;
+                                  viewModel.setAvatar(selected);
+                                  setState(() {});
+                                }
+                              },
+                              child: Image.asset(
+                                AppAvatars.avatarList[selectedIndex],
+                                fit: BoxFit.contain,
+                                width: width,
+                                height: height,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: height * 0.02),
+                          CustomTextFormField(
+                            controller: nameController,
+                            cursorColor: AppColors.whiteColor,
+                            fillColor: AppColors.darkGreyColor,
+                            prefixIcon: Image.asset(AppAssets.personIcon),
+                            hintText: 'John Safwat',
+                            hintStyle: AppStyles.robotoRegular20White,
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
+                                return 'Plaese Enter Name';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: height * 0.02),
+                          CustomTextFormField(
+                            controller: phoneController,
+                            cursorColor: AppColors.whiteColor,
+                            fillColor: AppColors.darkGreyColor,
+                            prefixIcon: Image.asset(AppAssets.phoneIcon),
+                            hintText: '+201200000000',
+                            hintStyle: AppStyles.robotoRegular20White,
+                            keyboardType: TextInputType.phone,
 
-          if (state is UpdateProfileLoading)
-            Container(
-              color: Colors.black.withOpacity(0.5),
-              child: const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.yellowColor,
+                            validator: (text) {
+                              final regex = RegExp(r'^\+20[0-9]{9,10}$');
+                              if (text == null || text.isEmpty) {
+                                return 'Plaese enter phone number';
+                              }
+                              if (!text.startsWith('+20')) {
+                                return 'Phone number must start with +20';
+                              }
+                              if (!regex.hasMatch(text)) {
+                                return 'Enter a valid phone number';
+                              }
+
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: height * 0.02),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  AppRoutes.forgetPasswordRouteName,
+                                );
+                              },
+                              child: Text(
+                                'Reset Password',
+                                style: AppStyles.robotoRegular20White,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: height * 0.25),
+                          CustomElevatedButton(
+                            backgroundColor: AppColors.redColor,
+                            onPressed: () {
+                              DialogUtils.showMessage(
+                                context: context,
+                                contentMsg:
+                                    'Are you sure, you want to delete profile !!',
+                                title: 'Warning',
+                                posActionName: 'Yes',
+                                posActionFunction: () {
+                                  viewModel.deleteProfile();
+                                  Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    AppRoutes.loginRouteName,
+                                    (route) => false,
+                                  );
+                                },
+                                negActionName: 'Cancel',
+                                negActionFunction: () {
+                                  Navigator.pop(context);
+                                },
+                              );
+                            },
+                            borderSideColor: AppColors.redColor,
+                            buttonContent: Text(
+                              'Delete Account',
+                              style: AppStyles.robotoRegular20White,
+                            ),
+                          ),
+                          SizedBox(height: height * 0.02),
+                          CustomElevatedButton(
+                            onPressed: () {
+                              if (viewModel.formKey.currentState!.validate()) {
+                                viewModel.updateProfile(
+                                  name: nameController.text,
+                                  phone: phoneController.text,
+                                  avaterId: selectedIndex,
+                                );
+                              }
+                            },
+                            buttonContent: Text(
+                              'Update Data',
+                              style: AppStyles.robotoRegular20Black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-        ],
-      );
-    },
-  ),
-),
+
+                if (state is UpdateProfileLoading)
+                  Container(
+                    color: Colors.black.withOpacity(0.5),
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.yellowColor,
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }

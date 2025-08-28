@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/core/constants/app_assets.dart';
 import 'package:movies_app/core/constants/app_avatar.dart';
 import 'package:movies_app/core/constants/app_colors.dart';
 
