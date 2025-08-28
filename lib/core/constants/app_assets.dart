@@ -37,4 +37,11 @@ class AppAssets {
   static const String monaAvatar = 'assets/images/mona_avatar.png';
   static const String omerAvatar = 'assets/images/omer_avatar.png';
   static const String tomAvatar = 'assets/images/tom_avatar.png';
+
+
+  //homeTab
+  static const String availableNow='assets/images/Available Now.png';
+  static const String watchNow='assets/images/watch_Now.png';
+
+
 }

@@ -39,6 +39,8 @@ dependencies:
   toggle_switch: ^2.3.0
 
   flutter_native_splash: ^2.4.6
+  dio: ^5.9.0
+  carousel_slider: ^5.1.1
 
 
 dev_dependencies:
