@@ -153,7 +153,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                               onPressed: () {
                                 Navigator.pushReplacementNamed(
                                   context,
-                                  AppRoutes.forgetPasswordRouteName,
+                                  AppRoutes.resetPasswordRouteName,
                                 );
                               },
                               child: Text(
