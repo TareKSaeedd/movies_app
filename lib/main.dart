@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.homeRouteName,
+      initialRoute: AppRoutes.homePageRouteName,
 
       routes: {
         AppRoutes.onboardingRouteName: (context) => OnboardingPage(),
@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
         AppRoutes.loginRouteName: (context) => LoginPage(),
         AppRoutes.forgetPasswordRouteName: (context) => ForgetPasswordPage(),
         AppRoutes.updateProfileRouteName: (context) => UpdateProfilePage(),
-        AppRoutes.homeRouteName: (context) => HomeTab(),
         AppRoutes.resetPasswordRouteName: (context) => ResetPasswordPage(),
         AppRoutes.homePageRouteName: (context) => HomePage(),
       },
