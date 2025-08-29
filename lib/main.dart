@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.updateProfileRouteName: (context) => UpdateProfilePage(),
         AppRoutes.resetPasswordRouteName: (context) => ResetPasswordPage(),
         AppRoutes.homePageRouteName: (context) => HomePage(),
+
       },
     );
   }
