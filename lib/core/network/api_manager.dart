@@ -1,17 +1,13 @@
 import 'dart:convert';
 
-
 import 'package:movies_app/core/network/api_constants.dart';
 import 'package:movies_app/core/network/end_points.dart';
 import 'package:movies_app/features/auth/data/register/model/register_model_request.dart';
 import 'package:movies_app/features/auth/data/register/model/register_model_response.dart';
 import 'package:http/http.dart' as http;
 import '../../features/update_profile/data/model/update_profile_response.dart';
-import 'api_constants.dart';
-import 'end_points.dart';
 
 class ApiManager {
-  
   Future<RegisterResponse> register(UserRequest userInfo) async {
     Uri url = Uri.https(ApiConstants.baseUrl, EndPoints.registerEndPoint);
 
@@ -28,7 +24,8 @@ class ApiManager {
     } catch (e) {
       throw Exception("Register failed: $e");
     }
-  
+  }
+
   Future<Map<String, dynamic>> resetPassword({
     required String oldPassword,
     required String newPassword,
@@ -38,14 +35,8 @@ class ApiManager {
 
     final response = await http.patch(
       url,
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token",
-      },
-      body: jsonEncode({
-        "oldPassword": oldPassword,
-        "newPassword": newPassword,
-      }),
+      headers: {"Content-Type": "application/json", "Authorization": "Bearer $token"},
+      body: jsonEncode({"oldPassword": oldPassword, "newPassword": newPassword}),
     );
 
     if (response.statusCode == 201) {
@@ -56,19 +47,16 @@ class ApiManager {
     }
   }
 
-  Future<UpdateProfileResponse?> updateProfile({String? name, String? phone, int? avaterId})async{
-    Uri url = Uri.https(ApiConstants.baseUrl,EndPoints.profile);
+  Future<UpdateProfileResponse?> updateProfile({String? name, String? phone, int? avaterId}) async {
+    Uri url = Uri.https(ApiConstants.baseUrl, EndPoints.profile);
     try {
-      var response = await http.patch(url,
+      var response = await http.patch(
+        url,
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer ${ApiConstants.token}",
         },
-        body: jsonEncode({
-          "name": name,
-          "phone": phone,
-          "avaterId": avaterId,
-        }),
+        body: jsonEncode({"name": name, "phone": phone, "avaterId": avaterId}),
       );
 
       var responseBody = response.body;
@@ -78,7 +66,6 @@ class ApiManager {
       rethrow;
     }
   }
-
 
   Future<UpdateProfileResponse?> deleteProfile() async {
     Uri url = Uri.https(ApiConstants.baseUrl, EndPoints.profile);
