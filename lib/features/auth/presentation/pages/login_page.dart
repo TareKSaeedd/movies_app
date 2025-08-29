@@ -26,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   bool isPasswordSecured = true;
   LoginCubit loginCubit = LoginCubit(loginRepository: injectLoginRepositoyr());
+  var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -66,127 +67,151 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 }
               },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(AppAssets.loginScreenLogo, height: height * 0.2),
-                  SizedBox(height: height * 0.05),
-                  CustomTextFormField(
-                    controller: emailController,
-                    prefixIcon: Image.asset(AppAssets.emailIcon),
-                    hintText: "Enter your email",
-                    hintStyle: AppStyles.robotoRegular16White,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  SizedBox(height: height * 0.03),
-                  CustomTextFormField(
-                    controller: passwordController,
-                    prefixIcon: Image.asset(AppAssets.passwordIcon),
-                    sufficIcon: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isPasswordSecured = !isPasswordSecured;
-                        });
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(AppAssets.loginScreenLogo, height: height * 0.2),
+                    SizedBox(height: height * 0.05),
+                    CustomTextFormField(
+                      controller: emailController,
+                      prefixIcon: Image.asset(AppAssets.emailIcon),
+                      hintText: "Enter your email",
+                      hintStyle: AppStyles.robotoRegular16White,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (text) {
+                        if (text == null || text.isEmpty) {
+                          return 'Please enter your Email';
+                        }
+                        final bool emailValid = RegExp(
+                          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                        ).hasMatch(text);
+
+                        if (!emailValid) {
+                          return 'Please enter valid email';
+                        }
+                        return null;
                       },
-                      child: isPasswordSecured
-                          ? Image.asset(AppAssets.eyeoffIcon)
-                          : Icon(Icons.remove_red_eye, color: AppColors.whiteColor),
                     ),
-                    hintText: "Enter your password",
-                    hintStyle: AppStyles.robotoRegular16White,
-                    obscureText: isPasswordSecured,
-                    obscuringCharacter: '•',
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(AppRoutes.resetPasswordRouteName);
-                      },
-                      style: TextButton.styleFrom(
-                        foregroundColor: AppColors.yellowColor,
-                        textStyle: AppStyles.robotoRegular14Yellow,
+                    SizedBox(height: height * 0.03),
+                    CustomTextFormField(
+                      controller: passwordController,
+                      prefixIcon: Image.asset(AppAssets.passwordIcon),
+                      sufficIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isPasswordSecured = !isPasswordSecured;
+                          });
+                        },
+                        child: isPasswordSecured
+                            ? Image.asset(AppAssets.eyeoffIcon)
+                            : Icon(Icons.remove_red_eye, color: AppColors.whiteColor),
                       ),
-                      child: const Text("Forget Password?"),
+                      hintText: "Enter your password",
+                      hintStyle: AppStyles.robotoRegular16White,
+                      obscureText: isPasswordSecured,
+                      obscuringCharacter: '•',
+                      validator: (text) {
+                        if (text == null || text.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                  SizedBox(height: height * 0.02),
-                  SizedBox(
-                    width: double.infinity,
-                    height: height * 0.07,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        loginCubit.login(
-                          LoginRequest(
-                            email: emailController.text,
-                            password: passwordController.text,
+                    SizedBox(height: height * 0.01),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(AppRoutes.resetPasswordRouteName);
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: AppColors.yellowColor,
+                          textStyle: AppStyles.robotoRegular14Yellow,
+                        ),
+                        child: const Text("Forget Password?"),
+                      ),
+                    ),
+                    SizedBox(height: height * 0.02),
+                    SizedBox(
+                      width: double.infinity,
+                      height: height * 0.07,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            loginCubit.login(
+                              LoginRequest(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              ),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.yellowColor,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        ),
+                        child: Text("Login", style: AppStyles.robotoRegular20Black),
+                      ),
+                    ),
+                    SizedBox(height: height * 0.03),
+                    RichText(
+                      text: TextSpan(
+                        text: "Don’t Have Account  ?  ",
+                        style: AppStyles.robotoRegular14White,
+                        children: [
+                          TextSpan(
+                            text: "Create One",
+                            style: AppStyles.robotoBlack14Yellow,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pushNamed(context, AppRoutes.registerRouteName);
+                              },
                           ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.yellowColor,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        ],
                       ),
-                      child: Text("Login", style: AppStyles.robotoRegular20Black),
                     ),
-                  ),
-                  SizedBox(height: height * 0.03),
-                  RichText(
-                    text: TextSpan(
-                      text: "Don’t Have Account  ?  ",
-                      style: AppStyles.robotoRegular14White,
+                    SizedBox(height: height * 0.03),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextSpan(
-                          text: "Create One",
-                          style: AppStyles.robotoBlack14Yellow,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.pushNamed(context, AppRoutes.registerRouteName);
-                            },
+                        SizedBox(
+                          width: width * 0.2,
+                          child: Divider(color: AppColors.yellowColor, thickness: 2),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: width * 0.04),
+                          child: Text("OR", style: AppStyles.robotoRegular15Yellow),
+                        ),
+                        SizedBox(
+                          width: width * 0.2,
+                          child: Divider(color: AppColors.yellowColor, thickness: 2),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(height: height * 0.03),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: width * 0.2,
-                        child: Divider(color: AppColors.yellowColor, thickness: 2),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-                        child: Text("OR", style: AppStyles.robotoRegular15Yellow),
-                      ),
-                      SizedBox(
-                        width: width * 0.2,
-                        child: Divider(color: AppColors.yellowColor, thickness: 2),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: height * 0.03),
-                  SizedBox(
-                    width: double.infinity,
-                    height: height * 0.07,
-                    child: ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: Image.asset(
-                        AppAssets.gmailIcon,
-                        height: width * 0.1,
-                        width: width * 0.1,
-                      ),
-                      label: Text("Login With Google", style: AppStyles.robotoRegular16Black),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.yellowColor,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    SizedBox(height: height * 0.03),
+                    SizedBox(
+                      width: double.infinity,
+                      height: height * 0.07,
+                      child: ElevatedButton.icon(
+                        onPressed: () {},
+                        icon: Image.asset(
+                          AppAssets.gmailIcon,
+                          height: width * 0.1,
+                          width: width * 0.1,
+                        ),
+                        label: Text("Login With Google", style: AppStyles.robotoRegular16Black),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.yellowColor,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: height * 0.02),
-                  Center(child: LanguageToggleSwitch()),
-                ],
+                    SizedBox(height: height * 0.02),
+                    Center(child: LanguageToggleSwitch()),
+                  ],
+                ),
               ),
             ),
           ),
