@@ -88,6 +88,12 @@ class AppStyles {
     color: AppColors.yellowColor,
   );
 
+  static TextStyle robotoRegular16red = GoogleFonts.roboto(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: AppColors.redColor,
+  );
+
   static TextStyle robotoRegular20White2 = GoogleFonts.roboto(
     fontSize: 20,
     fontWeight: FontWeight.w400,
