@@ -57,7 +57,11 @@ class _LoginPageState extends State<LoginPage> {
                     contentMsg: state.successMessage,
                     posActionName: 'OK',
                     posActionFunction: () {
-                      Navigator.pushReplacementNamed(context, AppRoutes.homeRouteName);
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        AppRoutes.homePageRouteName,
+                        (route) => false,
+                      );
                     },
                   );
                 }
@@ -98,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(AppRoutes.forgetPasswordRouteName);
+                        Navigator.of(context).pushNamed(AppRoutes.resetPasswordRouteName);
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: AppColors.yellowColor,

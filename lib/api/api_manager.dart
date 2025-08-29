@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movies_app/api/api_constants.dart';
 import 'package:movies_app/api/end_points.dart';
-import 'package:movies_app/model/movie_response.dart';
+import 'package:movies_app/features/home/model/movie_response.dart';
 
 class ApiManager {
-   Future<MovieResponse?> getMovies() async {
+  Future<MovieResponse?> getMovies() async {
     try {
       final url = Uri.https(ApiConstants.baseUrl, EndPoints.movieApi);
       final response = await http.get(url);
@@ -19,7 +19,7 @@ class ApiManager {
       }
 
       final json = jsonDecode(response.body);
-      if ( json['status'] == 'ok') {
+      if (json['status'] == 'ok') {
         return MovieResponse.fromJson(json);
       } else {
         return MovieResponse(
@@ -29,11 +29,7 @@ class ApiManager {
         );
       }
     } catch (e) {
-      return MovieResponse(
-        status: "error",
-        statusMessage: "Something went wrong: $e",
-        data: null,
-      );
+      return MovieResponse(status: "error", statusMessage: "Something went wrong: $e", data: null);
     }
   }
 }

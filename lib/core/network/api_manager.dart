@@ -28,7 +28,6 @@ class ApiManager {
     }
   }
 
-
   Future<LoginResponse> login(LoginRequest userInfo) async {
     Uri url = Uri.https(ApiConstants.baseUrl, EndPoints.loginEndPoint);
 
@@ -44,6 +43,8 @@ class ApiManager {
     } catch (e) {
       throw e;
     }
+  }
+
   Future<Map<String, dynamic>> resetPassword({
     required String oldPassword,
     required String newPassword,

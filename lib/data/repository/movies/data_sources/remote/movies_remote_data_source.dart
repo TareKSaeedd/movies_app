@@ -1,6 +1,5 @@
-import 'package:movies_app/model/movie_response.dart';
+import 'package:movies_app/features/home/model/movie_response.dart';
 
-abstract class MoviesRemoteDataSource{
-   Future<MovieResponse?>  getMovies();
-
+abstract class MoviesRemoteDataSource {
+  Future<MovieResponse?> getMovies();
 }

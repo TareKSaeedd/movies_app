@@ -49,18 +49,10 @@ class _HomePageState extends State<HomePage> {
                   });
                 },
                 items: [
-                  builtBottomNavigationBarItem(
-                    iconName: AppAssets.homeTabIconUnSelected,
-                  ),
-                  builtBottomNavigationBarItem(
-                    iconName: AppAssets.searchTabIconUnSelected,
-                  ),
-                  builtBottomNavigationBarItem(
-                    iconName: AppAssets.browseTabIconUnSelected,
-                  ),
-                  builtBottomNavigationBarItem(
-                    iconName: AppAssets.profileTabIconUnSelected,
-                  ),
+                  builtBottomNavigationBarItem(iconName: AppAssets.homeTabIconUnSelected),
+                  builtBottomNavigationBarItem(iconName: AppAssets.searchTabIconUnSelected),
+                  builtBottomNavigationBarItem(iconName: AppAssets.browseTabIconUnSelected),
+                  builtBottomNavigationBarItem(iconName: AppAssets.profileTabIconUnSelected),
                 ],
               ),
             ),
@@ -70,12 +62,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  BottomNavigationBarItem builtBottomNavigationBarItem({
-    required String iconName,
-  }) {
-    return BottomNavigationBarItem(
-      icon: ImageIcon(AssetImage(iconName)),
-      label: '',
-    );
+  BottomNavigationBarItem builtBottomNavigationBarItem({required String iconName}) {
+    return BottomNavigationBarItem(icon: ImageIcon(AssetImage(iconName)), label: '');
   }
 }

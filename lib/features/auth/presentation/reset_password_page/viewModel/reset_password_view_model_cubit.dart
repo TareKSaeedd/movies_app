@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/network/shared_pref_network.dart';
 
 import 'package:movies_app/features/auth/data/reset_password/repository/reset_password_repository.dart';
 
@@ -16,6 +17,12 @@ class ResetPasswordViewModelCubit extends Cubit<ResetPasswordViewModelState> {
     required String token,
   }) async {
     emit(ResetPasswordLoading());
+    final token = await SharedPrefNetwork.getCurrentUserToken();
+
+    if (token == null) {
+      emit(ResetPasswordError("No logged in user found"));
+      return;
+    }
 
     try {
       final data = await resetPasswordRepository.resetPassword(

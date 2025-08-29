@@ -49,7 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
             Navigator.pop(context);
           },
         ),
-        body: BlocListener<RegisterCubit, RegisterState>(
+        body: BlocConsumer<RegisterCubit, RegisterState>(
           listener: (context, state) {
             if (state is RegisterLoadingState) {
               DialogUtils.showLoading(context: context, loadingText: 'Waiting');
@@ -69,144 +69,151 @@ class _RegisterPageState extends State<RegisterPage> {
               );
             }
           },
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: width * 0.03),
-            child: Form(
-              key: formKey,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Image.asset(AppAssets.registerScreenImg, height: height * 0.17),
-                    SizedBox(height: height * 0.01),
-                    Text(
-                      'Avatar',
-                      style: AppStyles.robotoRegular16White,
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: height * 0.02),
-                    CustomTextFormField(
-                      controller: nameController,
-                      hintText: 'Name',
-                      prefixIcon: Image.asset(AppAssets.nameIcon),
-                      hintStyle: AppStyles.robotoRegular16White,
-                      validator: (text) {
-                        if (text == null || text.isEmpty) {
-                          return 'Please enter your name';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: height * 0.02),
-                    CustomTextFormField(
-                      controller: emailController,
-                      hintText: 'Email',
-                      prefixIcon: Image.asset(AppAssets.emailIcon),
-                      hintStyle: AppStyles.robotoRegular16White,
-                      validator: (text) {
-                        if (text == null || text.isEmpty) {
-                          return 'Please enter your Email';
-                        }
-                        final bool emailValid = RegExp(
-                          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-                        ).hasMatch(text);
-
-                        if (!emailValid) {
-                          return 'Please enter valid email';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: height * 0.02),
-                    CustomTextFormField(
-                      controller: passwordController,
-                      hintText: 'Password',
-                      prefixIcon: Image.asset(AppAssets.passwordIcon),
-                      sufficIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isPasswordObsecured = !isPasswordObsecured;
-                          });
-                        },
-                        child: isPasswordObsecured
-                            ? Image.asset(AppAssets.eyeoffIcon)
-                            : Icon(Icons.remove_red_eye, color: AppColors.whiteColor),
+          builder: (context, state) {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+              child: Form(
+                key: formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Image.asset(AppAssets.registerScreenImg, height: height * 0.17),
+                      SizedBox(height: height * 0.01),
+                      Text(
+                        'Avatar',
+                        style: AppStyles.robotoRegular16White,
+                        textAlign: TextAlign.center,
                       ),
-
-                      hintStyle: AppStyles.robotoRegular16White,
-                      obscureText: isPasswordObsecured,
-                      validator: (text) {
-                        if (text == null || text.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: height * 0.02),
-                    CustomTextFormField(
-                      controller: confirmPasswordController,
-                      hintText: 'Confirm Password',
-                      prefixIcon: Image.asset(AppAssets.passwordIcon),
-                      sufficIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isConfirmPasswordObsecured = !isConfirmPasswordObsecured;
-                          });
+                      SizedBox(height: height * 0.02),
+                      CustomTextFormField(
+                        controller: nameController,
+                        hintText: 'Name',
+                        prefixIcon: Image.asset(AppAssets.nameIcon),
+                        hintStyle: AppStyles.robotoRegular16White,
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'Please enter your name';
+                          }
+                          return null;
                         },
-                        child: isConfirmPasswordObsecured
-                            ? Image.asset(AppAssets.eyeoffIcon)
-                            : Icon(Icons.remove_red_eye, color: AppColors.whiteColor),
                       ),
-                      hintStyle: AppStyles.robotoRegular16White,
-                      obscureText: isConfirmPasswordObsecured,
-                      validator: (text) {
-                        if (text == null || text.isEmpty) {
-                          return 'Please enter your confirm password';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: height * 0.02),
-                    CustomTextFormField(
-                      controller: phoneNumberController,
-                      hintText: 'Phone Number',
-                      prefixIcon: Image.asset(AppAssets.phoneNumberIcon),
-                      hintStyle: AppStyles.robotoRegular16White,
-                      keyboardType: TextInputType.phone,
-                      validator: (text) {
-                        if (text == null || text.isEmpty) {
-                          return 'Please enter your phone number';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: height * 0.02),
-                    CustomElevatedButton(
-                      onPressed: () {
-                        //register
-                        viewModel.register(
-                          UserRequest(
-                            name: nameController.text,
-                            email: emailController.text,
-                            password: passwordController.text,
-                            confirmPassword: confirmPasswordController.text,
-                            phone: phoneNumberController.text,
-                            avaterId: 1,
-                          ),
-                        );
-                      },
-                      buttonContent: Text('Create Account', style: AppStyles.robotoRegular20Black),
-                    ),
-                    SizedBox(height: height * 0.02),
-                    TwoTextsRow(text1: 'Already Have Account ? ', text2: 'Login'),
-                    SizedBox(height: height * 0.02),
-                    Center(child: LanguageToggleSwitch()),
-                    SizedBox(height: height * 0.2),
-                  ],
+                      SizedBox(height: height * 0.02),
+                      CustomTextFormField(
+                        controller: emailController,
+                        hintText: 'Email',
+                        prefixIcon: Image.asset(AppAssets.emailIcon),
+                        hintStyle: AppStyles.robotoRegular16White,
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'Please enter your Email';
+                          }
+                          final bool emailValid = RegExp(
+                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                          ).hasMatch(text);
+
+                          if (!emailValid) {
+                            return 'Please enter valid email';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: height * 0.02),
+                      CustomTextFormField(
+                        controller: passwordController,
+                        hintText: 'Password',
+                        prefixIcon: Image.asset(AppAssets.passwordIcon),
+                        sufficIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isPasswordObsecured = !isPasswordObsecured;
+                            });
+                          },
+                          child: isPasswordObsecured
+                              ? Image.asset(AppAssets.eyeoffIcon)
+                              : Icon(Icons.remove_red_eye, color: AppColors.whiteColor),
+                        ),
+
+                        hintStyle: AppStyles.robotoRegular16White,
+                        obscureText: isPasswordObsecured,
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: height * 0.02),
+                      CustomTextFormField(
+                        controller: confirmPasswordController,
+                        hintText: 'Confirm Password',
+                        prefixIcon: Image.asset(AppAssets.passwordIcon),
+                        sufficIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isConfirmPasswordObsecured = !isConfirmPasswordObsecured;
+                            });
+                          },
+                          child: isConfirmPasswordObsecured
+                              ? Image.asset(AppAssets.eyeoffIcon)
+                              : Icon(Icons.remove_red_eye, color: AppColors.whiteColor),
+                        ),
+                        hintStyle: AppStyles.robotoRegular16White,
+                        obscureText: isConfirmPasswordObsecured,
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'Please confirm your password';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: height * 0.02),
+                      CustomTextFormField(
+                        controller: phoneNumberController,
+                        hintText: 'Phone Number',
+                        prefixIcon: Image.asset(AppAssets.phoneNumberIcon),
+                        hintStyle: AppStyles.robotoRegular16White,
+                        keyboardType: TextInputType.phone,
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'Please enter your phone number';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: height * 0.02),
+                      CustomElevatedButton(
+                        onPressed: () {
+                          //register
+                          if (formKey.currentState!.validate()) {
+                            viewModel.register(
+                              UserRequest(
+                                name: nameController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
+                                confirmPassword: confirmPasswordController.text,
+                                phone: phoneNumberController.text,
+                                avaterId: 1,
+                              ),
+                            );
+                          }
+                        },
+                        buttonContent: Text(
+                          'Create Account',
+                          style: AppStyles.robotoRegular20Black,
+                        ),
+                      ),
+                      SizedBox(height: height * 0.02),
+                      TwoTextsRow(text1: 'Already Have Account ? ', text2: 'Login'),
+                      SizedBox(height: height * 0.02),
+                      Center(child: LanguageToggleSwitch()),
+                      SizedBox(height: height * 0.2),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );
