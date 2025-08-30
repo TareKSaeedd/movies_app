@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/constants/app_assets.dart';
 import 'package:movies_app/core/constants/app_colors.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
-import 'package:movies_app/di/di.dart';
+import 'package:movies_app/features/home/data/di/di.dart';
 import 'package:movies_app/features/home/presentation/cubit/home/home_tab_states.dart';
 import 'package:movies_app/features/home/presentation/cubit/home/home_tab_view_model.dart';
 import 'package:movies_app/features/home/presentation/pages/tabs/home_tab/widgets/movie_item.dart';
