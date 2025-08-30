@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/data/repository/movies/repository/home_tab_repository.dart';
-import 'package:movies_app/features/home/presentation/cubit/home/cubit/home_tab_states.dart';
-import '../../../../model/movie_response.dart';
+import 'package:movies_app/features/home/presentation/cubit/home/home_tab_states.dart';
+import '../../../data/model/movie_response.dart';
 
 class HomeTabViewModel extends Cubit<HomeTabStates> {
   HomeTabViewModel({required this.moviesRepository}) : super(HomeTabLoadingState());

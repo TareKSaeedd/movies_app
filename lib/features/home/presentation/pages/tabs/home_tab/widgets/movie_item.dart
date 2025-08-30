@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../../../../../../../../../core/constants/app_colors.dart';
-import '../../../../../model/movie_response.dart';
+import '../../../../../data/model/movie_response.dart';
 import '../home_tab.dart';
 
 class MovieItem extends StatelessWidget {

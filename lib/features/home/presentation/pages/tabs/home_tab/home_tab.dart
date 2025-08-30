@@ -6,10 +6,10 @@ import 'package:movies_app/core/constants/app_assets.dart';
 import 'package:movies_app/core/constants/app_colors.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
 import 'package:movies_app/di/di.dart';
-import 'package:movies_app/features/home/presentation/cubit/home/cubit/home_tab_states.dart';
-import 'package:movies_app/features/home/presentation/cubit/home/cubit/home_tab_view_model.dart';
+import 'package:movies_app/features/home/presentation/cubit/home/home_tab_states.dart';
+import 'package:movies_app/features/home/presentation/cubit/home/home_tab_view_model.dart';
 import 'package:movies_app/features/home/presentation/pages/tabs/home_tab/widgets/movie_item.dart';
-import 'package:movies_app/features/home/model/movie_response.dart';
+import 'package:movies_app/features/home/data/model/movie_response.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});

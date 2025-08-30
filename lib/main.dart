@@ -11,7 +11,7 @@ import 'core/utils/bloc_observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-import 'features/auth/presentation/reset_password_page/view/reset_password_page.dart';
+import 'features/auth/presentation/pages/reset_password_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
