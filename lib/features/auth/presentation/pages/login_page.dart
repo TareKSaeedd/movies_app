@@ -53,6 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                     negActionName: 'OK',
                   );
                 } else if (state is LoginSuccessState) {
+                  DialogUtils.hideLoading(context: context);
                   DialogUtils.showMessage(
                     context: context,
                     contentMsg: state.successMessage,
@@ -65,6 +66,29 @@ class _LoginPageState extends State<LoginPage> {
                       );
                     },
                   );
+                } else if (state is LoginWithGoogleSuccessState) {
+                  DialogUtils.hideLoading(context: context);
+                  DialogUtils.showMessage(
+                    context: context,
+                    contentMsg: state.successMessage,
+                    posActionName: 'OK',
+                    posActionFunction: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        AppRoutes.homePageRouteName,
+                        (route) => false,
+                      );
+                    },
+                  );
+                } else if (state is LoginWithGoogleErrorState) {
+                  DialogUtils.hideLoading(context: context);
+                  DialogUtils.showMessage(
+                    context: context,
+                    contentMsg: state.errorMessage,
+                    negActionName: 'OK',
+                  );
+                } else if (state is LoginWithGoogleCancelState) {
+                  DialogUtils.hideLoading(context: context);
                 }
               },
               child: Form(
@@ -195,7 +219,9 @@ class _LoginPageState extends State<LoginPage> {
                       width: double.infinity,
                       height: height * 0.07,
                       child: ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await loginCubit.loginWithGoogle();
+                        },
                         icon: Image.asset(
                           AppAssets.gmailIcon,
                           height: width * 0.1,

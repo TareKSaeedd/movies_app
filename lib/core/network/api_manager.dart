@@ -41,7 +41,7 @@ class ApiManager {
       var json = jsonDecode(response.body);
       return LoginResponse.fromJson(json)..statusCode = response.statusCode;
     } catch (e) {
-      throw e;
+      throw Exception("Login failed: $e");
     }
   }
 
