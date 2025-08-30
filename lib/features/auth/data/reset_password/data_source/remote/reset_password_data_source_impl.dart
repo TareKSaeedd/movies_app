@@ -1,4 +1,4 @@
-import 'package:movies_app/core/network/api_manager.dart';
+import 'package:movies_app/core/network/auth_api/api_manager.dart';
 import 'package:movies_app/features/auth/data/reset_password/data_source/remote/reset_password_data_source.dart';
 
 class ResetPasswordDataSourceImpl implements ResetPasswordDataSource {
@@ -10,7 +10,7 @@ class ResetPasswordDataSourceImpl implements ResetPasswordDataSource {
     required String oldPassword,
     required String newPassword,
     required String token,
-  }) async{
+  }) async {
     // TODO: implement resetPassword
 
     return await apiManager.resetPassword(

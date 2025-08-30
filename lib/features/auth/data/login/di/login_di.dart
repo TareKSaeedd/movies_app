@@ -1,4 +1,4 @@
-import 'package:movies_app/core/network/api_manager.dart';
+import 'package:movies_app/core/network/auth_api/api_manager.dart';
 import 'package:movies_app/features/auth/data/login/data_source/login_data_source.dart';
 import 'package:movies_app/features/auth/data/login/data_source/login_data_source_impl.dart';
 import 'package:movies_app/features/auth/data/login/repository/login_repository.dart';

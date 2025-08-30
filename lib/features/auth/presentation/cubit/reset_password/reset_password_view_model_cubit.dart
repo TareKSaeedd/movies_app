@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/core/network/shared_pref_network.dart';
+import 'package:movies_app/core/network/auth_api/shared_pref_network.dart';
 
 import 'package:movies_app/features/auth/data/reset_password/repository/reset_password_repository.dart';
 

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:movies_app/core/network/shared_pref_network.dart';
+import 'package:movies_app/core/network/auth_api/shared_pref_network.dart';
 import 'package:movies_app/features/auth/data/login/model/login_request.dart';
 import 'package:movies_app/features/auth/data/login/repository/login_repository.dart';
 import 'package:movies_app/features/auth/presentation/cubit/login/login_state.dart';
