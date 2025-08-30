@@ -21,7 +21,10 @@ class LoginCubit extends Cubit<LoginState> {
       await SharedPrefNetwork.saveToken(email: userInfo.email!, token: response.data!);
       emit(LoginSuccessState(successMessage: response.message));
     } else {
-      emit(LoginErrorState(errorMessage: response.message));
+      String errorMsg = response.message is List
+          ? (response.message as List).join(", ")
+          : response.message.toString();
+      emit(LoginErrorState(errorMessage: errorMsg));
     }
   }
 
