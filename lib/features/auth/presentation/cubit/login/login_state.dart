@@ -13,3 +13,16 @@ class LoginSuccessState extends LoginState {
 
   LoginSuccessState({required this.successMessage});
 }
+
+class LoginWithGoogleSuccessState extends LoginState {
+  String successMessage;
+  LoginWithGoogleSuccessState({required this.successMessage});
+}
+
+class LoginWithGoogleErrorState extends LoginState {
+  String errorMessage;
+
+  LoginWithGoogleErrorState({required this.errorMessage});
+}
+
+class LoginWithGoogleCancelState extends LoginState {}

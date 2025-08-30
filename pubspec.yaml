@@ -32,11 +32,14 @@ dependencies:
   cached_network_image: ^3.4.1
   carousel_slider: ^5.1.1
   cupertino_icons: ^1.0.8
+  firebase_auth: ^6.0.1
+  firebase_core: ^4.0.0
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
   flutter_native_splash: ^2.4.6
   google_fonts: ^6.3.0
+  google_sign_in: ^6.3.0
   http: ^1.5.0
   shared_preferences: ^2.5.3
   toggle_switch: ^2.3.0

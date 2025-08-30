@@ -8,10 +8,14 @@ import 'package:movies_app/features/home/presentation/pages/home_page.dart';
 import 'package:movies_app/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:movies_app/features/update_profile/presentation/page/update_profile_page.dart';
 import 'core/utils/bloc_observer.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'features/auth/presentation/reset_password_page/view/reset_password_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
 }
