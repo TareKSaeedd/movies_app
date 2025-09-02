@@ -26,6 +26,7 @@ class AppAssets {
   static const String personIcon = 'assets/icons/icon_person.png';
   static const String phoneIcon = 'assets/icons/icon_phone.png';
   static const String arrowBackIcon = 'assets/icons/icon_arrow_back.png';
+  static const String errorIcon = 'assets/icons/icon_error.png';
 
   static const String homeTabIconUnSelected =
       'assets/icons/icon_home_tab_unselected.png';

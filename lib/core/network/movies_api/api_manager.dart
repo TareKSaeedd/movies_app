@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:movies_app/core/network/movies_api/api_constants.dart';
 import 'package:movies_app/core/network/movies_api/end_points.dart';
 import 'package:movies_app/features/home/data/model/movie_response.dart';
+import 'package:movies_app/features/home/data/model/search_response.dart';
 
 class ApiManager {
   Future<MovieResponse?> getMovies() async {
@@ -32,4 +33,35 @@ class ApiManager {
       return MovieResponse(status: "error", statusMessage: "Something went wrong: $e", data: null);
     }
   }
+
+
+ Future<SearchResponse?> searchMovies(String? query) async {
+  try {
+    final url = Uri.https(
+      ApiConstants.baseUrl,
+      EndPoints.movieApi,
+      {
+        "query_term": query,
+        "sort_by" : "rating",
+        "limit" : "50"
+      },
+    );
+
+    final response = await http.get(url);
+    if (response.statusCode != 200) {
+      return SearchResponse(movies: []);
+    }
+
+    final json = jsonDecode(response.body);
+    final movieResponse = MovieResponse.fromJson(json);
+
+    if (movieResponse.status == 'ok') {
+      return SearchResponse(movies: movieResponse.data?.movies ?? []);
+    } else {
+      return SearchResponse(movies: []);
+    }
+  } catch (e) {
+    return SearchResponse(movies: []);
+  }
+}
 }
