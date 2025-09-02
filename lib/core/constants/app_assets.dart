@@ -53,6 +53,9 @@ class AppAssets {
   static const String availableNow='assets/images/Available Now.png';
   static const String watchNow='assets/images/watch_Now.png';
 
-
+  //profile tab
+  static const String exitIcon = 'assets/icons/exit_icon.png';
+  static const String watchListIcon = 'assets/icons/watchList_icon.png';
+  static const String folderIcon = 'assets/icons/Folder_icon.png';
 }
 //
