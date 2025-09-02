@@ -4,7 +4,8 @@ import 'package:movies_app/features/home/presentation/cubit/home/home_tab_states
 import '../../../data/model/movie_response.dart';
 
 class HomeTabViewModel extends Cubit<HomeTabStates> {
-  HomeTabViewModel({required this.moviesRepository}) : super(HomeTabLoadingState());
+  HomeTabViewModel({required this.moviesRepository})
+    : super(HomeTabLoadingState());
   HomeTabRepository moviesRepository;
 
   void getMovies() async {
@@ -15,14 +16,22 @@ class HomeTabViewModel extends Cubit<HomeTabStates> {
         emit(HomeTabErrorState(errorMessage: response!.statusMessage!));
       }
       if (response?.status == 'ok') {
-        emit(HomeTabSuccessState(moviesList: response!.data!.movies ?? [], selectedIndex: 0));
+        emit(
+          HomeTabSuccessState(
+            moviesList: response!.data!.movies ?? [],
+            selectedIndex: 0,
+          ),
+        );
       }
     } catch (e) {
       emit(HomeTabErrorState(errorMessage: e.toString()));
     }
   }
 
-  void changeSelectedIndex({required int index, required List<Movies?> moviesList}) {
+  void changeSelectedIndex({
+    required int index,
+    required List<Movies?> moviesList,
+  }) {
     emit(HomeTabSuccessState(moviesList: moviesList, selectedIndex: index));
   }
 }
