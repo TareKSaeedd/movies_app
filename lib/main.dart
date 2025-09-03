@@ -9,6 +9,7 @@ import 'package:movies_app/features/onboarding/presentation/pages/onboarding_pag
 import 'package:movies_app/features/update_profile/presentation/page/update_profile_page.dart';
 import 'core/utils/bloc_observer.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'features/home/presentation/pages/tabs/movie_details_tab/movie_details_tab.dart';
 import 'firebase_options.dart';
 
 import 'features/auth/presentation/pages/reset_password_page.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.loginRouteName,
+      initialRoute: AppRoutes.movieDetailsRouteName,
       routes: {
         AppRoutes.onboardingRouteName: (context) => OnboardingPage(),
         AppRoutes.registerRouteName: (context) => RegisterPage(),
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.updateProfileRouteName: (context) => UpdateProfilePage(),
         AppRoutes.resetPasswordRouteName: (context) => ResetPasswordPage(),
         AppRoutes.homePageRouteName: (context) => HomePage(),
+        AppRoutes.movieDetailsRouteName: (context) => MovieDetailsTab(movieId: 122),
       },
     );
   }

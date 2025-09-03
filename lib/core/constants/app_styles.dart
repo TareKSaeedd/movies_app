@@ -107,6 +107,11 @@ class AppStyles {
     color: AppColors.whiteColor,
   );
 
+  static TextStyle robotoBold20Gray = GoogleFonts.roboto(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: AppColors.darkGreyColor,
+  );
   // ========== Inter ==========
   static TextStyle interMedium36White = GoogleFonts.inter(
     fontSize: 36,

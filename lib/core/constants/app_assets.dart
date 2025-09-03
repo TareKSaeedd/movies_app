@@ -26,6 +26,17 @@ class AppAssets {
   static const String personIcon = 'assets/icons/icon_person.png';
   static const String phoneIcon = 'assets/icons/icon_phone.png';
   static const String arrowBackIcon = 'assets/icons/icon_arrow_back.png';
+  static const String backArrowIcon = 'assets/icons/arrow_back_icon.png';
+  static const String watchIcon = 'assets/icons/watch_icon.png';
+  static const String favoriteIcon = 'assets/icons/favorite_icon.png';
+  static const String saveIcon = 'assets/icons/save_icon.png';
+  static const String starIcon = 'assets/icons/star_icon.png';
+  static const String startIcon = 'assets/icons/start_icon.png';
+
+
+
+
+
 
   static const String homeTabIconUnSelected =
       'assets/icons/icon_home_tab_unselected.png';
