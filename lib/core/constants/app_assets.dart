@@ -69,7 +69,11 @@ class AppAssets {
   static const String screenShot3='assets/images/screen3.png';
   static const String movie='assets/images/movie.png';
   static const String actor='assets/images/actor.png';
-
+  
+  //profile tab
+  static const String exitIcon = 'assets/icons/exit_icon.png';
+  static const String watchListIcon = 'assets/icons/watchList_icon.png';
+  static const String folderIcon = 'assets/icons/Folder_icon.png';
 
 }
 //
