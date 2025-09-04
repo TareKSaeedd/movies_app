@@ -52,6 +52,23 @@ class AppAssets {
   //homeTab
   static const String availableNow='assets/images/Available Now.png';
   static const String watchNow='assets/images/watch_Now.png';
+//detailsTab
+  static const String detailsImage='assets/images/details_image.png';
+  static const String screenShot1='assets/images/screenshot1.png';
+  static const String screenShot2='assets/images/screenshot2.png';
+  static const String screenShot3='assets/images/screenshot3.png';
+  static const String backArrowIcon = 'assets/icons/arrow_back_icon.png';
+  static const String watchIcon = 'assets/icons/watch_icon.png';
+  static const String favoriteIcon = 'assets/icons/favorite_icon.png';
+  static const String starIcon = 'assets/icons/star_icon.png';
+  static const String startIcon = 'assets/icons/start_icon.png';
+  static const String saveIcon = 'assets/icons/save_icon.png';
+
+
+
+
+
+
 
 
 }
