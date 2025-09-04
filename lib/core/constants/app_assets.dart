@@ -13,6 +13,7 @@ class AppAssets {
   static const String egyptFlag = "assets/images/egypt_flag.png";
   static const String englishFlag = "assets/images/english_flag.png";
   static const String forgetPasswordImage = "assets/images/forgot_password.png";
+  static const String playImage = "assets/images/play_image.png";
 
   // Icons
 
@@ -27,6 +28,12 @@ class AppAssets {
   static const String phoneIcon = 'assets/icons/icon_phone.png';
   static const String arrowBackIcon = 'assets/icons/icon_arrow_back.png';
   static const String errorIcon = 'assets/icons/icon_error.png';
+  static const String saveIcon = 'assets/icons/icon_save.png';
+  static const String saveYellowIcon = 'assets/icons/icon_save_yellow.png';
+  static const String favoriteIcon = 'assets/icons/icon_favorite.png';
+  static const String watchIcon = 'assets/icons/icon_watch.png';
+  static const String rateIcon = 'assets/icons/icon_rate.png';
+
 
   static const String homeTabIconUnSelected =
       'assets/icons/icon_home_tab_unselected.png';
@@ -53,6 +60,15 @@ class AppAssets {
   //homeTab
   static const String availableNow='assets/images/Available Now.png';
   static const String watchNow='assets/images/watch_Now.png';
+
+
+  //Test
+
+  static const String screenShot1='assets/images/screen1.png';
+  static const String screenShot2='assets/images/screen2.png';
+  static const String screenShot3='assets/images/screen3.png';
+  static const String movie='assets/images/movie.png';
+  static const String actor='assets/images/actor.png';
 
 
 }
