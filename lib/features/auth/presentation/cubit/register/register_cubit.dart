@@ -7,7 +7,6 @@ class RegisterCubit extends Cubit<RegisterState> {
   RegisterRepository registerRepository;
   RegisterCubit({required this.registerRepository}) : super(RegisterLoadingState());
 
-  // Hold data - Handle logic
 
   void register(UserRequest useriInfo) async {
     emit(RegisterLoadingState());

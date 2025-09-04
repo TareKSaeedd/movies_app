@@ -10,6 +10,7 @@ import 'package:movies_app/features/home/presentation/cubit/home/home_tab_states
 import 'package:movies_app/features/home/presentation/cubit/home/home_tab_view_model.dart';
 import 'package:movies_app/features/home/presentation/pages/tabs/home_tab/widgets/movie_item.dart';
 import 'package:movies_app/features/home/data/model/movie_response.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -43,10 +44,10 @@ class _HomeTabState extends State<HomeTab> {
         if (state is HomeTabLoadingState) {
           return Center(child: CircularProgressIndicator(color: AppColors.darkGreyColor));
         } else if (state is HomeTabErrorState) {
-          return Center(child: Text('Something Went Wrong: ${state.errorMessage}'));
+          return Center(child: Text('${AppLocalizations.of(context)!.something_went_wrong} ${state.errorMessage}'));
         } else if (state is HomeTabSuccessState) {
           if (state.moviesList.isEmpty) {
-            return const Center(child: Text("No movies found"));
+            return  Center(child: Text(AppLocalizations.of(context)!.no_movies_found));
           }
           return Scaffold(
             backgroundColor: AppColors.blackColor,
@@ -141,14 +142,14 @@ class _HomeTabState extends State<HomeTab> {
                     child: Row(
                       children: [
                         Text(
-                          'Action',
+                          AppLocalizations.of(context)!.action,
                           style: AppStyles.robotoRegular20White.copyWith(
                             decoration: TextDecoration.none,
                           ),
                         ),
                         Spacer(),
                         Text(
-                          'See More',
+                          AppLocalizations.of(context)!.see_more,
                           style: AppStyles.robotoRegular16Yellow.copyWith(
                             decoration: TextDecoration.none,
                           ),

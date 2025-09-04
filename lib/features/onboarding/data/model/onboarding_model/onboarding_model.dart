@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
 
 import '../../../../../core/constants/app_assets.dart';
 import '../../../../../core/constants/app_colors.dart';
@@ -16,45 +17,45 @@ class OnboardingModel {
     required this.gradientColors,
   });
 
-  static List<OnboardingModel> pages = [
+  static List<OnboardingModel> pages(BuildContext context) => [
     OnboardingModel(
       imagePath: AppAssets.onboarding1,
-      title: 'Find Your Next\n Favorite Movie Here',
+      title: AppLocalizations.of(context)!.onboarding_title_1,
       description:
-          'Get access to a huge library of movies to suit all tastes. You will surely like it.',
+      AppLocalizations.of(context)!.onboarding_desc_1,
       gradientColors: [Colors.transparent, Colors.black],
     ),
     OnboardingModel(
       imagePath: AppAssets.onboarding2,
-      title: 'Discover Movies',
+      title: AppLocalizations.of(context)!.onboarding_title_2,
       description:
-          'Explore a vast collection of movies in all qualities and genres. Find your next favorite film with ease.',
+      AppLocalizations.of(context)!.onboarding_desc_2,
       gradientColors: [Colors.transparent, AppColors.darkBlue],
     ),
     OnboardingModel(
       imagePath: AppAssets.onboarding3,
-      title: 'Explore All Genres',
+      title: AppLocalizations.of(context)!.onboarding_title_3,
       description:
-          'Discover movies from every genre, in all available qualities. Find something new and exciting to watch every day.',
+      AppLocalizations.of(context)!.onboarding_desc_3,
       gradientColors: [Colors.transparent, AppColors.brown],
     ),
     OnboardingModel(
       imagePath: AppAssets.onboarding4,
-      title: 'Create Watchlists',
+      title:  AppLocalizations.of(context)!.onboarding_title_4,
       description:
-          'Save movies to your watchlist to keep track of what you want to watch next. Enjoy films in various qualities and genres.',
+      AppLocalizations.of(context)!.onboarding_desc_4,
       gradientColors: [Colors.transparent, AppColors.purple],
     ),
     OnboardingModel(
       imagePath: AppAssets.onboarding5,
-      title: 'Rate, Review, and Learn',
+      title: AppLocalizations.of(context)!.onboarding_title_5,
       description:
-          'Share your thoughts on the movies you have watched. Dive deep into film details and help others discover great movies with your reviews.',
+      AppLocalizations.of(context)!.onboarding_desc_5,
       gradientColors: [Colors.transparent, AppColors.darkRed],
     ),
     OnboardingModel(
       imagePath: AppAssets.onboarding6,
-      title: 'Start Watching Now',
+      title: AppLocalizations.of(context)!.onboarding_title_6,
       gradientColors: [Colors.transparent, AppColors.darkGrey],
     ),
   ];

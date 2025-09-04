@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/features/update_profile/data/repository/update_profile_repository.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
 import 'update_profile_state.dart';
 
 class UpdateProfileViewModel extends Cubit<UpdateProfileState> {
@@ -15,7 +16,7 @@ class UpdateProfileViewModel extends Cubit<UpdateProfileState> {
   }
  
 
-  Future<void> updateProfile({String? name, String? phone, int? avaterId}) async {
+  Future<void> updateProfile({String? name, String? phone, int? avaterId,required BuildContext context}) async {
     emit(UpdateProfileLoading());
     try {
       final response = await repository.updateProfile(
@@ -26,21 +27,21 @@ class UpdateProfileViewModel extends Cubit<UpdateProfileState> {
       if (response != null) {
         emit(UpdateProfileSuccess(response));
       } else {
-        emit(UpdateProfileError("No response from server"));
+        emit(UpdateProfileError(AppLocalizations.of(context)!.no_response_from_server));
       }
     } catch (e) {
       emit(UpdateProfileError(e.toString()));
     }
   }
 
-  Future<void> deleteProfile() async {
+  Future<void> deleteProfile({required BuildContext context}) async {
     emit(DeleteProfileLoading());
     try {
       final response = await repository.deleteProfile();
       if (response != null) {
         emit(DeleteProfileSuccess(response));
       } else {
-        emit(DeleteProfileError("No response from server"));
+        emit(DeleteProfileError(AppLocalizations.of(context)!.no_response_from_server));
       }
     } catch (e) {
       emit(DeleteProfileError(e.toString()));

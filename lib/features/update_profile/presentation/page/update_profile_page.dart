@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/constants/app_assets.dart';
@@ -12,6 +13,8 @@ import 'package:movies_app/features/update_profile/data/di/update_profile_di.dar
 import 'package:movies_app/features/update_profile/presentation/cubit/update_profile_state.dart';
 import 'package:movies_app/features/update_profile/presentation/cubit/update_profile_view_model.dart';
 import 'package:movies_app/features/update_profile/presentation/widgets/show_avatar_picker.dart';
+
+import '../../../../l10n/app_localizations.dart';
 
 class UpdateProfilePage extends StatefulWidget {
   const UpdateProfilePage({super.key});
@@ -43,7 +46,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.blackColor,
-        title: Text('Pick Avatar', style: AppStyles.robotoRegular16Yellow),
+        title: Text(AppLocalizations.of(context)!.pick_avatar, style: AppStyles.robotoRegular16Yellow),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
@@ -59,7 +62,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
           if (state is UpdateProfileSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.response.message ?? "Profile updated"),
+                content: Text(state.response.message ?? AppLocalizations.of(context)!.profile_updated),
               ),
             );
           } else if (state is UpdateProfileError) {
@@ -112,11 +115,11 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                             cursorColor: AppColors.whiteColor,
                             fillColor: AppColors.darkGreyColor,
                             prefixIcon: Image.asset(AppAssets.personIcon),
-                            hintText: 'John Safwat',
+                            hintText: AppLocalizations.of(context)!.name_hint,
                             hintStyle: AppStyles.robotoRegular20White,
                             validator: (text) {
                               if (text == null || text.isEmpty) {
-                                return 'Plaese Enter Name';
+                                return AppLocalizations.of(context)!.enter_name_error;
                               }
                               return null;
                             },
@@ -127,20 +130,20 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                             cursorColor: AppColors.whiteColor,
                             fillColor: AppColors.darkGreyColor,
                             prefixIcon: Image.asset(AppAssets.phoneIcon),
-                            hintText: '+201200000000',
+                            hintText: AppLocalizations.of(context)!.phone_hint,
                             hintStyle: AppStyles.robotoRegular20White,
                             keyboardType: TextInputType.phone,
 
                             validator: (text) {
                               final regex = RegExp(r'^\+20[0-9]{9,10}$');
                               if (text == null || text.isEmpty) {
-                                return 'Plaese enter phone number';
+                                return AppLocalizations.of(context)!.enter_phone_error;
                               }
                               if (!text.startsWith('+20')) {
-                                return 'Phone number must start with +20';
+                                return AppLocalizations.of(context)!.phone_start_error;
                               }
                               if (!regex.hasMatch(text)) {
-                                return 'Enter a valid phone number';
+                                return AppLocalizations.of(context)!.phone_invalid_error;
                               }
 
                               return null;
@@ -157,7 +160,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                 );
                               },
                               child: Text(
-                                'Reset Password',
+                                AppLocalizations.of(context)!.reset_password,
                                 style: AppStyles.robotoRegular20White,
                               ),
                             ),
@@ -169,18 +172,20 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                               DialogUtils.showMessage(
                                 context: context,
                                 contentMsg:
-                                    'Are you sure, you want to delete profile !!',
-                                title: 'Warning',
-                                posActionName: 'Yes',
+                                AppLocalizations.of(context)!.delete_profile_msg,
+                                title: AppLocalizations.of(context)!.warning_title,
+                                posActionName:AppLocalizations.of(context)!.yes,
                                 posActionFunction: () {
-                                  viewModel.deleteProfile();
+                                  viewModel.deleteProfile(
+                                    context: context
+                                  );
                                   Navigator.pushNamedAndRemoveUntil(
                                     context,
                                     AppRoutes.loginRouteName,
                                     (route) => false,
                                   );
                                 },
-                                negActionName: 'Cancel',
+                                negActionName: AppLocalizations.of(context)!.cancel,
                                 negActionFunction: () {
                                   Navigator.pop(context);
                                 },
@@ -188,7 +193,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                             },
                             borderSideColor: AppColors.redColor,
                             buttonContent: Text(
-                              'Delete Account',
+                              AppLocalizations.of(context)!.delete_account,
                               style: AppStyles.robotoRegular20White,
                             ),
                           ),
@@ -200,11 +205,12 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                   name: nameController.text,
                                   phone: phoneController.text,
                                   avaterId: selectedIndex,
+                                  context: context
                                 );
                               }
                             },
                             buttonContent: Text(
-                              'Update Data',
+                              AppLocalizations.of(context)!.update_data,
                               style: AppStyles.robotoRegular20Black,
                             ),
                           ),

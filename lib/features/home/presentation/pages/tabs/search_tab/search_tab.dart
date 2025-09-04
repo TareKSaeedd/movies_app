@@ -3,6 +3,8 @@ import 'package:movies_app/core/constants/app_assets.dart';
 import 'package:movies_app/core/constants/app_colors.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
 
+import '../../../../../../l10n/app_localizations.dart';
+
 class SearchTab extends StatelessWidget {
   const SearchTab({super.key});
 
@@ -39,7 +41,7 @@ class SearchTab extends StatelessWidget {
                     prefixIcon: ImageIcon(
                         AssetImage(AppAssets.searchTabIconUnSelected)),
                     prefixIconColor: AppColors.whiteColor,
-                    hintText: 'Search',
+                    hintText: AppLocalizations.of(context)!.search,
                     hintStyle: AppStyles.robotoRegular16White,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),

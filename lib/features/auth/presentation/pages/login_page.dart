@@ -11,8 +11,9 @@ import 'package:movies_app/features/auth/data/login/di/login_di.dart';
 import 'package:movies_app/features/auth/data/login/model/login_request.dart';
 import 'package:movies_app/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:movies_app/features/auth/presentation/cubit/login/login_state.dart';
+import 'package:movies_app/features/auth/presentation/pages/widgets/language_toggle_switch.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
 
-import '../../../../core/widgets/language_toggle_switch.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -44,20 +45,20 @@ class _LoginPageState extends State<LoginPage> {
               listener: (context, state) {
                 // TODO: implement listener
                 if (state is LoginLoadingState) {
-                  DialogUtils.showLoading(context: context, loadingText: 'Waiting');
+                  DialogUtils.showLoading(context: context, loadingText:AppLocalizations.of(context)!.waiting);
                 } else if (state is LoginErrorState) {
                   DialogUtils.hideLoading(context: context);
                   DialogUtils.showMessage(
                     context: context,
                     contentMsg: state.errorMessage,
-                    negActionName: 'OK',
+                    negActionName: AppLocalizations.of(context)!.ok,
                   );
                 } else if (state is LoginSuccessState) {
                   DialogUtils.hideLoading(context: context);
                   DialogUtils.showMessage(
                     context: context,
                     contentMsg: state.successMessage,
-                    posActionName: 'OK',
+                    posActionName: AppLocalizations.of(context)!.ok,
                     posActionFunction: () {
                       Navigator.pushNamedAndRemoveUntil(
                         context,
@@ -71,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                   DialogUtils.showMessage(
                     context: context,
                     contentMsg: state.successMessage,
-                    posActionName: 'OK',
+                    posActionName: AppLocalizations.of(context)!.ok,
                     posActionFunction: () {
                       Navigator.pushNamedAndRemoveUntil(
                         context,
@@ -85,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                   DialogUtils.showMessage(
                     context: context,
                     contentMsg: state.errorMessage,
-                    negActionName: 'OK',
+                    negActionName: AppLocalizations.of(context)!.ok,
                   );
                 } else if (state is LoginWithGoogleCancelState) {
                   DialogUtils.hideLoading(context: context);
@@ -101,19 +102,19 @@ class _LoginPageState extends State<LoginPage> {
                     CustomTextFormField(
                       controller: emailController,
                       prefixIcon: Image.asset(AppAssets.emailIcon),
-                      hintText: "Enter your email",
+                      hintText:  AppLocalizations.of(context)!.enter_email_hint,
                       hintStyle: AppStyles.robotoRegular16White,
                       keyboardType: TextInputType.emailAddress,
                       validator: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Please enter your Email';
+                          return AppLocalizations.of(context)!.please_enter_email;
                         }
                         final bool emailValid = RegExp(
                           r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
                         ).hasMatch(text);
 
                         if (!emailValid) {
-                          return 'Please enter valid email';
+                          return AppLocalizations.of(context)!.enter_valid_email_error;
                         }
                         return null;
                       },
@@ -132,13 +133,13 @@ class _LoginPageState extends State<LoginPage> {
                             ? Image.asset(AppAssets.eyeoffIcon)
                             : Icon(Icons.remove_red_eye, color: AppColors.whiteColor),
                       ),
-                      hintText: "Enter your password",
+                      hintText:  AppLocalizations.of(context)!.enter_password_hint,
                       hintStyle: AppStyles.robotoRegular16White,
                       obscureText: isPasswordSecured,
                       obscuringCharacter: '•',
                       validator: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Please enter your password';
+                          return AppLocalizations.of(context)!.enter_password_error;
                         }
                         return null;
                       },
@@ -154,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                           foregroundColor: AppColors.yellowColor,
                           textStyle: AppStyles.robotoRegular14Yellow,
                         ),
-                        child: const Text("Forget Password?"),
+                        child: Text(AppLocalizations.of(context)!.forget_password),
                       ),
                     ),
                     SizedBox(height: height * 0.02),
@@ -176,17 +177,17 @@ class _LoginPageState extends State<LoginPage> {
                           backgroundColor: AppColors.yellowColor,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                         ),
-                        child: Text("Login", style: AppStyles.robotoRegular20Black),
+                        child: Text( AppLocalizations.of(context)!.login, style: AppStyles.robotoRegular20Black),
                       ),
                     ),
                     SizedBox(height: height * 0.03),
                     RichText(
                       text: TextSpan(
-                        text: "Don’t Have Account  ?  ",
+                        text:  AppLocalizations.of(context)!.dont_have_account,
                         style: AppStyles.robotoRegular14White,
                         children: [
                           TextSpan(
-                            text: "Create One",
+                            text:  AppLocalizations.of(context)!.create_one,
                             style: AppStyles.robotoBlack14Yellow,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
@@ -206,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-                          child: Text("OR", style: AppStyles.robotoRegular15Yellow),
+                          child: Text( AppLocalizations.of(context)!.or, style: AppStyles.robotoRegular15Yellow),
                         ),
                         SizedBox(
                           width: width * 0.2,
@@ -227,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: width * 0.1,
                           width: width * 0.1,
                         ),
-                        label: Text("Login With Google", style: AppStyles.robotoRegular16Black),
+                        label: Text( AppLocalizations.of(context)!.login_with_google, style: AppStyles.robotoRegular16Black),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.yellowColor,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
