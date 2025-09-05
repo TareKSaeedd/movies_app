@@ -5,11 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/constants/app_assets.dart';
 import 'package:movies_app/core/constants/app_colors.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
+import 'package:movies_app/core/navigation/app_routes.dart';
 import 'package:movies_app/features/home/data/di/di.dart';
 import 'package:movies_app/features/home/presentation/cubit/home/home_tab_states.dart';
 import 'package:movies_app/features/home/presentation/cubit/home/home_tab_view_model.dart';
 import 'package:movies_app/features/home/presentation/pages/tabs/home_tab/widgets/movie_item.dart';
-import 'package:movies_app/features/home/data/model/movie_response.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -19,7 +19,6 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  List<Movies> moviesList = [];
   final ScrollController _listController = ScrollController();
 
   HomeTabViewModel viewModel = HomeTabViewModel(moviesRepository: injectMoviesRepository());
@@ -102,21 +101,29 @@ class _HomeTabState extends State<HomeTab> {
                           items: state.moviesList.map((movie) {
                             return Builder(
                               builder: (context) {
-                                return Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: generateCachedNetworkImage(
-                                          key: ValueKey(state.selectedIndex),
-                                          imageUrl: movie!.mediumCoverImage!,
-                                          width: width * 0.54,
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                      AppRoutes.detailsScreenPageRouteName,
+                                      arguments: movie.id,
+                                    );
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(20),
+                                          child: generateCachedNetworkImage(
+                                            key: ValueKey(state.selectedIndex),
+                                            imageUrl: movie!.mediumCoverImage!,
+                                            width: width * 0.54,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
