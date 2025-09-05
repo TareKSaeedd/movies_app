@@ -4,7 +4,7 @@ import 'package:movies_app/core/navigation/app_routes.dart';
 import 'package:movies_app/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:movies_app/features/auth/presentation/pages/login_page.dart';
 import 'package:movies_app/features/auth/presentation/pages/register_page.dart';
-import 'package:movies_app/features/details_screen/presentation/page/details_screen.dart';
+import 'package:movies_app/features/movie_details_screen/presentation/page/movie_details_screen.dart';
 import 'package:movies_app/features/home/presentation/pages/home_page.dart';
 import 'package:movies_app/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:movies_app/features/update_profile/presentation/page/update_profile_page.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.detailsScreenPageRouteName,
+      initialRoute: AppRoutes.homePageRouteName,
 
       routes: {
         AppRoutes.onboardingRouteName: (context) => OnboardingPage(),
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.updateProfileRouteName: (context) => UpdateProfilePage(),
         AppRoutes.resetPasswordRouteName: (context) => ResetPasswordPage(),
         AppRoutes.homePageRouteName: (context) => HomePage(),
-        AppRoutes.detailsScreenPageRouteName: (context) => DetailsScreen(),
+        AppRoutes.detailsScreenPageRouteName: (context) => MovieDetailsScreen(),
       },
     );
   }
