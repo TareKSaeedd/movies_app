@@ -7,8 +7,9 @@ import 'package:movies_app/features/home/data/di/di.dart';
 import 'package:movies_app/features/home/presentation/cubit/search/search_tab_state.dart';
 import 'package:movies_app/features/home/presentation/cubit/search/search_tab_view_model.dart';
 import 'package:movies_app/features/home/presentation/pages/tabs/search_tab/movie_card.dart';
+import '../../../../../../l10n/app_localizations.dart';
 
-class SearchTab extends StatefulWidget {
+class SearchTab extends StatelessWidget {
   const SearchTab({super.key});
 
   @override
@@ -55,7 +56,7 @@ class _SearchTabState extends State<SearchTab> {
                     prefixIcon: ImageIcon(
                         AssetImage(AppAssets.searchTabIconUnSelected)),
                     prefixIconColor: AppColors.whiteColor,
-                    hintText: 'Search',
+                    hintText: AppLocalizations.of(context)!.search,
                     hintStyle: AppStyles.robotoRegular16White,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),

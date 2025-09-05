@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
-
 import '../../../../core/constants/app_colors.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'widgets/forget_password_page_body.dart';
 
 class ForgetPasswordPage extends StatelessWidget {
@@ -13,7 +13,7 @@ class ForgetPasswordPage extends StatelessWidget {
       backgroundColor: AppColors.blackColor,
       appBar: AppBar(
         backgroundColor: AppColors.blackColor,
-        title: Text("Forget Password",style: AppStyles.robotoRegular16Yellow,),
+        title: Text(AppLocalizations.of(context)!.forget_password,style: AppStyles.robotoRegular16Yellow,),
         leading: IconButton(
           icon: Icon(Icons.arrow_back,color: AppColors.yellowColor,),
           onPressed: () {

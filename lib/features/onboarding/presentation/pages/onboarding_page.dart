@@ -3,6 +3,7 @@ import 'package:movies_app/core/constants/app_colors.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/features/onboarding/data/model/onboarding_model/onboarding_model.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
 
 import '../../../auth/presentation/pages/login_page.dart';
 
@@ -11,21 +12,26 @@ w = 430
 h = 932
 */
 class OnboardingPage extends StatefulWidget {
-  const OnboardingPage({super.key});
+   const OnboardingPage({super.key});
 
   @override
   State<OnboardingPage> createState() => _OnboardingPageState();
 }
-
 class _OnboardingPageState extends State<OnboardingPage> {
+  late List<OnboardingModel> onBoardingPages;
   final PageController _pageController = PageController();
 
-  final List<OnboardingModel> onBoardingPages = OnboardingModel.pages;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    onBoardingPages = OnboardingModel.pages(context);
+  }
 
   int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
+    // final List<OnboardingModel> onBoardingPages = OnboardingModel.pages(context);
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.blackColor,
@@ -76,7 +82,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       SizedBox(height: screenSize.height * 0.02),
                       CustomElevatedButton(
                         onPressed: () => nextPage(),
-                        buttonContent: Text('Explore Now', style: AppStyles.interBold20Black),
+                        buttonContent: Text(AppLocalizations.of(context)!.explore_now, style: AppStyles.interBold20Black),
                       ),
                     ],
                   ),
@@ -149,7 +155,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           }
                         },
                         buttonContent: Text(
-                          index == onBoardingPages.length - 1 ? "Finish" : "Next",
+                          index == onBoardingPages.length - 1 ? AppLocalizations.of(context)!.finish
+                              : AppLocalizations.of(context)!.next,
                           style: AppStyles.interSemiBoldBlack.copyWith(fontSize: 20),
                         ),
                       ),
@@ -161,7 +168,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           backgroundColor: AppColors.blackColor,
                           borderSideColor: AppColors.yellowColor,
                           buttonContent: Text(
-                            "Back",
+                            AppLocalizations.of(context)!.back,
                             style: AppStyles.interSemiBoldYellow.copyWith(fontSize: 20),
                           ),
                         ),

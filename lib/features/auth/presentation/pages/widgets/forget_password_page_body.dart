@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/constants/app_assets.dart';
-
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/core/widgets/custom_text_form_field.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
 
 import '../../../../../core/constants/app_styles.dart';
 
@@ -30,14 +30,13 @@ class ForgetPasswordPageBody extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
               prefixIcon: Image.asset(AppAssets.emailIcon),
               controller: emailController,
-              hintText: "Email",
+              hintText: AppLocalizations.of(context)!.email_hint,
               hintStyle: AppStyles.robotoRegular16White,
             ),
             SizedBox(height: height * 0.02),
-
             CustomElevatedButton(
-              onPressed: verifyEmail,
-              buttonContent: Text("Verify Email", style: AppStyles.robotoRegular16Black),
+              onPressed: verifyEmail(context: context),
+              buttonContent: Text(AppLocalizations.of(context)!.verify_email, style: AppStyles.robotoRegular16Black),
             ),
           ],
         ),
@@ -45,8 +44,8 @@ class ForgetPasswordPageBody extends StatelessWidget {
     );
   }
 
-  void verifyEmail() {
+   verifyEmail({required BuildContext context}) {
     // todo: verify email logic
-    debugPrint("verify email");
+    debugPrint(AppLocalizations.of(context)!.verify_email);
   }
 }

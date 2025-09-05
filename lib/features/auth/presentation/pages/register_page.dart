@@ -10,10 +10,11 @@ import 'package:movies_app/features/auth/data/register/di/register_di.dart';
 import 'package:movies_app/features/auth/data/register/model/register_model_request.dart';
 import 'package:movies_app/features/auth/presentation/cubit/register/register_cubit.dart';
 import 'package:movies_app/features/auth/presentation/cubit/register/register_state.dart';
+import 'package:movies_app/features/auth/presentation/pages/widgets/language_toggle_switch.dart';
 import 'package:movies_app/features/auth/presentation/pages/widgets/two_texts_row.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
-import 'widgets/language_toggle_switch.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -44,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Scaffold(
         backgroundColor: AppColors.blackColor,
         appBar: buildCustomAppBar(
-          title: 'Register',
+          title: AppLocalizations.of(context)!.register,
           onTap: () {
             Navigator.pop(context);
           },
@@ -52,19 +53,19 @@ class _RegisterPageState extends State<RegisterPage> {
         body: BlocConsumer<RegisterCubit, RegisterState>(
           listener: (context, state) {
             if (state is RegisterLoadingState) {
-              DialogUtils.showLoading(context: context, loadingText: 'Waiting');
+              DialogUtils.showLoading(context: context, loadingText: AppLocalizations.of(context)!.waiting);
             } else if (state is RegisterErrorState) {
               DialogUtils.hideLoading(context: context);
               DialogUtils.showMessage(
                 context: context,
                 contentMsg: state.errorMessage,
-                negActionName: 'OK',
+                negActionName: AppLocalizations.of(context)!.ok,
               );
             } else if (state is RegisterSuccessState) {
               DialogUtils.showMessage(
                 context: context,
                 contentMsg: state.successMessage,
-                posActionName: 'OK',
+                posActionName: AppLocalizations.of(context)!.ok,
                 posActionFunction: () => Navigator.of(context).pushNamed(AppRoutes.loginRouteName),
               );
             }
@@ -88,12 +89,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: height * 0.02),
                       CustomTextFormField(
                         controller: nameController,
-                        hintText: 'Name',
+                        hintText: AppLocalizations.of(context)!.name_hint,
                         prefixIcon: Image.asset(AppAssets.nameIcon),
                         hintStyle: AppStyles.robotoRegular16White,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            return 'Please enter your name';
+                            return AppLocalizations.of(context)!.enter_name_error;
                           }
                           return null;
                         },
@@ -101,19 +102,19 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: height * 0.02),
                       CustomTextFormField(
                         controller: emailController,
-                        hintText: 'Email',
+                        hintText: AppLocalizations.of(context)!.email_hint,
                         prefixIcon: Image.asset(AppAssets.emailIcon),
                         hintStyle: AppStyles.robotoRegular16White,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            return 'Please enter your Email';
+                            return AppLocalizations.of(context)!.enter_email_error;
                           }
                           final bool emailValid = RegExp(
                             r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
                           ).hasMatch(text);
 
                           if (!emailValid) {
-                            return 'Please enter valid email';
+                            return AppLocalizations.of(context)!.enter_valid_email_error;
                           }
                           return null;
                         },
@@ -121,7 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: height * 0.02),
                       CustomTextFormField(
                         controller: passwordController,
-                        hintText: 'Password',
+                        hintText: AppLocalizations.of(context)!.password_hint,
                         prefixIcon: Image.asset(AppAssets.passwordIcon),
                         sufficIcon: GestureDetector(
                           onTap: () {
@@ -138,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         obscureText: isPasswordObsecured,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            return 'Please enter your password';
+                            return AppLocalizations.of(context)!.enter_password_error;
                           }
                           return null;
                         },
@@ -146,7 +147,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: height * 0.02),
                       CustomTextFormField(
                         controller: confirmPasswordController,
-                        hintText: 'Confirm Password',
+                        hintText: AppLocalizations.of(context)!.confirm_password_hint,
                         prefixIcon: Image.asset(AppAssets.passwordIcon),
                         sufficIcon: GestureDetector(
                           onTap: () {
@@ -162,7 +163,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         obscureText: isConfirmPasswordObsecured,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            return 'Please confirm your password';
+                            return AppLocalizations.of(context)!.confirm_password_error;
                           }
                           return null;
                         },
@@ -170,13 +171,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: height * 0.02),
                       CustomTextFormField(
                         controller: phoneNumberController,
-                        hintText: 'Phone Number',
+                        hintText: AppLocalizations.of(context)!.phone_hint,
                         prefixIcon: Image.asset(AppAssets.phoneNumberIcon),
                         hintStyle: AppStyles.robotoRegular16White,
                         keyboardType: TextInputType.phone,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            return 'Please enter your phone number';
+                            return AppLocalizations.of(context)!.enter_phone_error;
                           }
                           return null;
                         },
@@ -199,12 +200,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           }
                         },
                         buttonContent: Text(
-                          'Create Account',
+                          AppLocalizations.of(context)!.create_account,
                           style: AppStyles.robotoRegular20Black,
                         ),
                       ),
                       SizedBox(height: height * 0.02),
-                      TwoTextsRow(text1: 'Already Have Account ? ', text2: 'Login'),
+                      TwoTextsRow(text1: AppLocalizations.of(context)!.already_have_account,
+                          text2: AppLocalizations.of(context)!.login),
                       SizedBox(height: height * 0.02),
                       Center(child: LanguageToggleSwitch()),
                       SizedBox(height: height * 0.2),

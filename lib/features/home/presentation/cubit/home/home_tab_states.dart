@@ -15,7 +15,3 @@ class HomeTabSuccessState extends HomeTabStates {
   HomeTabSuccessState({required this.moviesList, required this.selectedIndex});
 }
 
-// class ChangeIndexOnTapState extends HomeTabStates{
-//   int selectedIndex;
-//   ChangeIndexOnTapState({required this.selectedIndex});
-// }
