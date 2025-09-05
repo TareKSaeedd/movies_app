@@ -7,6 +7,8 @@ import 'package:movies_app/core/services/cubit/language_state.dart';
 import 'package:movies_app/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:movies_app/features/auth/presentation/pages/login_page.dart';
 import 'package:movies_app/features/auth/presentation/pages/register_page.dart';
+import 'package:movies_app/features/movie_details_screen/presentation/page/movie_details_screen.dart';
+import 'package:movies_app/features/home/presentation/pages/home_page.dart';
 import 'package:movies_app/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:movies_app/features/update_profile/presentation/page/update_profile_page.dart';
 import 'package:movies_app/l10n/app_localizations.dart';

@@ -1,8 +1,16 @@
 import 'package:movies_app/core/network/movies_api/api_manager.dart';
 import 'package:movies_app/features/home/data/data_source/remote/impl/movies_remote_data_source_impl.dart';
+import 'package:movies_app/features/home/data/data_source/remote/impl/search_remote_data_source_impl.dart';
 import 'package:movies_app/features/home/data/data_source/remote/movies_remote_data_source.dart';
+import 'package:movies_app/features/home/data/data_source/remote/search_remote_data_source.dart';
 import 'package:movies_app/features/home/data/repository/impl/home_tab_repository_impl.dart';
 import 'package:movies_app/features/home/data/repository/home_tab_repository.dart';
+import 'package:movies_app/features/home/data/repository/impl/search_tab_repository_impl.dart';
+import 'package:movies_app/features/home/data/repository/search_tab_repository.dart';
+import 'package:movies_app/features/movie_details_screen/data/data_source/remote/impl/movie_details_remote_data_source_impl.dart';
+import 'package:movies_app/features/movie_details_screen/data/data_source/remote/movie_details_remote_data_source.dart';
+import 'package:movies_app/features/movie_details_screen/data/repository/impl/movie_details_repository_impl.dart';
+import 'package:movies_app/features/movie_details_screen/data/repository/movie_details_repository.dart';
 //todo:HomeTabViewModel => object MoviesRepository
 //todo:MoviesRepository=> object MoviesRemoteDataSource
 //todo:MoviesRemoteDataSource=> object Api manager
@@ -17,4 +25,22 @@ MoviesRemoteDataSource injectMoviesRemoteDataSource() {
 
 ApiManager injectApiManager() {
   return ApiManager();
+}
+
+SearchTabRepository injectSearchTabRepository() {
+  return SearchTabRepositoryImpl(searchRemoteDataSource: injectSearchRemoteDataSource());
+}
+
+SearchRemoteDataSource injectSearchRemoteDataSource() {
+  return SearchRemoteDataSourceImpl(apiManager: injectApiManager());
+}
+
+MovieDetailsRepository injectMovieDetailsRepository() {
+  return MovieDetailsRepositoryImpl(
+    movieDetailsRemoteDatasource: injectMovieDetailsRemoteDataSOurce(),
+  );
+}
+
+MovieDetailsRemoteDatasource injectMovieDetailsRemoteDataSOurce() {
+  return MovieDetailsRemoteDataSourceImpl(apiManager: injectApiManager());
 }
