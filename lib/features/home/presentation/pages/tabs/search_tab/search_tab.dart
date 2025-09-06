@@ -9,7 +9,7 @@ import 'package:movies_app/features/home/presentation/cubit/search/search_tab_vi
 import 'package:movies_app/features/home/presentation/pages/tabs/search_tab/movie_card.dart';
 import '../../../../../../l10n/app_localizations.dart';
 
-class SearchTab extends StatelessWidget {
+class SearchTab extends StatefulWidget {
   const SearchTab({super.key});
 
   @override
@@ -17,25 +17,24 @@ class SearchTab extends StatelessWidget {
 }
 
 class _SearchTabState extends State<SearchTab> {
- late SearchTabViewModel viewModel;
+  late SearchTabViewModel viewModel;
   @override
   void initState() {
     super.initState();
     viewModel = SearchTabViewModel(searchRepository: injectSearchTabRepository());
   }
+
   @override
   Widget build(BuildContext context) {
-    var sizeScreen = MediaQuery
-        .of(context)
-        .size;
+    var sizeScreen = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.blackColor,
       appBar: AppBar(
         backgroundColor: AppColors.blackColor,
         title: Padding(
           padding: EdgeInsets.symmetric(
-              vertical: sizeScreen.height * 0.06,
-              horizontal: sizeScreen.width * 0.001
+            vertical: sizeScreen.height * 0.06,
+            horizontal: sizeScreen.width * 0.001,
           ),
           child: Column(
             children: [
@@ -53,19 +52,12 @@ class _SearchTabState extends State<SearchTab> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: AppColors.darkGreyColor,
-                    prefixIcon: ImageIcon(
-                        AssetImage(AppAssets.searchTabIconUnSelected)),
+                    prefixIcon: ImageIcon(AssetImage(AppAssets.searchTabIconUnSelected)),
                     prefixIconColor: AppColors.whiteColor,
                     hintText: AppLocalizations.of(context)!.search,
                     hintStyle: AppStyles.robotoRegular16White,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-
-
+                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                    focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
                   ),
                   onChanged: (query) {
                     if (query.isNotEmpty) {
@@ -73,55 +65,48 @@ class _SearchTabState extends State<SearchTab> {
                     }
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
 
       body: Padding(
-        padding:  EdgeInsets.symmetric(
+        padding: EdgeInsets.symmetric(
           horizontal: sizeScreen.width * 0.02,
-          vertical: sizeScreen.height * 0.015
+          vertical: sizeScreen.height * 0.015,
         ),
-        child: BlocBuilder<SearchTabViewModel,SearchState>(
+        child: BlocBuilder<SearchTabViewModel, SearchState>(
           bloc: viewModel,
           builder: (context, state) {
             if (state is SearchInitial) {
               return Center(child: Image.asset(AppAssets.nonSearchTabIcon));
-            } else if(state is SearchSuccess){
-              return state.movies.isEmpty ?
-              Center(child: Image.asset(AppAssets.nonSearchTabIcon)):
-              GridView.builder(
-            itemCount: state.movies.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 15,
-              crossAxisSpacing: 15,
-              childAspectRatio: 0.65,
-              ),
-             itemBuilder: (context, index) {
-              
-              return MovieCard(movie: state.movies[index]);
-             },);
-            }else if(state is SearchError){
-              return Center(
-                child: Text(state.message),
-              );
-            }else{
-              return Container(
-                      color: Colors.black.withOpacity(0.5),
-                      child: const Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.yellowColor,
-                        ),
+            } else if (state is SearchSuccess) {
+              return state.movies.isEmpty
+                  ? Center(child: Image.asset(AppAssets.nonSearchTabIcon))
+                  : GridView.builder(
+                      itemCount: state.movies.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 15,
+                        crossAxisSpacing: 15,
+                        childAspectRatio: 0.65,
                       ),
+                      itemBuilder: (context, index) {
+                        return MovieCard(movie: state.movies[index]);
+                      },
                     );
+            } else if (state is SearchError) {
+              return Center(child: Text(state.message));
+            } else {
+              return Container(
+                color: Colors.black.withOpacity(0.5),
+                child: const Center(child: CircularProgressIndicator(color: AppColors.yellowColor)),
+              );
             }
           },
         ),
-      )
-      );      
-    
+      ),
+    );
   }
 }
