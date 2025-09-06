@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.loginRouteName,
+          initialRoute: AppRoutes.homePageRouteName,
           routes: {
             AppRoutes.onboardingRouteName: (context) => OnboardingPage(), //todo: done localization
             AppRoutes.registerRouteName: (context) => RegisterPage(), // todo : done localization

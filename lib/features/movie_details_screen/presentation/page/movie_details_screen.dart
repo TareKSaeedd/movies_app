@@ -7,6 +7,8 @@ import 'package:movies_app/core/constants/app_styles.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_details_states.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_details_view_model.dart';
+import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_suggestion_states.dart';
+import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_suggestion_view_model.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/widgets/cast_card.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/widgets/count_card.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/widgets/genres_card.dart';
@@ -17,7 +19,11 @@ import 'package:movies_app/features/home/data/di/di.dart';
 class MovieDetailsScreen extends StatelessWidget {
   MovieDetailsScreen({super.key});
 
-  MovieDetailsViewModel viewModel = MovieDetailsViewModel(
+  MovieDetailsViewModel movieDetailsViewModel = MovieDetailsViewModel(
+    movieDetailsRepository: injectMovieDetailsRepository(),
+  );
+
+  MovieSuggestionViewModel movieSuggestionViewModel = MovieSuggestionViewModel(
     movieDetailsRepository: injectMovieDetailsRepository(),
   );
 
@@ -26,12 +32,18 @@ class MovieDetailsScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     int movieId = ModalRoute.of(context)!.settings.arguments as int;
-    return BlocProvider(
-      create: (context) => viewModel..getMovieDetails('$movieId'),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => movieDetailsViewModel..getMovieDetails('$movieId')),
+        BlocProvider(
+          create: (context) => movieSuggestionViewModel..getMoviesSuggestions('$movieId'),
+        ),
+      ],
+
       child: BlocBuilder<MovieDetailsViewModel, MovieDetailsStates>(
         builder: (context, state) {
           if (state is MovieDetailsErorrState) {
-            return Center(child: Text(state.message));
+            return Center(child: Text(state.message, style: AppStyles.robotoRegular20White));
           } else if (state is MovieDetailsSuccessState) {
             return SingleChildScrollView(
               child: Column(
@@ -181,19 +193,31 @@ class MovieDetailsScreen extends StatelessWidget {
                           ),
                         ),
 
-                        GridView.builder(
-                          padding: EdgeInsets.only(top: height * 0.01),
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: 4,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 15,
-                            crossAxisSpacing: 15,
-                            childAspectRatio: 0.65,
-                          ),
-                          itemBuilder: (context, index) {
-                            return MovieCard(index: index, movieId: movieId);
+                        BlocBuilder<MovieSuggestionViewModel, MovieSuggestionStates>(
+                          builder: (context, state) {
+                            if (state is MovieSuggestionSuccessState) {
+                              return GridView.builder(
+                                padding: EdgeInsets.only(top: height * 0.01),
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: state.suggestionMovies!.length,
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 15,
+                                  crossAxisSpacing: 15,
+                                  childAspectRatio: 0.65,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return MovieCard(index: index, movieId: movieId);
+                                },
+                              );
+                            } else if (state is MovieSuggestionErrorState) {
+                              return Center(child: Text(state.errorMessage));
+                            } else if (state is MovieSuggestionLoadingStates) {
+                              return Center(child: CircularProgressIndicator());
+                            } else {
+                              return SizedBox();
+                            }
                           },
                         ),
                         SizedBox(height: height * 0.02),

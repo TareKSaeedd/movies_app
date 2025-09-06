@@ -19,18 +19,4 @@ class MovieDetailsViewModel extends Cubit<MovieDetailsStates> {
       emit(MovieDetailsErorrState(message: e.toString()));
     }
   }
-
-  void getMoviesSuggestions(String movieId) async {
-    try {
-      var response = await movieDetailsRepository.getMovieSuggestion(movieId);
-      if (response.status == 'ok') {
-        print("Suggestions movies: ${response.data?.movies?.map((m) => m.mediumCoverImage)}");
-        emit(MovieSuggestionSuccessState(suggestionMovies: response.data!.movies));
-      } else if (response.status != 'ok') {
-        emit(MovieDetailsErorrState(message: response.statusMessage!));
-      }
-    } on Exception catch (e) {
-      emit(MovieDetailsErorrState(message: e.toString()));
-    }
-  }
 }

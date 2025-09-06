@@ -94,12 +94,6 @@ class AppStyles {
     color: AppColors.redColor,
   );
 
-  static TextStyle robotoRegular20White2 = GoogleFonts.roboto(
-    fontSize: 20,
-    fontWeight: FontWeight.w400,
-    color: AppColors.whiteColor,
-  );
-
   // ========== Poppins ==========
   static TextStyle poppinsRegular16White = GoogleFonts.poppins(
     fontSize: 16,

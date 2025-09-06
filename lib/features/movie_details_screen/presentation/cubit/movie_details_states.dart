@@ -17,9 +17,3 @@ class MovieDetailsSuccessState extends MovieDetailsStates {
 
   MovieDetailsSuccessState({required this.movieDetails});
 }
-
-class MovieSuggestionSuccessState extends MovieDetailsStates {
-  List<Movies>? suggestionMovies;
-
-  MovieSuggestionSuccessState({required this.suggestionMovies});
-}
