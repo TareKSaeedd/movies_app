@@ -3,6 +3,7 @@ import 'package:movies_app/core/constants/app_assets.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
 import 'package:movies_app/core/navigation/app_routes.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
 
 import '../../../../../../core/constants/app_colors.dart';
 
@@ -18,9 +19,7 @@ class _ProfileTabState extends State<ProfileTab> {
 
   @override
   Widget build(BuildContext context) {
-    var sizeScreen = MediaQuery
-        .of(context)
-        .size;
+    var sizeScreen = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.darkGreyColor,
       body: SafeArea(
@@ -32,10 +31,7 @@ class _ProfileTabState extends State<ProfileTab> {
               children: [
                 Column(
                   children: [
-                    CircleAvatar(
-                      radius: 55,
-                      backgroundImage: AssetImage(AppAssets.jackAvatar),
-                    ),
+                    CircleAvatar(radius: 55, backgroundImage: AssetImage(AppAssets.jackAvatar)),
                     SizedBox(height: sizeScreen.height * 0.02),
                     Text('John Safwat', style: AppStyles.robotoBold20White),
                   ],
@@ -43,13 +39,16 @@ class _ProfileTabState extends State<ProfileTab> {
                 Column(
                   children: [
                     Text('12', style: AppStyles.robotoBold36White),
-                    Text('Wish List', style: AppStyles.robotoBold24White),
+                    Text(
+                      AppLocalizations.of(context)!.watch_list,
+                      style: AppStyles.robotoBold24White,
+                    ),
                   ],
                 ),
                 Column(
                   children: [
                     Text('10', style: AppStyles.robotoBold36White),
-                    Text('History', style: AppStyles.robotoBold24White),
+                    Text(AppLocalizations.of(context)!.histoyr, style: AppStyles.robotoBold24White),
                   ],
                 ),
               ],
@@ -65,15 +64,13 @@ class _ProfileTabState extends State<ProfileTab> {
                   Expanded(
                     flex: 2,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: sizeScreen.width * 0.02,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: sizeScreen.width * 0.02),
                       child: CustomElevatedButton(
                         onPressed: () {
                           //todo: Edit Profile
                         },
                         buttonContent: Text(
-                          'Edit Profile',
+                          AppLocalizations.of(context)!.edit_profile,
                           style: AppStyles.robotoRegular20Black,
                         ),
                       ),
@@ -84,8 +81,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     child: CustomElevatedButton(
                       onPressed: () {
                         //todo:  Logout
-                        Navigator.pushReplacementNamed(
-                            context, AppRoutes.loginRouteName);
+                        Navigator.pushReplacementNamed(context, AppRoutes.loginRouteName);
                       },
                       backgroundColor: AppColors.redColor,
                       borderSideColor: AppColors.transparent,
@@ -93,15 +89,12 @@ class _ProfileTabState extends State<ProfileTab> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Exit',
+                            AppLocalizations.of(context)!.exit,
                             style: AppStyles.robotoRegular20White,
                             textAlign: TextAlign.center,
                           ),
                           SizedBox(width: sizeScreen.width * 0.03),
-                          ImageIcon(
-                            AssetImage(AppAssets.exitIcon),
-                            color: AppColors.whiteColor,
-                          ),
+                          ImageIcon(AssetImage(AppAssets.exitIcon), color: AppColors.whiteColor),
                         ],
                       ),
                     ),
@@ -113,23 +106,23 @@ class _ProfileTabState extends State<ProfileTab> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 buildTab(
-                  title: "Watch List",
+                  title: AppLocalizations.of(context)!.watch_list,
                   iconPath: AppAssets.watchListIcon,
-                  isSelected: selectedTab == "wishlist",
+                  isSelected: selectedTab == AppLocalizations.of(context)!.watch_list,
                   onTap: () {
                     setState(() {
-                      selectedTab = "wishlist";
+                      selectedTab = AppLocalizations.of(context)!.watch_list;
                     });
                   },
                   screenWidth: sizeScreen.width,
                 ),
                 buildTab(
-                  title: "History",
+                  title: AppLocalizations.of(context)!.histoyr,
                   iconPath: AppAssets.folderIcon,
-                  isSelected: selectedTab == "history",
+                  isSelected: selectedTab == AppLocalizations.of(context)!.histoyr,
                   onTap: () {
                     setState(() {
-                      selectedTab = "history";
+                      selectedTab = AppLocalizations.of(context)!.histoyr;
                     });
                   },
                   screenWidth: sizeScreen.width,
@@ -137,7 +130,7 @@ class _ProfileTabState extends State<ProfileTab> {
               ],
             ),
             AnimatedAlign(
-              alignment: selectedTab == "wishlist"
+              alignment: selectedTab == AppLocalizations.of(context)!.watch_list
                   ? Alignment.centerLeft
                   : Alignment.centerRight,
               duration: const Duration(milliseconds: 300),
@@ -151,7 +144,7 @@ class _ProfileTabState extends State<ProfileTab> {
               child: Container(
                 color: AppColors.blackColor,
                 width: double.infinity,
-                child: selectedTab == "wishlist"
+                child: selectedTab == AppLocalizations.of(context)!.watch_list
                     ? Image.asset(AppAssets.nonSearchTabIcon)
                     : Image.asset(AppAssets.arrowBackIcon),
               ),
@@ -175,12 +168,7 @@ class _ProfileTabState extends State<ProfileTab> {
         child: Column(
           children: [
             Image.asset(iconPath, color: AppColors.yellowColor),
-            Text(
-              title,
-              style: AppStyles.robotoRegular20White.copyWith(
-                color: Colors.white,
-              ),
-            ),
+            Text(title, style: AppStyles.robotoRegular20White.copyWith(color: Colors.white)),
           ],
         ),
       ),

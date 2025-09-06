@@ -505,6 +505,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error changing password'**
   String get error_changing_password;
+
+  /// No description provided for @histoyr.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get histoyr;
+
+  /// No description provided for @exit.
+  ///
+  /// In en, this message translates to:
+  /// **' Exit'**
+  String get exit;
+
+  /// No description provided for @watch_list.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch List'**
+  String get watch_list;
+
+  /// No description provided for @edit_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get edit_profile;
 }
 
 class _AppLocalizationsDelegate

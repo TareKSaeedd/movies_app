@@ -216,4 +216,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get error_changing_password => 'حدث خطأ أثناء تغيير كلمة المرور';
+
+  @override
+  String get histoyr => 'السجل';
+
+  @override
+  String get exit => 'خروج';
+
+  @override
+  String get watch_list => 'قائمة المشاهدة';
+
+  @override
+  String get edit_profile => 'تعديل الملف الشخصي';
 }

@@ -216,4 +216,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get error_changing_password => 'Error changing password';
+
+  @override
+  String get histoyr => 'History';
+
+  @override
+  String get exit => ' Exit';
+
+  @override
+  String get watch_list => 'Watch List';
+
+  @override
+  String get edit_profile => 'Edit Profile';
 }
