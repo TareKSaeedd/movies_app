@@ -1,4 +1,4 @@
-import 'package:movies_app/core/network/movies_api/api_manager.dart';
+import 'package:movies_app/core/network/movies_api/movies_api_manager.dart';
 import 'package:movies_app/features/home/data/data_source/remote/impl/movies_remote_data_source_impl.dart';
 import 'package:movies_app/features/home/data/data_source/remote/impl/search_remote_data_source_impl.dart';
 import 'package:movies_app/features/home/data/data_source/remote/movies_remote_data_source.dart';
@@ -23,8 +23,8 @@ MoviesRemoteDataSource injectMoviesRemoteDataSource() {
   return MoviesRemoteDataSourceImpl(apiManager: injectApiManager());
 }
 
-ApiManager injectApiManager() {
-  return ApiManager();
+MoviesApiManager injectApiManager() {
+  return MoviesApiManager();
 }
 
 SearchTabRepository injectSearchTabRepository() {

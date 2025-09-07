@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:movies_app/core/network/auth_api/api_constants.dart';
-import 'package:movies_app/core/network/auth_api/end_points.dart';
+import 'package:movies_app/core/network/auth_api/auth_api_constants.dart';
+import 'package:movies_app/core/network/auth_api/auth_end_points.dart';
 import 'package:movies_app/features/auth/data/login/model/login_request.dart';
 import 'package:movies_app/features/auth/data/login/model/login_response.dart';
 import 'package:movies_app/features/auth/data/register/model/register_model_request.dart';
@@ -9,9 +9,9 @@ import 'package:movies_app/features/auth/data/register/model/register_model_resp
 import 'package:http/http.dart' as http;
 import '../../../features/update_profile/data/model/update_profile_response.dart';
 
-class ApiManager {
+class AuthApiManager {
   Future<RegisterResponse> register(UserRequest userInfo) async {
-    Uri url = Uri.https(ApiConstants.baseUrl, EndPoints.registerEndPoint);
+    Uri url = Uri.https(AuthApiConstants.baseUrl, AuthEndPoints.registerEndPoint);
 
     try {
       var response = await http.post(
@@ -29,7 +29,7 @@ class ApiManager {
   }
 
   Future<LoginResponse> login(LoginRequest userInfo) async {
-    Uri url = Uri.https(ApiConstants.baseUrl, EndPoints.loginEndPoint);
+    Uri url = Uri.https(AuthApiConstants.baseUrl, AuthEndPoints.loginEndPoint);
 
     try {
       var response = await http.post(
@@ -50,7 +50,7 @@ class ApiManager {
     required String newPassword,
     required String token,
   }) async {
-    final url = Uri.https(ApiConstants.baseUrl, EndPoints.resetPassword);
+    final url = Uri.https(AuthApiConstants.baseUrl, AuthEndPoints.resetPassword);
 
     final response = await http.patch(
       url,
@@ -67,13 +67,13 @@ class ApiManager {
   }
 
   Future<UpdateProfileResponse?> updateProfile({String? name, String? phone, int? avaterId}) async {
-    Uri url = Uri.https(ApiConstants.baseUrl, EndPoints.profile);
+    Uri url = Uri.https(AuthApiConstants.baseUrl, AuthEndPoints.profile);
     try {
       var response = await http.patch(
         url,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer ${ApiConstants.token}",
+          "Authorization": "Bearer ${AuthApiConstants.token}",
         },
         body: jsonEncode({"name": name, "phone": phone, "avaterId": avaterId}),
       );
@@ -87,13 +87,13 @@ class ApiManager {
   }
 
   Future<UpdateProfileResponse?> deleteProfile() async {
-    Uri url = Uri.https(ApiConstants.baseUrl, EndPoints.profile);
+    Uri url = Uri.https(AuthApiConstants.baseUrl, AuthEndPoints.profile);
     try {
       var response = await http.delete(
         url,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer ${ApiConstants.token}",
+          "Authorization": "Bearer ${AuthApiConstants.token}",
         },
       );
 

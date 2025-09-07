@@ -1,16 +1,16 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:movies_app/core/network/movies_api/api_constants.dart';
-import 'package:movies_app/core/network/movies_api/end_points.dart';
+import 'package:movies_app/core/network/movies_api/movies_api_constants.dart';
+import 'package:movies_app/core/network/movies_api/movies_end_points.dart';
 import 'package:movies_app/features/movie_details_screen/data/model/movie_details_response.dart';
 import 'package:movies_app/features/home/data/model/movie_response.dart';
 import 'package:movies_app/features/home/data/model/search_response.dart';
 import 'package:movies_app/features/movie_details_screen/data/model/movie_suggestions_response.dart';
 
-class ApiManager {
+class MoviesApiManager {
   Future<MovieResponse?> getMovies() async {
     try {
-      final url = Uri.https(ApiConstants.baseUrl, EndPoints.movieApi);
+      final url = Uri.https(MoviesApiConstants.baseUrl, MoviesEndPoints.movieApi);
       final response = await http.get(url);
 
       if (response.statusCode != 200) {
@@ -38,7 +38,7 @@ class ApiManager {
 
   Future<SearchResponse?> searchMovies(String? query) async {
     try {
-      final url = Uri.https(ApiConstants.baseUrl, EndPoints.movieApi, {
+      final url = Uri.https(MoviesApiConstants.baseUrl, MoviesEndPoints.movieApi, {
         "query_term": query,
         "sort_by": "rating",
         "limit": "50",
@@ -64,7 +64,7 @@ class ApiManager {
 
   Future<MovieDetailsResponse> getMovieDetails(String movieId) async {
     try {
-      Uri url = Uri.https(ApiConstants.baseUrl, EndPoints.movieDetailsApi, {
+      Uri url = Uri.https(MoviesApiConstants.baseUrl, MoviesEndPoints.movieDetailsApi, {
         'movie_id': movieId,
         'with_images': 'true',
         'with_cast': 'true',
@@ -79,7 +79,7 @@ class ApiManager {
 
   Future<MovieSuggestionsResponse> getMovieSuggestions(String movieId) async {
     try {
-      Uri url = Uri.https(ApiConstants.baseUrl, EndPoints.movieSuggestionApi, {
+      Uri url = Uri.https(MoviesApiConstants.baseUrl, MoviesEndPoints.movieSuggestionApi, {
         'movie_id': movieId,
       });
       var response = await http.get(url);

@@ -68,6 +68,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       child: CustomElevatedButton(
                         onPressed: () {
                           //todo: Edit Profile
+                          Navigator.of(context).pushNamed(AppRoutes.updateProfileRouteName);
                         },
                         buttonContent: Text(
                           AppLocalizations.of(context)!.edit_profile,
