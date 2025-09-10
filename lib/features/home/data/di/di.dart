@@ -1,4 +1,5 @@
 import 'package:movies_app/core/network/movies_api/movies_api_manager.dart';
+import 'package:movies_app/features/home/data/data_source/local/history_movies_local_ds.dart';
 import 'package:movies_app/features/home/data/data_source/remote/impl/movies_remote_data_source_impl.dart';
 import 'package:movies_app/features/home/data/data_source/remote/impl/search_remote_data_source_impl.dart';
 import 'package:movies_app/features/home/data/data_source/remote/movies_remote_data_source.dart';
@@ -11,6 +12,11 @@ import 'package:movies_app/features/movie_details_screen/data/data_source/remote
 import 'package:movies_app/features/movie_details_screen/data/data_source/remote/movie_details_remote_data_source.dart';
 import 'package:movies_app/features/movie_details_screen/data/repository/impl/movie_details_repository_impl.dart';
 import 'package:movies_app/features/movie_details_screen/data/repository/movie_details_repository.dart';
+
+import '../../../../core/services/history_movie_services.dart';
+import '../data_source/local/impl/history_movies_local_ds_impl.dart';
+import '../repository/history_repository.dart';
+import '../repository/impl/history_repository_imp;.dart';
 //todo:HomeTabViewModel => object MoviesRepository
 //todo:MoviesRepository=> object MoviesRemoteDataSource
 //todo:MoviesRemoteDataSource=> object Api manager
@@ -43,4 +49,19 @@ MovieDetailsRepository injectMovieDetailsRepository() {
 
 MovieDetailsRemoteDatasource injectMovieDetailsRemoteDataSOurce() {
   return MovieDetailsRemoteDataSourceImpl(apiManager: injectApiManager());
+}
+
+HistoryRepository injectHistoryRepository(){
+  return HistoryRepositoryImpl(localDs: injectHistoryMoviesLocalDs());
+}
+
+
+HistoryMoviesLocalDs injectHistoryMoviesLocalDs(){
+  return HistoryMoviesLocalDsImpl(services: injectHistoryMovieServices());
+
+}
+
+HistoryMovieServices injectHistoryMovieServices(){
+  return HistoryMovieServices();
+
 }
