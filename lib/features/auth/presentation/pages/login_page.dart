@@ -14,6 +14,8 @@ import 'package:movies_app/features/auth/presentation/cubit/login/login_state.da
 import 'package:movies_app/features/auth/presentation/pages/widgets/language_toggle_switch.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 
+import '../../../../core/services/shared_prefrencies_services/preferences_service.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -42,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: height * 0.05),
             child: BlocListener<LoginCubit, LoginState>(
-              listener: (context, state) {
+              listener: (context, state) async {
                 // TODO: implement listener
                 if (state is LoginLoadingState) {
                   DialogUtils.showLoading(context: context, loadingText:AppLocalizations.of(context)!.waiting);
@@ -54,6 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                     negActionName: AppLocalizations.of(context)!.ok,
                   );
                 } else if (state is LoginSuccessState) {
+                 await OnBoardingPreferencesService.hideOnBoarding();
                   DialogUtils.hideLoading(context: context);
                   DialogUtils.showMessage(
                     context: context,
@@ -68,6 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   );
                 } else if (state is LoginWithGoogleSuccessState) {
+                  await OnBoardingPreferencesService.hideOnBoarding();
                   DialogUtils.hideLoading(context: context);
                   DialogUtils.showMessage(
                     context: context,
@@ -172,6 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             );
                           }
+
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.yellowColor,

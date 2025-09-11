@@ -20,6 +20,7 @@ class MovieDetailsScreen extends StatelessWidget {
   MovieDetailsScreen({super.key});
 
   MovieDetailsViewModel movieDetailsViewModel = MovieDetailsViewModel(
+    historyRepository: injectHistoryRepository(),
     movieDetailsRepository: injectMovieDetailsRepository(),
   );
 

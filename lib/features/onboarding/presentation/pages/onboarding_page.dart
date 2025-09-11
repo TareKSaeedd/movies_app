@@ -142,7 +142,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         style: AppStyles.interRegular20White,
                       ),
                       SizedBox(height: screenSize.height * 0.01),
-
                       CustomElevatedButton(
                         onPressed: () {
                           if (index == onBoardingPages.length - 1) {
