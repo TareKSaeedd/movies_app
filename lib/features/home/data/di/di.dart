@@ -3,8 +3,8 @@ import 'package:movies_app/features/home/data/data_source/remote/impl/movies_rem
 import 'package:movies_app/features/home/data/data_source/remote/impl/search_remote_data_source_impl.dart';
 import 'package:movies_app/features/home/data/data_source/remote/movies_remote_data_source.dart';
 import 'package:movies_app/features/home/data/data_source/remote/search_remote_data_source.dart';
-import 'package:movies_app/features/home/data/repository/impl/home_tab_repository_impl.dart';
 import 'package:movies_app/features/home/data/repository/home_tab_repository.dart';
+import 'package:movies_app/features/home/data/repository/impl/home_tab_repository_impl.dart';
 import 'package:movies_app/features/home/data/repository/impl/search_tab_repository_impl.dart';
 import 'package:movies_app/features/home/data/repository/search_tab_repository.dart';
 import 'package:movies_app/features/movie_details_screen/data/data_source/remote/impl/movie_details_remote_data_source_impl.dart';
@@ -51,7 +51,6 @@ MovieDetailsRemoteDatasource injectMovieDetailsRemoteDataSOurce() {
   return MovieDetailsRemoteDataSourceImpl(apiManager: injectApiManager());
 }
 
-}
 
 BrowseTabRepository injectBrowseTabRepository() {
   return BrowseTabRepositoryImpl(
