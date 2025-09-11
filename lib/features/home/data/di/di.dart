@@ -11,6 +11,12 @@ import 'package:movies_app/features/movie_details_screen/data/data_source/remote
 import 'package:movies_app/features/movie_details_screen/data/data_source/remote/movie_details_remote_data_source.dart';
 import 'package:movies_app/features/movie_details_screen/data/repository/impl/movie_details_repository_impl.dart';
 import 'package:movies_app/features/movie_details_screen/data/repository/movie_details_repository.dart';
+
+import '../data_source/remote/browse_remote_data_source.dart';
+import '../data_source/remote/impl/browse_remote_data_source_impl.dart';
+import '../repository/browse_tab_repository.dart';
+import '../repository/impl/browse_tab_repository_impl.dart';
+
 //todo:HomeTabViewModel => object MoviesRepository
 //todo:MoviesRepository=> object MoviesRemoteDataSource
 //todo:MoviesRemoteDataSource=> object Api manager
@@ -43,4 +49,16 @@ MovieDetailsRepository injectMovieDetailsRepository() {
 
 MovieDetailsRemoteDatasource injectMovieDetailsRemoteDataSOurce() {
   return MovieDetailsRemoteDataSourceImpl(apiManager: injectApiManager());
+}
+
+}
+
+BrowseTabRepository injectBrowseTabRepository() {
+  return BrowseTabRepositoryImpl(
+    remoteDataSource: injectBrowseRemoteDataSource(),
+  );
+}
+
+BrowseRemoteDataSource injectBrowseRemoteDataSource() {
+  return BrowseRemoteDataSourceImpl(apiManager: injectApiManager());
 }

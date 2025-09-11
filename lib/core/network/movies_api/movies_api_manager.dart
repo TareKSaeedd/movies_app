@@ -1,11 +1,13 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:movies_app/core/network/movies_api/movies_api_constants.dart';
 import 'package:movies_app/core/network/movies_api/movies_end_points.dart';
-import 'package:movies_app/features/movie_details_screen/data/model/movie_details_response.dart';
 import 'package:movies_app/features/home/data/model/movie_response.dart';
 import 'package:movies_app/features/home/data/model/search_response.dart';
+import 'package:movies_app/features/movie_details_screen/data/model/movie_details_response.dart';
 import 'package:movies_app/features/movie_details_screen/data/model/movie_suggestions_response.dart';
+
 
 class MoviesApiManager {
   Future<MovieResponse?> getMovies() async {
@@ -89,4 +91,65 @@ class MoviesApiManager {
       rethrow;
     }
   }
+
+
+  Future<MovieResponse?> getMoviesByGenre(String genre) async {
+    try {
+      final url = Uri.https(
+          MoviesApiConstants.baseUrl, MoviesEndPoints.movieApi, {
+        "genre": genre,
+        "limit": "50",
+      });
+
+      final response = await http.get(url);
+      if (response.statusCode != 200) {
+        return MovieResponse(
+          status: "error",
+          statusMessage: "Server error: ${response.statusCode}",
+          data: null,
+        );
+      }
+
+      final json = jsonDecode(response.body);
+      return MovieResponse.fromJson(json);
+    } catch (e) {
+      return MovieResponse(
+          status: "error", statusMessage: e.toString(), data: null);
+    }
+  }
+
+  Future<List<String>> getGenres() async {
+    try {
+      final url = Uri.https(
+          MoviesApiConstants.baseUrl, MoviesEndPoints.movieApi, {
+        "limit": "50",
+        "page": "1",
+      });
+
+      final response = await http.get(url);
+      if (response.statusCode != 200) {
+        return [];
+      }
+
+      final json = jsonDecode(response.body);
+      final movieResponse = MovieResponse.fromJson(json);
+
+      final Set<String> genresSet = {};
+      final movies = movieResponse.data?.movies ?? [];
+      for (var movie in movies) {
+        if (movie.genres != null) {
+          genresSet.addAll(movie.genres!);
+        }
+      }
+
+      return genresSet.toList()
+        ..sort();
+    } catch (e) {
+      return [];
+    }
+  }
+
+
+
+
 }

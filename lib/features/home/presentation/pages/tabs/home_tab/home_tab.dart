@@ -10,9 +10,7 @@ import 'package:movies_app/features/home/data/di/di.dart';
 import 'package:movies_app/features/home/presentation/cubit/home/home_tab_states.dart';
 import 'package:movies_app/features/home/presentation/cubit/home/home_tab_view_model.dart';
 import 'package:movies_app/features/home/presentation/pages/tabs/home_tab/widgets/movie_item.dart';
-import 'package:movies_app/features/home/data/model/movie_response.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
-
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -24,7 +22,10 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   final ScrollController _listController = ScrollController();
 
-  HomeTabViewModel viewModel = HomeTabViewModel(moviesRepository: injectMoviesRepository());
+  HomeTabViewModel viewModel = HomeTabViewModel(
+    moviesRepository: injectMoviesRepository(),
+  );
+
   @override
   void initState() {
     super.initState();
@@ -43,12 +44,20 @@ class _HomeTabState extends State<HomeTab> {
       bloc: viewModel,
       builder: (context, state) {
         if (state is HomeTabLoadingState) {
-          return Center(child: CircularProgressIndicator(color: AppColors.darkGreyColor));
+          return Center(
+            child: CircularProgressIndicator(color: AppColors.darkGreyColor),
+          );
         } else if (state is HomeTabErrorState) {
-          return Center(child: Text('${AppLocalizations.of(context)!.something_went_wrong} ${state.errorMessage}'));
+          return Center(
+            child: Text(
+              '${AppLocalizations.of(context)!.something_went_wrong} ${state.errorMessage}',
+            ),
+          );
         } else if (state is HomeTabSuccessState) {
           if (state.moviesList.isEmpty) {
-            return  Center(child: Text(AppLocalizations.of(context)!.no_movies_found));
+            return Center(
+              child: Text(AppLocalizations.of(context)!.no_movies_found),
+            );
           }
           return Scaffold(
             backgroundColor: AppColors.blackColor,
@@ -58,7 +67,11 @@ class _HomeTabState extends State<HomeTab> {
                   Stack(
                     children: [
                       generateCachedNetworkImage(
-                        imageUrl: state.moviesList[state.selectedIndex]?.largeCoverImage! ?? '',
+                        imageUrl:
+                            state
+                                .moviesList[state.selectedIndex]
+                                ?.largeCoverImage! ??
+                            '',
                         key: ValueKey(state.selectedIndex),
                         width: width,
                         height: height * 0.69,
@@ -118,7 +131,9 @@ class _HomeTabState extends State<HomeTab> {
                                     child: Stack(
                                       children: [
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
                                           child: generateCachedNetworkImage(
                                             key: ValueKey(state.selectedIndex),
                                             imageUrl: movie!.mediumCoverImage!,
@@ -140,7 +155,8 @@ class _HomeTabState extends State<HomeTab> {
                         child: generateRatingWidget(
                           width,
                           height,
-                          state.moviesList[state.selectedIndex]!.rating.toString(),
+                          state.moviesList[state.selectedIndex]!.rating
+                              .toString(),
                         ),
                       ),
                     ],
@@ -171,13 +187,19 @@ class _HomeTabState extends State<HomeTab> {
                               curve: Curves.easeInOut,
                             );
                           },
-                          child: Icon(Icons.arrow_forward, color: AppColors.yellowColor),
+                          child: Icon(
+                            Icons.arrow_forward,
+                            color: AppColors.yellowColor,
+                          ),
                         ),
                       ],
                     ),
                   ),
                   MovieItem(
-                    key: ValueKey(state.moviesList[state.selectedIndex]!.mediumCoverImage ?? ''),
+                    key: ValueKey(
+                      state.moviesList[state.selectedIndex]!.mediumCoverImage ??
+                          '',
+                    ),
                     itemCount: state.moviesList.length,
                     controller: _listController,
                     moviesList: state.moviesList,
@@ -197,7 +219,10 @@ class _HomeTabState extends State<HomeTab> {
 
 Widget generateRatingWidget(double width, double height, String text) {
   return Container(
-    padding: EdgeInsets.symmetric(horizontal: width * 0.02, vertical: height * 0.001),
+    padding: EdgeInsets.symmetric(
+      horizontal: width * 0.02,
+      vertical: height * 0.001,
+    ),
     decoration: BoxDecoration(
       color: AppColors.darkGreyColor,
       borderRadius: BorderRadius.circular(10),
@@ -224,8 +249,9 @@ CachedNetworkImage generateCachedNetworkImage({
     fit: BoxFit.fill,
     width: width,
     height: height,
-    placeholder: (context, url) =>
-        Center(child: CircularProgressIndicator(color: AppColors.darkGreyColor)),
+    placeholder: (context, url) => Center(
+      child: CircularProgressIndicator(color: AppColors.darkGreyColor),
+    ),
     errorWidget: (context, url, error) => Icon(Icons.error),
   );
 }

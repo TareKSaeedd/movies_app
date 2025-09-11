@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'rating_widget.dart';
@@ -19,12 +20,18 @@ class GridViewItem extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(16),
-          child: Image.asset(
-            imageUrl,
+          child: CachedNetworkImage(
+            imageUrl: imageUrl,
             height: height * 0.29,
             width: width * 0.45,
             fit: BoxFit.fill,
+            placeholder: (context, url) =>
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
+
         ),
         Positioned(
           top: height * 0.01,
@@ -35,3 +42,4 @@ class GridViewItem extends StatelessWidget {
     );
   }
 }
+
