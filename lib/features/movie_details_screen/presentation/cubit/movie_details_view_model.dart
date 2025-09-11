@@ -10,6 +10,7 @@ class MovieDetailsViewModel extends Cubit<MovieDetailsStates> {
   MovieDetailsViewModel({required this.movieDetailsRepository,    required this.historyRepository,
   }) : super(MovieDetailsInitialState());
 
+  bool isClicked=false;
 
   void getMovieDetails(String movieId) async {
     emit(MovieDetailsLoadingState());
@@ -18,14 +19,26 @@ class MovieDetailsViewModel extends Cubit<MovieDetailsStates> {
       if (response!.status == 'ok') {
 
         await historyRepository.addMovieToHistory( response.data!.movie!);
-        emit(MovieDetailsSuccessState(movieDetails: response.data!.movie!));
+
+
+        emit(MovieDetailsSuccessState(movieDetails: response.data!.movie!,isClicked: isClicked));
       } else if (response.status != 'ok') {
-        emit(MovieDetailsErorrState(message: response.statusMessage!));
+        emit(MovieDetailsErrorState(message: response.statusMessage!));
       }
     } on Exception catch (e) {
-      emit(MovieDetailsErorrState(message: e.toString()));
+      emit(MovieDetailsErrorState(message: e.toString()));
     }
   }
+  void addMovieToFavorite() {
+    isClicked = !isClicked;
+    if (state is MovieDetailsSuccessState) {
+      emit(MovieDetailsSuccessState(
+        movieDetails: (state as MovieDetailsSuccessState).movieDetails,
+        isClicked: isClicked,
+      ));
+    }
+  }
+
 }
 
 

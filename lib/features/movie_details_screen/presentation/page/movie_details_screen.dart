@@ -5,6 +5,7 @@ import 'package:movies_app/core/constants/app_assets.dart';
 import 'package:movies_app/core/constants/app_colors.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
+import 'package:movies_app/features/home/data/di/di.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_details_states.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_details_view_model.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_suggestion_states.dart';
@@ -14,7 +15,6 @@ import 'package:movies_app/features/movie_details_screen/presentation/widgets/co
 import 'package:movies_app/features/movie_details_screen/presentation/widgets/genres_card.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/widgets/movie_card.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/widgets/screen_shots_widget.dart';
-import 'package:movies_app/features/home/data/di/di.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   MovieDetailsScreen({super.key});
@@ -45,9 +45,31 @@ class MovieDetailsScreen extends StatelessWidget {
         ),
       ],
 
-      child: BlocBuilder<MovieDetailsViewModel, MovieDetailsStates>(
+      child: BlocConsumer<MovieDetailsViewModel, MovieDetailsStates>(
+        listener: (context, state) {
+          if (state is MovieDetailsSuccessState && state.isClicked){
+            showDialog(context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    elevation: 2,
+                    alignment: Alignment.center,
+                    actions: [
+                      TextButton(onPressed: () {
+                        Navigator.pop(context);
+                      }, child: Text('Ok',style: AppStyles.robotoRegular20Black,))
+                    ],
+                   content:Row(
+                     children: [
+                       Text('Added Successfully ! ',style: AppStyles.interBold20Yellow),
+                       Icon(Icons.celebration,color: AppColors.yellowColor,)
+                     ],
+                   )
+                  );
+            });
+          }
+        },
         builder: (context, state) {
-          if (state is MovieDetailsErorrState) {
+          if (state is MovieDetailsErrorState) {
             return Center(
               child: Text(state.message, style: AppStyles.robotoRegular20White),
             );
@@ -103,10 +125,11 @@ class MovieDetailsScreen extends StatelessWidget {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {
-                                    // save movie
-                                  },
-                                  icon: Image.asset(AppAssets.saveYellowIcon),
+                                onPressed: () {
+                                movieDetailsViewModel.addMovieToFavorite();
+                                },
+                                icon: state.isClicked ? Image.asset(AppAssets.saveYellowIcon) :
+                                Image.asset(AppAssets.saveIcon),
                                 ),
                               ],
                             ),

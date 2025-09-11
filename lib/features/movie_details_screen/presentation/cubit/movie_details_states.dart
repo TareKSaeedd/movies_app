@@ -6,13 +6,14 @@ class MovieDetailsInitialState extends MovieDetailsStates {}
 
 class MovieDetailsLoadingState extends MovieDetailsStates {}
 
-class MovieDetailsErorrState extends MovieDetailsStates {
+class MovieDetailsErrorState extends MovieDetailsStates {
   String message;
-  MovieDetailsErorrState({required this.message});
+  MovieDetailsErrorState({required this.message});
 }
 
 class MovieDetailsSuccessState extends MovieDetailsStates {
   Movie movieDetails;
+  final bool isClicked;
 
-  MovieDetailsSuccessState({required this.movieDetails});
+  MovieDetailsSuccessState({required this.movieDetails,this.isClicked=false});
 }
