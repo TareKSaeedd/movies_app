@@ -15,6 +15,7 @@ class CastCard extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: width * 0.02, vertical: height * 0.01),
+      margin: EdgeInsets.only(bottom: height * 0.01),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: AppColors.darkGreyColor,

@@ -35,16 +35,22 @@ class MovieDetailsScreen extends StatelessWidget {
     int movieId = ModalRoute.of(context)!.settings.arguments as int;
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => movieDetailsViewModel..getMovieDetails('$movieId')),
         BlocProvider(
-          create: (context) => movieSuggestionViewModel..getMoviesSuggestions('$movieId'),
+          create: (context) =>
+              movieDetailsViewModel..getMovieDetails('$movieId'),
+        ),
+        BlocProvider(
+          create: (context) =>
+              movieSuggestionViewModel..getMoviesSuggestions('$movieId'),
         ),
       ],
 
       child: BlocBuilder<MovieDetailsViewModel, MovieDetailsStates>(
         builder: (context, state) {
           if (state is MovieDetailsErorrState) {
-            return Center(child: Text(state.message, style: AppStyles.robotoRegular20White));
+            return Center(
+              child: Text(state.message, style: AppStyles.robotoRegular20White),
+            );
           } else if (state is MovieDetailsSuccessState) {
             return SingleChildScrollView(
               child: Column(
@@ -53,7 +59,10 @@ class MovieDetailsScreen extends StatelessWidget {
                   Stack(
                     children: [
                       state.movieDetails.largeCoverImage != null
-                          ? CachedNetworkImage(imageUrl: state.movieDetails.largeCoverImage ?? '')
+                          ? CachedNetworkImage(
+                              imageUrl:
+                                  state.movieDetails.largeCoverImage ?? '',
+                            )
                           : Text(
                               'No cover found for this movie',
                               style: AppStyles.interMedium36White,
@@ -88,7 +97,10 @@ class MovieDetailsScreen extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  icon: Icon(Icons.arrow_back_ios, color: AppColors.whiteColor),
+                                  icon: Icon(
+                                    Icons.arrow_back_ios,
+                                    color: AppColors.whiteColor,
+                                  ),
                                 ),
                                 IconButton(
                                   onPressed: () {
@@ -99,7 +111,12 @@ class MovieDetailsScreen extends StatelessWidget {
                               ],
                             ),
                             SizedBox(height: height * 0.18),
-                            Center(child: Image.asset(AppAssets.playImage, width: width * 0.2)),
+                            Center(
+                              child: Image.asset(
+                                AppAssets.playImage,
+                                width: width * 0.2,
+                              ),
+                            ),
                             SizedBox(height: height * 0.2),
 
                             Text(
@@ -125,7 +142,10 @@ class MovieDetailsScreen extends StatelessWidget {
                               onPressed: () {
                                 //watch Button
                               },
-                              buttonContent: Text('Watch', style: AppStyles.robotoBold20White),
+                              buttonContent: Text(
+                                'Watch',
+                                style: AppStyles.robotoBold20White,
+                              ),
                               backgroundColor: AppColors.redColor,
                               borderSideColor: AppColors.redColor,
                             ),
@@ -194,7 +214,10 @@ class MovieDetailsScreen extends StatelessWidget {
                           ),
                         ),
 
-                        BlocBuilder<MovieSuggestionViewModel, MovieSuggestionStates>(
+                        BlocBuilder<
+                          MovieSuggestionViewModel,
+                          MovieSuggestionStates
+                        >(
                           builder: (context, state) {
                             if (state is MovieSuggestionSuccessState) {
                               return GridView.builder(
@@ -202,14 +225,18 @@ class MovieDetailsScreen extends StatelessWidget {
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 itemCount: state.suggestionMovies!.length,
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 15,
-                                  crossAxisSpacing: 15,
-                                  childAspectRatio: 0.65,
-                                ),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 15,
+                                      crossAxisSpacing: 15,
+                                      childAspectRatio: 0.65,
+                                    ),
                                 itemBuilder: (context, index) {
-                                  return MovieCard(index: index, movieId: movieId);
+                                  return MovieCard(
+                                    index: index,
+                                    movieId: movieId,
+                                  );
                                 },
                               );
                             } else if (state is MovieSuggestionErrorState) {
@@ -245,38 +272,23 @@ class MovieDetailsScreen extends StatelessWidget {
                             decoration: TextDecoration.none,
                           ),
                         ),
+
                         SizedBox(height: height * 0.01),
-                        CastCard(
-                          image:
-                              state.movieDetails.cast?[0].urlSmallImage ??
-                              'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png',
-                          name: state.movieDetails.cast?[0].name ?? '',
-                          charector: state.movieDetails.cast?[0].characterName ?? '',
+
+                        Column(
+                          children: (state.movieDetails.cast ?? [])
+                              .map(
+                                (actor) => CastCard(
+                                  image:
+                                      actor.urlSmallImage ??
+                                      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png',
+                                  name: actor.name ?? '',
+                                  charector: actor.characterName ?? '',
+                                ),
+                              )
+                              .toList(),
                         ),
-                        SizedBox(height: height * 0.01),
-                        CastCard(
-                          image:
-                              state.movieDetails.cast?[1].urlSmallImage ??
-                              'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png',
-                          name: state.movieDetails.cast?[1].name ?? '',
-                          charector: state.movieDetails.cast?[1].characterName ?? '',
-                        ),
-                        SizedBox(height: height * 0.01),
-                        CastCard(
-                          image:
-                              state.movieDetails.cast?[2].urlSmallImage ??
-                              'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png',
-                          name: state.movieDetails.cast?[2].name ?? '',
-                          charector: state.movieDetails.cast?[2].characterName ?? '',
-                        ),
-                        SizedBox(height: height * 0.01),
-                        CastCard(
-                          image:
-                              state.movieDetails.cast?[3].urlSmallImage ??
-                              'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png',
-                          name: state.movieDetails.cast?[3].name ?? '',
-                          charector: state.movieDetails.cast?[3].characterName ?? '',
-                        ),
+
                         SizedBox(height: height * 0.02),
 
                         //Genres
@@ -293,12 +305,13 @@ class MovieDetailsScreen extends StatelessWidget {
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: state.movieDetails.genres!.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 15,
-                            crossAxisSpacing: 15,
-                            childAspectRatio: 3,
-                          ),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 15,
+                                crossAxisSpacing: 15,
+                                childAspectRatio: 3,
+                              ),
                           itemBuilder: (context, index) {
                             return GenresCard(
                               genre: state.movieDetails.genres!,
@@ -314,7 +327,9 @@ class MovieDetailsScreen extends StatelessWidget {
               ),
             );
           } else {
-            return Center(child: CircularProgressIndicator(color: AppColors.darkGrey));
+            return Center(
+              child: CircularProgressIndicator(color: AppColors.darkGrey),
+            );
           }
         },
       ),

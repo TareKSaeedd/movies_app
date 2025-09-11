@@ -6,6 +6,7 @@ import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 
 import '../../../../../../core/constants/app_colors.dart';
+import '../../../../../favorites/presentation/page/favorites_page.dart';
 import 'widgets/history_tab_body.dart';
 
 class ProfileTab extends StatefulWidget {
@@ -147,7 +148,7 @@ class _ProfileTabState extends State<ProfileTab> {
                 color: AppColors.blackColor,
                 width: double.infinity,
                 child: selectedTab == AppLocalizations.of(context)!.watch_list
-                    ? Image.asset(AppAssets.nonSearchTabIcon)
+                    ? FavoritesPage()
                     : HistoryTabBody(),
               ),
             ),
