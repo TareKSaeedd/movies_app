@@ -1,5 +1,5 @@
 import 'package:movies_app/core/network/movies_api/movies_api_manager.dart';
-import 'package:movies_app/features/home/data/data_source/local/history_movies_local_ds.dart';
+import 'package:movies_app/features/home/data/data_source/local/history_movies_local_data_source.dart';
 import 'package:movies_app/features/home/data/data_source/remote/impl/movies_remote_data_source_impl.dart';
 import 'package:movies_app/features/home/data/data_source/remote/impl/search_remote_data_source_impl.dart';
 import 'package:movies_app/features/home/data/data_source/remote/movies_remote_data_source.dart';
@@ -14,7 +14,7 @@ import 'package:movies_app/features/movie_details_screen/data/repository/impl/mo
 import 'package:movies_app/features/movie_details_screen/data/repository/movie_details_repository.dart';
 
 import '../../../../core/services/history_movie_services.dart';
-import '../data_source/local/impl/history_movies_local_ds_impl.dart';
+import '../data_source/local/impl/history_movies_local_data_source_impl.dart';
 import '../repository/history_repository.dart';
 import '../repository/impl/history_repository_imp;.dart';
 //todo:HomeTabViewModel => object MoviesRepository
@@ -56,8 +56,8 @@ HistoryRepository injectHistoryRepository(){
 }
 
 
-HistoryMoviesLocalDs injectHistoryMoviesLocalDs(){
-  return HistoryMoviesLocalDsImpl(services: injectHistoryMovieServices());
+HistoryMoviesLocalDataSource injectHistoryMoviesLocalDs(){
+  return HistoryMoviesLocalDataSourceImpl(services: injectHistoryMovieServices());
 
 }
 
