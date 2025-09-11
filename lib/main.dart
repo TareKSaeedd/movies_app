@@ -13,6 +13,9 @@ import 'package:movies_app/features/onboarding/presentation/pages/onboarding_pag
 import 'package:movies_app/features/update_profile/presentation/page/update_profile_page.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 
+
+import 'core/services/prefrences_service.dart';
+
 import 'core/services/shared_prefrencies_services/preferences_service.dart';
 import 'features/auth/presentation/pages/reset_password_page.dart';
 
@@ -52,7 +55,10 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           debugShowCheckedModeBanner: false,
+
+
           initialRoute: showOnBoard! ? AppRoutes.onboardingRouteName : AppRoutes.loginRouteName,
+
           routes: {
             AppRoutes.onboardingRouteName: (context) => OnboardingPage(), //todo: done localization
             AppRoutes.registerRouteName: (context) => RegisterPage(), // todo : done localization

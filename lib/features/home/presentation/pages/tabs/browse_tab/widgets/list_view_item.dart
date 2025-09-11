@@ -19,7 +19,7 @@ class ListViewItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: isSelect ? AppColors.yellowColor : AppColors.blackColor,
         border: Border.all(color: AppColors.yellowColor, width: 2),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Text(
         text,
