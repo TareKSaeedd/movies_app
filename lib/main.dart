@@ -24,19 +24,18 @@ void main() async {
   runApp(
     BlocProvider(
       create: (context) => LanguageCubit(prefsService, savedLocale),
-      child:  MyApp(showOnBoard : showOnBoard),
+      child: MyApp(showOnBoard: showOnBoard),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
- final bool showOnBoard;
-   const MyApp({super.key,required this.showOnBoard});
+  final bool? showOnBoard;
+  const MyApp({super.key, this.showOnBoard});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LanguageCubit, LanguageState>(
-
       builder: (context, state) {
         final locale = state is LanguageChanged
             ? state.locale
@@ -53,8 +52,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           debugShowCheckedModeBanner: false,
-          initialRoute: showOnBoard ?
-              AppRoutes.onboardingRouteName : AppRoutes.loginRouteName,
+          initialRoute: showOnBoard! ? AppRoutes.onboardingRouteName : AppRoutes.loginRouteName,
           routes: {
             AppRoutes.onboardingRouteName: (context) => OnboardingPage(), //todo: done localization
             AppRoutes.registerRouteName: (context) => RegisterPage(), // todo : done localization
