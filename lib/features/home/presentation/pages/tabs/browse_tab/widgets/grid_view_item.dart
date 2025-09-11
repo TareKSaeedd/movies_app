@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../../core/constants/app_colors.dart';
 import 'rating_widget.dart';
 
 class GridViewItem extends StatelessWidget {
@@ -27,7 +28,7 @@ class GridViewItem extends StatelessWidget {
             fit: BoxFit.fill,
             placeholder: (context, url) =>
             const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color: AppColors.yellowColor,),
             ),
             errorWidget: (context, url, error) => const Icon(Icons.error),
           ),

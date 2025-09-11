@@ -28,7 +28,7 @@ class BrowseTabViewModel extends Cubit<BrowseTabState> {
 
   Future<void> changeSelectedGenre(int index) async {
     selectedIndex = index;
-    emit(BrowseLoadingState());
+
     try {
       final movies = await repository.getMoviesByGenre(genres[selectedIndex]);
       emit(
