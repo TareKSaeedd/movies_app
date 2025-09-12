@@ -29,6 +29,7 @@ class FavoritesCheckState extends FavoritesStates {
 }
 
 class FavoritesDeleteState extends FavoritesStates {
+  final bool isFavorite;
   final String message;
-  FavoritesDeleteState({this.message = "Movie deleted successfully"});
+  FavoritesDeleteState({this.message = "Movie deleted successfully", required this.isFavorite});
 }

@@ -65,9 +65,10 @@ class FavoritesApiManager {
   }
 
   Future<bool> checkIsFavorite({required String token, required String movieId}) async {
-    final url = Uri.https(FavoritesApiEndPoints.baseUrl, FavoritesApiEndPoints.isFavoriteEndPoint, {
-      "moviedId": movieId,
-    });
+    final url = Uri.https(
+      FavoritesApiEndPoints.baseUrl,
+      "${FavoritesApiEndPoints.isFavoriteEndPoint}/$movieId",
+    );
 
     final response = await http.get(
       url,

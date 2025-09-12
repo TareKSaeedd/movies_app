@@ -44,7 +44,7 @@ class FavoritesViewModel extends Cubit<FavoritesStates> {
       String? token = await SharedPrefNetwork.getCurrentUserToken();
       await favoritesRepository.deleteFavorite(token: token!, movieId: movieId);
 
-      emit(FavoritesDeleteState());
+      emit(FavoritesDeleteState(isFavorite: false));
     } catch (e) {
       emit(FavoritesErrorState(message: e.toString()));
     }

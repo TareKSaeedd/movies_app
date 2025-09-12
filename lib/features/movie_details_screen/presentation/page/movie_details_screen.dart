@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/constants/app_assets.dart';
 import 'package:movies_app/core/constants/app_colors.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
+import 'package:movies_app/core/utils/dialog_utils.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/features/favorites/data/di/favorites_di.dart';
 import 'package:movies_app/features/favorites/data/model/add_to_favorites_request.dart';
@@ -21,7 +22,7 @@ import 'package:movies_app/features/movie_details_screen/presentation/widgets/sc
 import 'package:movies_app/features/home/data/di/di.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
-  MovieDetailsScreen({super.key});
+  const MovieDetailsScreen({super.key});
 
   @override
   State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
@@ -37,12 +38,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     movieDetailsRepository: injectMovieDetailsRepository(),
   );
 
-  late FavoritesViewModel favoritesViewModel;
-  @override
-  void initState() {
-    super.initState();
-    favoritesViewModel = FavoritesViewModel(favoritesRepository: injectFavoritesRepository());
-  }
+  FavoritesViewModel favoritesViewModel = FavoritesViewModel(
+    favoritesRepository: injectFavoritesRepository(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -110,38 +108,63 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                   icon: Icon(Icons.arrow_back_ios, color: AppColors.whiteColor),
                                 ),
 
-                                BlocBuilder<FavoritesViewModel, FavoritesStates>(
+                                BlocConsumer<FavoritesViewModel, FavoritesStates>(
+                                  listener: (context, state) {
+                                    if (state is AddToFavoritesState) {
+                                      return DialogUtils.showMessage(
+                                        context: context,
+                                        contentMsg: state.response.message!,
+                                      );
+                                    } else if (state is FavoritesDeleteState) {
+                                      return DialogUtils.showMessage(
+                                        context: context,
+                                        contentMsg: state.message,
+                                      );
+                                    }
+                                  },
                                   builder: (context, favState) {
                                     bool isFav = false;
+                                    if (favState is FavoritesCheckState) {
+                                      isFav = favState.isFavorite;
+                                    } else if (favState is FavoritesDeleteState) {
+                                      isFav = favState.isFavorite;
+                                    } else if (favState is AddToFavoritesState) {
+                                      isFav = favState.isFavorite;
+                                    } else if (favState is FavoritesLoadingState) {
+                                      return SizedBox(
+                                        width: 24,
+                                        height: 24,
+                                        child: CircularProgressIndicator(color: AppColors.darkGrey),
+                                      );
+                                    }
                                     AddToFavoritesRequest request = AddToFavoritesRequest(
                                       movieId: movieId.toString(),
                                       name: state.movieDetails.title,
                                       imageURL: state.movieDetails.mediumCoverImage,
-                                      rating: state.movieDetails.rating as double,
+                                      rating: (state.movieDetails.rating ?? 0).toDouble(),
                                       year: state.movieDetails.year.toString(),
                                     );
-                                    if (favState is FavoritesCheckState) {
-                                      isFav = favState.isFavorite;
-                                    } else if (favState is FavoritesDeleteState) {
-                                      isFav = false;
-                                    } else if (favState is FavoritesErrorState) {
-                                      isFav = false;
-                                    } else if (favState is AddToFavoritesState) {
-                                      isFav = true;
-                                    }
                                     return IconButton(
                                       onPressed: () {
                                         if (isFav) {
-                                          favoritesViewModel.deleteFavorite(movieId.toString());
+                                          context.read<FavoritesViewModel>().deleteFavorite(
+                                            movieId.toString(),
+                                          );
                                         } else {
-                                          favoritesViewModel.addToFavorites(
+                                          context.read<FavoritesViewModel>().addToFavorites(
                                             favoriteRequest: request,
                                           );
                                         }
                                       },
                                       icon: isFav
-                                          ? Image.asset(AppAssets.saveYellowIcon)
-                                          : Image.asset(AppAssets.saveIcon),
+                                          ? Image.asset(
+                                              AppAssets.saveYellowIcon,
+                                              key: ValueKey("fav"),
+                                            )
+                                          : Image.asset(
+                                              AppAssets.saveIcon,
+                                              key: ValueKey("notFav"),
+                                            ),
                                     );
                                   },
                                 ),
