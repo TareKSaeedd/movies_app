@@ -5,6 +5,7 @@ import 'package:movies_app/core/constants/app_assets.dart';
 import 'package:movies_app/core/constants/app_colors.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
+import 'package:movies_app/features/favorites/presentation/cubit/favorites_states.dart';
 import 'package:movies_app/features/home/data/di/di.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_details_states.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_details_view_model.dart';
@@ -16,58 +17,45 @@ import 'package:movies_app/features/movie_details_screen/presentation/widgets/ge
 import 'package:movies_app/features/movie_details_screen/presentation/widgets/movie_card.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/widgets/screen_shots_widget.dart';
 
+import '../../../favorites/presentation/cubit/favorites_view_model.dart';
+import '../../data/model/movie_details_response.dart';
+
+
 class MovieDetailsScreen extends StatelessWidget {
   MovieDetailsScreen({super.key});
 
   MovieDetailsViewModel movieDetailsViewModel = MovieDetailsViewModel(
     historyRepository: injectHistoryRepository(),
     movieDetailsRepository: injectMovieDetailsRepository(),
+    favoritesRepository: injectFavoritesRepository()
   );
 
   MovieSuggestionViewModel movieSuggestionViewModel = MovieSuggestionViewModel(
     movieDetailsRepository: injectMovieDetailsRepository(),
   );
-
+FavoritesViewModel favoritesViewModel=FavoritesViewModel(favoritesRepository: injectFavoritesRepository());
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     int movieId = ModalRoute.of(context)!.settings.arguments as int;
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) =>
               movieDetailsViewModel..getMovieDetails('$movieId'),
+
         ),
         BlocProvider(
           create: (context) =>
               movieSuggestionViewModel..getMoviesSuggestions('$movieId'),
         ),
+        BlocProvider(
+          create: (context) => FavoritesViewModel(favoritesRepository: injectFavoritesRepository()),
+        ),
       ],
-
-      child: BlocConsumer<MovieDetailsViewModel, MovieDetailsStates>(
-        listener: (context, state) {
-          if (state is MovieDetailsSuccessState && state.isClicked){
-            showDialog(context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    elevation: 2,
-                    alignment: Alignment.center,
-                    actions: [
-                      TextButton(onPressed: () {
-                        Navigator.pop(context);
-                      }, child: Text('Ok',style: AppStyles.robotoRegular20Black,))
-                    ],
-                   content:Row(
-                     children: [
-                       Text('Added Successfully ! ',style: AppStyles.interBold20Yellow),
-                       Icon(Icons.celebration,color: AppColors.yellowColor,)
-                     ],
-                   )
-                  );
-            });
-          }
-        },
+      child: BlocBuilder<MovieDetailsViewModel, MovieDetailsStates>(
         builder: (context, state) {
           if (state is MovieDetailsErrorState) {
             return Center(
@@ -124,13 +112,61 @@ class MovieDetailsScreen extends StatelessWidget {
                                     color: AppColors.whiteColor,
                                   ),
                                 ),
-                                IconButton(
-                                onPressed: () {
-                                movieDetailsViewModel.addMovieToFavorite();
-                                },
-                                icon: state.isClicked ? Image.asset(AppAssets.saveYellowIcon) :
-                                Image.asset(AppAssets.saveIcon),
-                                ),
+                                Spacer(),
+                                BlocConsumer<FavoritesViewModel,FavoritesStates>(
+                                    listener: (context, state) {
+                                    if (state is AddedToFavoriteState ){
+                                    print('added');
+                                    showDialog(context: context,
+                                    builder: (context) {
+                                    return AlertDialog(
+                                    alignment: Alignment.center,
+                                    actions: [
+                                    TextButton(onPressed: () {
+                                    Navigator.pop(context);
+                                    }, child: Text('Ok',style: AppStyles.robotoRegular20Black,))
+                                    ],
+                                    content:Row(
+                                    children: [
+                                    Text('Added Successfully ! ',style: AppStyles.interBold20Yellow),
+                                    Icon(Icons.celebration,color: AppColors.yellowColor,)
+                                    ],
+                                    )
+                                    );
+                                    });
+                                    }
+
+          },                      builder: (context, state) {
+
+                                    final detailsState = context.watch<MovieDetailsViewModel>().state;
+                                    Movie? movie;
+
+                                    if (detailsState is MovieDetailsSuccessState) {
+                                      movie = Movie(
+                                        id: detailsState.movieDetails.id,
+                                        title: detailsState.movieDetails.title ?? "",
+                                        year: detailsState.movieDetails.year ?? 0,
+                                        rating: detailsState.movieDetails.rating ?? 0,
+                                        url: detailsState.movieDetails.largeCoverImage ?? "",
+                                      );
+                                    }
+                                    if(movie !=null){
+                                      favoritesViewModel.addMovieToFavorite(movie: movie)  ;
+                                    }
+                                  bool isClicked = !favoritesViewModel.isClicked;
+                                    return  IconButton(
+                                      onPressed: () {
+                                        if (movie !=null){
+
+                                          context.read<FavoritesViewModel>().addMovieToFavorite(movie: movie);
+                                        }
+                                      },
+                                      icon: isClicked? Image.asset(AppAssets.saveYellowIcon) :
+                                      Image.asset(AppAssets.saveIcon),
+                                    ) ;
+
+                                },),
+
                               ],
                             ),
                             SizedBox(height: height * 0.18),
@@ -287,7 +323,6 @@ class MovieDetailsScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: height * 0.02),
-
                         //Cast
                         Text(
                           'Cast',

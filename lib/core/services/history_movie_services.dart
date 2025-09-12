@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../features/movie_details_screen/data/model/movie_details_response.dart';
 
 class HistoryMovieServices {
@@ -26,4 +28,5 @@ class HistoryMovieServices {
         .map((movieStr) => Movie.fromJson(jsonDecode(movieStr)))
         .toList();
   }
+
 }

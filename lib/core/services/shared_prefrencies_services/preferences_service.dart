@@ -31,4 +31,5 @@ class OnBoardingPreferencesService{
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool('showOnBoard')?? true;
   }
+
 }

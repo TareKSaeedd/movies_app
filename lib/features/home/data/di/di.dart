@@ -13,15 +13,16 @@ import 'package:movies_app/features/movie_details_screen/data/data_source/remote
 import 'package:movies_app/features/movie_details_screen/data/repository/impl/movie_details_repository_impl.dart';
 import 'package:movies_app/features/movie_details_screen/data/repository/movie_details_repository.dart';
 
-
+import '../../../../core/services/history_movie_services.dart';
+import '../../../favorites/data/di/favorites_di.dart';
+import '../../../favorites/data/repository/favorites_repository.dart';
+import '../../../favorites/data/repository/favorites_repository_impl.dart';
+import '../data_source/local/impl/history_movies_local_data_source_impl.dart';
 import '../data_source/remote/browse_remote_data_source.dart';
 import '../data_source/remote/impl/browse_remote_data_source_impl.dart';
 import '../repository/browse_tab_repository.dart';
-import '../repository/impl/browse_tab_repository_impl.dart';
-
-import '../../../../core/services/history_movie_services.dart';
-import '../data_source/local/impl/history_movies_local_data_source_impl.dart';
 import '../repository/history_repository.dart';
+import '../repository/impl/browse_tab_repository_impl.dart';
 import '../repository/impl/history_repository_imp;.dart';
 
 //todo:HomeTabViewModel => object MoviesRepository
@@ -83,4 +84,8 @@ HistoryMovieServices injectHistoryMovieServices(){
   return HistoryMovieServices();
 
 }
-
+FavoritesRepository injectFavoritesRepository(){
+  return FavoritesRepositoryImpl(
+    favoritesDataSource: injectFavoritesDataSource(),
+  );
+}

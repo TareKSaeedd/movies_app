@@ -17,3 +17,4 @@ class MovieDetailsSuccessState extends MovieDetailsStates {
 
   MovieDetailsSuccessState({required this.movieDetails,this.isClicked=false});
 }
+

@@ -53,7 +53,8 @@ class MyApp extends StatelessWidget {
           ],
           debugShowCheckedModeBanner: false,
 
-          initialRoute: showOnBoard! ? AppRoutes.onboardingRouteName : AppRoutes.loginRouteName,
+          initialRoute: AppRoutes.homePageRouteName,
+          // showOnBoard! ? AppRoutes.onboardingRouteName : AppRoutes.loginRouteName,
 
           routes: {
             AppRoutes.onboardingRouteName: (context) => OnboardingPage(), //todo: done localization
