@@ -6,7 +6,7 @@ import 'favorites_states.dart';
 
 class FavoritesViewModel extends Cubit<FavoritesStates> {
   final FavoritesRepository favoritesRepository;
-
+  bool isFav = false;
   FavoritesViewModel({required this.favoritesRepository})
     : super(FavoritesInitialState());
 
@@ -22,4 +22,28 @@ class FavoritesViewModel extends Cubit<FavoritesStates> {
       emit(FavoritesErrorState(message: e.toString()));
     }
   }
+   Future<void> deleteFavorite(String movieId) async {
+  emit(FavoritesLoadingState());
+  try {
+    String? token = await SharedPrefNetwork.getCurrentUserToken();
+    await favoritesRepository.deleteFavorite(token: token!, movieId: movieId);
+
+    emit(FavoritesDeleteState());
+  } catch (e) {
+    emit(FavoritesErrorState(message: e.toString()));
+  }
+}
+
+Future<void> checkIsFavorite(String movieId) async {
+  try {
+    String? token = await SharedPrefNetwork.getCurrentUserToken();
+      isFav = await favoritesRepository.checkIsFavorite(
+      token: token!,
+      movieId: movieId,
+    );
+    emit(FavoritesCheckState(isFavorite: isFav));
+  } catch (e) {
+    emit(FavoritesErrorState(message: e.toString()));
+  }
+}
 }

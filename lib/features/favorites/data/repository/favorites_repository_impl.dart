@@ -14,4 +14,14 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
     return favoritesDataSource.getAllFavorites(token: token);
   }
 
+  @override
+  Future<bool> checkIsFavorite({required String token, required String movieId}) {
+    return favoritesDataSource.checkIsFavorite(token: token, movieId: movieId);
+  }
+  
+  @override
+  Future<void> deleteFavorite({required String token, required String movieId}) {
+    return favoritesDataSource.deleteFavorite(token: token, movieId: movieId);
+  }
+
 }

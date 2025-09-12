@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/network/auth_api/shared_pref_network.dart';
 import 'package:movies_app/features/movie_details_screen/data/repository/movie_details_repository.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_details_states.dart';
 

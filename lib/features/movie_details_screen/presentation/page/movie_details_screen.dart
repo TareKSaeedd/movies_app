@@ -5,6 +5,9 @@ import 'package:movies_app/core/constants/app_assets.dart';
 import 'package:movies_app/core/constants/app_colors.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
+import 'package:movies_app/features/favorites/data/di/favorites_di.dart';
+import 'package:movies_app/features/favorites/presentation/cubit/favorites_states.dart';
+import 'package:movies_app/features/favorites/presentation/cubit/favorites_view_model.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_details_states.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_details_view_model.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_suggestion_states.dart';
@@ -16,9 +19,14 @@ import 'package:movies_app/features/movie_details_screen/presentation/widgets/mo
 import 'package:movies_app/features/movie_details_screen/presentation/widgets/screen_shots_widget.dart';
 import 'package:movies_app/features/home/data/di/di.dart';
 
-class MovieDetailsScreen extends StatelessWidget {
+class MovieDetailsScreen extends StatefulWidget {
   MovieDetailsScreen({super.key});
 
+  @override
+  State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
+}
+
+class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   MovieDetailsViewModel movieDetailsViewModel = MovieDetailsViewModel(
     historyRepository: injectHistoryRepository(),
     movieDetailsRepository: injectMovieDetailsRepository(),
@@ -28,6 +36,15 @@ class MovieDetailsScreen extends StatelessWidget {
     movieDetailsRepository: injectMovieDetailsRepository(),
   );
 
+  late FavoritesViewModel favoritesViewModel;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    favoritesViewModel = FavoritesViewModel(favoritesRepository: injectFavoritesRepository());
+  }
+  
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -36,12 +53,16 @@ class MovieDetailsScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              movieDetailsViewModel..getMovieDetails('$movieId'),
+          create: (context) => movieDetailsViewModel
+            ..getMovieDetails('$movieId')
         ),
         BlocProvider(
           create: (context) =>
               movieSuggestionViewModel..getMoviesSuggestions('$movieId'),
+        ),
+        BlocProvider(
+          create: (context) =>
+              favoritesViewModel..checkIsFavorite(movieId.toString()),
         ),
       ],
 
@@ -102,11 +123,40 @@ class MovieDetailsScreen extends StatelessWidget {
                                     color: AppColors.whiteColor,
                                   ),
                                 ),
-                                IconButton(
-                                  onPressed: () {
-                                    // save movie
+
+                                BlocBuilder<
+                                  FavoritesViewModel,
+                                  FavoritesStates
+                                >(
+                                 
+                                  builder: (context, favState) {
+                                    bool isFav = false;
+
+                                    if (favState is FavoritesCheckState) {
+                                      isFav = favState.isFavorite;
+                                    } else if (favState
+                                        is FavoritesDeleteState) {
+                                     isFav = false;
+                                    }else if (favState is FavoritesErrorState){
+                                      isFav = false;
+                                    }
+                                    return IconButton(
+                                      onPressed: () {
+                                        if (isFav) {
+                                          context
+                                              .read<FavoritesViewModel>()
+                                              .deleteFavorite(
+                                                movieId.toString(),
+                                              );
+                                        }
+                                      },
+                                      icon: isFav
+                                          ? Image.asset(
+                                              AppAssets.saveYellowIcon,
+                                            )
+                                          : Image.asset(AppAssets.saveIcon),
+                                    );
                                   },
-                                  icon: Image.asset(AppAssets.saveYellowIcon),
                                 ),
                               ],
                             ),
