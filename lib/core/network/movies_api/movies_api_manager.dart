@@ -1,14 +1,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:movies_app/core/network/favorites_api/favorites_api_end_points.dart';
 import 'package:movies_app/core/network/movies_api/movies_api_constants.dart';
 import 'package:movies_app/core/network/movies_api/movies_end_points.dart';
 import 'package:movies_app/features/home/data/model/movie_response.dart';
 import 'package:movies_app/features/home/data/model/search_response.dart';
 import 'package:movies_app/features/movie_details_screen/data/model/movie_details_response.dart';
 import 'package:movies_app/features/movie_details_screen/data/model/movie_suggestions_response.dart';
-
 
 class MoviesApiManager {
   Future<MovieResponse?> getMovies() async {
@@ -93,11 +91,9 @@ class MoviesApiManager {
     }
   }
 
-
   Future<MovieResponse?> getMoviesByGenre(String genre) async {
     try {
-      final url = Uri.https(
-          MoviesApiConstants.baseUrl, MoviesEndPoints.movieApi, {
+      final url = Uri.https(MoviesApiConstants.baseUrl, MoviesEndPoints.movieApi, {
         "genre": genre,
         "limit": "50",
       });
@@ -114,15 +110,13 @@ class MoviesApiManager {
       final json = jsonDecode(response.body);
       return MovieResponse.fromJson(json);
     } catch (e) {
-      return MovieResponse(
-          status: "error", statusMessage: e.toString(), data: null);
+      return MovieResponse(status: "error", statusMessage: e.toString(), data: null);
     }
   }
 
   Future<List<String>> getGenres() async {
     try {
-      final url = Uri.https(
-          MoviesApiConstants.baseUrl, MoviesEndPoints.movieApi, {
+      final url = Uri.https(MoviesApiConstants.baseUrl, MoviesEndPoints.movieApi, {
         "limit": "50",
         "page": "1",
       });
@@ -143,8 +137,7 @@ class MoviesApiManager {
         }
       }
 
-      return genresSet.toList()
-        ..sort();
+      return genresSet.toList()..sort();
     } catch (e) {
       return [];
     }

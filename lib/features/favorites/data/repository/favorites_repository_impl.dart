@@ -1,5 +1,3 @@
-
-
 import 'package:movies_app/features/favorites/data/model/favorites_model.dart';
 
 import '../data_source/favorites_data_source.dart';
@@ -10,7 +8,6 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   FavoritesRepositoryImpl({required this.favoritesDataSource});
   @override
   Future<List<FavoritesModel>> getAllFavorites({required String token}) {
-    // TODO: implement getAllFavorites
     return favoritesDataSource.getAllFavorites(token: token);
   }
 
@@ -18,10 +15,9 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   Future<bool> checkIsFavorite({required String token, required String movieId}) {
     return favoritesDataSource.checkIsFavorite(token: token, movieId: movieId);
   }
-  
+
   @override
   Future<void> deleteFavorite({required String token, required String movieId}) {
     return favoritesDataSource.deleteFavorite(token: token, movieId: movieId);
   }
-
 }

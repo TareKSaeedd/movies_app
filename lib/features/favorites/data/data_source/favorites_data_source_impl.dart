@@ -8,15 +8,14 @@ class FavoritesDataSourceImpl implements FavoritesDataSource {
 
   @override
   Future<List<FavoritesModel>> getAllFavorites({required String token}) {
-    // TODO: implement getAllFavorites
-
     return apiManager.getAllFavorites(token: token);
   }
-   @override
+
+  @override
   Future<bool> checkIsFavorite({required String token, required String movieId}) {
     return apiManager.checkIsFavorite(token: token, movieId: movieId);
   }
-  
+
   @override
   Future<void> deleteFavorite({required String token, required String movieId}) {
     return apiManager.deleteFavorite(token: token, movieId: movieId);

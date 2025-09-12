@@ -39,11 +39,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   late FavoritesViewModel favoritesViewModel;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     favoritesViewModel = FavoritesViewModel(favoritesRepository: injectFavoritesRepository());
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -52,26 +50,17 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     int movieId = ModalRoute.of(context)!.settings.arguments as int;
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => movieDetailsViewModel..getMovieDetails('$movieId')),
         BlocProvider(
-          create: (context) => movieDetailsViewModel
-            ..getMovieDetails('$movieId')
+          create: (context) => movieSuggestionViewModel..getMoviesSuggestions('$movieId'),
         ),
-        BlocProvider(
-          create: (context) =>
-              movieSuggestionViewModel..getMoviesSuggestions('$movieId'),
-        ),
-        BlocProvider(
-          create: (context) =>
-              favoritesViewModel..checkIsFavorite(movieId.toString()),
-        ),
+        BlocProvider(create: (context) => favoritesViewModel..checkIsFavorite(movieId.toString())),
       ],
 
       child: BlocBuilder<MovieDetailsViewModel, MovieDetailsStates>(
         builder: (context, state) {
           if (state is MovieDetailsErorrState) {
-            return Center(
-              child: Text(state.message, style: AppStyles.robotoRegular20White),
-            );
+            return Center(child: Text(state.message, style: AppStyles.robotoRegular20White));
           } else if (state is MovieDetailsSuccessState) {
             return SingleChildScrollView(
               child: Column(
@@ -80,10 +69,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   Stack(
                     children: [
                       state.movieDetails.largeCoverImage != null
-                          ? CachedNetworkImage(
-                              imageUrl:
-                                  state.movieDetails.largeCoverImage ?? '',
-                            )
+                          ? CachedNetworkImage(imageUrl: state.movieDetails.largeCoverImage ?? '')
                           : Text(
                               'No cover found for this movie',
                               style: AppStyles.interMedium36White,
@@ -118,42 +104,30 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  icon: Icon(
-                                    Icons.arrow_back_ios,
-                                    color: AppColors.whiteColor,
-                                  ),
+                                  icon: Icon(Icons.arrow_back_ios, color: AppColors.whiteColor),
                                 ),
 
-                                BlocBuilder<
-                                  FavoritesViewModel,
-                                  FavoritesStates
-                                >(
-                                 
+                                BlocBuilder<FavoritesViewModel, FavoritesStates>(
                                   builder: (context, favState) {
                                     bool isFav = false;
 
                                     if (favState is FavoritesCheckState) {
                                       isFav = favState.isFavorite;
-                                    } else if (favState
-                                        is FavoritesDeleteState) {
-                                     isFav = false;
-                                    }else if (favState is FavoritesErrorState){
+                                    } else if (favState is FavoritesDeleteState) {
+                                      isFav = false;
+                                    } else if (favState is FavoritesErrorState) {
                                       isFav = false;
                                     }
                                     return IconButton(
                                       onPressed: () {
                                         if (isFav) {
-                                          context
-                                              .read<FavoritesViewModel>()
-                                              .deleteFavorite(
-                                                movieId.toString(),
-                                              );
+                                          context.read<FavoritesViewModel>().deleteFavorite(
+                                            movieId.toString(),
+                                          );
                                         }
                                       },
                                       icon: isFav
-                                          ? Image.asset(
-                                              AppAssets.saveYellowIcon,
-                                            )
+                                          ? Image.asset(AppAssets.saveYellowIcon)
                                           : Image.asset(AppAssets.saveIcon),
                                     );
                                   },
@@ -161,12 +135,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                               ],
                             ),
                             SizedBox(height: height * 0.18),
-                            Center(
-                              child: Image.asset(
-                                AppAssets.playImage,
-                                width: width * 0.2,
-                              ),
-                            ),
+                            Center(child: Image.asset(AppAssets.playImage, width: width * 0.2)),
                             SizedBox(height: height * 0.2),
 
                             Text(
@@ -192,10 +161,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                               onPressed: () {
                                 //watch Button
                               },
-                              buttonContent: Text(
-                                'Watch',
-                                style: AppStyles.robotoBold20White,
-                              ),
+                              buttonContent: Text('Watch', style: AppStyles.robotoBold20White),
                               backgroundColor: AppColors.redColor,
                               borderSideColor: AppColors.redColor,
                             ),
@@ -264,10 +230,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           ),
                         ),
 
-                        BlocBuilder<
-                          MovieSuggestionViewModel,
-                          MovieSuggestionStates
-                        >(
+                        BlocBuilder<MovieSuggestionViewModel, MovieSuggestionStates>(
                           builder: (context, state) {
                             if (state is MovieSuggestionSuccessState) {
                               return GridView.builder(
@@ -275,18 +238,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 itemCount: state.suggestionMovies!.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      mainAxisSpacing: 15,
-                                      crossAxisSpacing: 15,
-                                      childAspectRatio: 0.65,
-                                    ),
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 15,
+                                  crossAxisSpacing: 15,
+                                  childAspectRatio: 0.65,
+                                ),
                                 itemBuilder: (context, index) {
-                                  return MovieCard(
-                                    index: index,
-                                    movieId: movieId,
-                                  );
+                                  return MovieCard(index: index, movieId: movieId);
                                 },
                               );
                             } else if (state is MovieSuggestionErrorState) {
@@ -355,13 +314,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: state.movieDetails.genres!.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                mainAxisSpacing: 15,
-                                crossAxisSpacing: 15,
-                                childAspectRatio: 3,
-                              ),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 15,
+                            crossAxisSpacing: 15,
+                            childAspectRatio: 3,
+                          ),
                           itemBuilder: (context, index) {
                             return GenresCard(
                               genre: state.movieDetails.genres!,
@@ -377,9 +335,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               ),
             );
           } else {
-            return Center(
-              child: CircularProgressIndicator(color: AppColors.darkGrey),
-            );
+            return Center(child: CircularProgressIndicator(color: AppColors.darkGrey));
           }
         },
       ),

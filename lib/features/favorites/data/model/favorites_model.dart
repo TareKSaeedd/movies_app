@@ -1,4 +1,4 @@
-class FavoritesModel{
+class FavoritesModel {
   final String movieId;
   final String name;
   final double rating;
