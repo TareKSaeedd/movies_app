@@ -3,6 +3,8 @@ import 'package:movies_app/core/constants/app_assets.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
 import 'package:movies_app/core/navigation/app_routes.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
+import 'package:movies_app/features/favorites/data/di/favorites_di.dart';
+import 'package:movies_app/features/favorites/presentation/cubit/favorites_view_model.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 
 import '../../../../../../core/constants/app_colors.dart';
@@ -10,7 +12,7 @@ import '../../../../../favorites/presentation/page/favorites_page.dart';
 import 'widgets/history_tab_body.dart';
 
 class ProfileTab extends StatefulWidget {
-  ProfileTab({super.key});
+  const ProfileTab({super.key});
 
   @override
   State<ProfileTab> createState() => _ProfileTabState();
@@ -18,6 +20,9 @@ class ProfileTab extends StatefulWidget {
 
 class _ProfileTabState extends State<ProfileTab> {
   String selectedTab = "wishlist";
+  FavoritesViewModel viewModel = FavoritesViewModel(
+    favoritesRepository: injectFavoritesRepository(),
+  );
 
   @override
   Widget build(BuildContext context) {

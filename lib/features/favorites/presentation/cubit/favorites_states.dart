@@ -1,3 +1,4 @@
+import 'package:movies_app/features/favorites/data/model/add_to_favorites_response.dart';
 import 'package:movies_app/features/favorites/data/model/favorites_model.dart';
 
 abstract class FavoritesStates {}
@@ -11,6 +12,12 @@ class FavoritesSuccessState extends FavoritesStates {
   FavoritesSuccessState({required this.movies});
 }
 
+class AddToFavoritesState extends FavoritesStates {
+  final AddToFavoritesResponse response;
+  final bool isFavorite;
+  AddToFavoritesState({required this.response, required this.isFavorite});
+}
+
 class FavoritesErrorState extends FavoritesStates {
   final String message;
   FavoritesErrorState({required this.message});
@@ -22,6 +29,7 @@ class FavoritesCheckState extends FavoritesStates {
 }
 
 class FavoritesDeleteState extends FavoritesStates {
+  final bool isFavorite;
   final String message;
-  FavoritesDeleteState({this.message = "Movie deleted successfully"});
+  FavoritesDeleteState({this.message = "Movie deleted successfully", required this.isFavorite});
 }

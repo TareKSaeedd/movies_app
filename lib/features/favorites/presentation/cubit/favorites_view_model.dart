@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:movies_app/features/favorites/data/model/add_to_favorites_request.dart';
 import 'package:movies_app/features/favorites/data/repository/favorites_repository.dart';
 import '../../../../core/network/auth_api/shared_pref_network.dart';
 import 'favorites_states.dart';
@@ -8,6 +8,22 @@ class FavoritesViewModel extends Cubit<FavoritesStates> {
   final FavoritesRepository favoritesRepository;
   bool isFav = false;
   FavoritesViewModel({required this.favoritesRepository}) : super(FavoritesInitialState());
+
+  Future<void> addToFavorites({required AddToFavoritesRequest favoriteRequest}) async {
+    emit(FavoritesLoadingState());
+    try {
+      String? token = await SharedPrefNetwork.getCurrentUserToken();
+
+      var response = await favoritesRepository.addToFavorites(
+        token: token!,
+        favoriteRequest: favoriteRequest,
+      );
+
+      emit(AddToFavoritesState(response: response, isFavorite: true));
+    } catch (e) {
+      emit(FavoritesErrorState(message: e.toString()));
+    }
+  }
 
   Future<void> getAllFavorites() async {
     emit(FavoritesLoadingState());
@@ -28,7 +44,7 @@ class FavoritesViewModel extends Cubit<FavoritesStates> {
       String? token = await SharedPrefNetwork.getCurrentUserToken();
       await favoritesRepository.deleteFavorite(token: token!, movieId: movieId);
 
-      emit(FavoritesDeleteState());
+      emit(FavoritesDeleteState(isFavorite: false));
     } catch (e) {
       emit(FavoritesErrorState(message: e.toString()));
     }
