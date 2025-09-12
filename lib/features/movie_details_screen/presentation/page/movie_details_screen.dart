@@ -6,6 +6,7 @@ import 'package:movies_app/core/constants/app_colors.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/features/favorites/data/di/favorites_di.dart';
+import 'package:movies_app/features/favorites/data/model/add_to_favorites_request.dart';
 import 'package:movies_app/features/favorites/presentation/cubit/favorites_states.dart';
 import 'package:movies_app/features/favorites/presentation/cubit/favorites_view_model.dart';
 import 'package:movies_app/features/movie_details_screen/presentation/cubit/movie_details_states.dart';
@@ -50,9 +51,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     int movieId = ModalRoute.of(context)!.settings.arguments as int;
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => movieDetailsViewModel..getMovieDetails('$movieId')),
         BlocProvider(
-          create: (context) => movieSuggestionViewModel..getMoviesSuggestions('$movieId'),
+          create: (context) => movieDetailsViewModel..getMovieDetails(movieId.toString()),
+        ),
+        BlocProvider(
+          create: (context) => movieSuggestionViewModel..getMoviesSuggestions(movieId.toString()),
         ),
         BlocProvider(create: (context) => favoritesViewModel..checkIsFavorite(movieId.toString())),
       ],
@@ -110,19 +113,29 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                 BlocBuilder<FavoritesViewModel, FavoritesStates>(
                                   builder: (context, favState) {
                                     bool isFav = false;
-
+                                    AddToFavoritesRequest request = AddToFavoritesRequest(
+                                      movieId: movieId.toString(),
+                                      name: state.movieDetails.title,
+                                      imageURL: state.movieDetails.mediumCoverImage,
+                                      rating: state.movieDetails.rating as double,
+                                      year: state.movieDetails.year.toString(),
+                                    );
                                     if (favState is FavoritesCheckState) {
                                       isFav = favState.isFavorite;
                                     } else if (favState is FavoritesDeleteState) {
                                       isFav = false;
                                     } else if (favState is FavoritesErrorState) {
                                       isFav = false;
+                                    } else if (favState is AddToFavoritesState) {
+                                      isFav = true;
                                     }
                                     return IconButton(
                                       onPressed: () {
                                         if (isFav) {
-                                          context.read<FavoritesViewModel>().deleteFavorite(
-                                            movieId.toString(),
+                                          favoritesViewModel.deleteFavorite(movieId.toString());
+                                        } else {
+                                          favoritesViewModel.addToFavorites(
+                                            favoriteRequest: request,
                                           );
                                         }
                                       },

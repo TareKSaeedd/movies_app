@@ -1,3 +1,4 @@
+import 'package:movies_app/features/favorites/data/model/add_to_favorites_response.dart';
 import 'package:movies_app/features/favorites/data/model/favorites_model.dart';
 
 abstract class FavoritesStates {}
@@ -9,6 +10,12 @@ class FavoritesLoadingState extends FavoritesStates {}
 class FavoritesSuccessState extends FavoritesStates {
   final List<FavoritesModel> movies;
   FavoritesSuccessState({required this.movies});
+}
+
+class AddToFavoritesState extends FavoritesStates {
+  final AddToFavoritesResponse response;
+  final bool isFavorite;
+  AddToFavoritesState({required this.response, required this.isFavorite});
 }
 
 class FavoritesErrorState extends FavoritesStates {

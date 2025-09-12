@@ -3,4 +3,5 @@ class FavoritesApiEndPoints {
   static const getAllFavoritesEndPoint = '/favorites/all';
   static const deleteFavoriteEndPoint = '/favorites/remove';
   static const isFavoriteEndPoint = '/favorites/is-favorite';
+  static const addToFavorite = '/favorites/add';
 }
