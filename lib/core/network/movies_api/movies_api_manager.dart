@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:movies_app/core/network/favorites_api/favorites_api_end_points.dart';
 import 'package:movies_app/core/network/movies_api/movies_api_constants.dart';
 import 'package:movies_app/core/network/movies_api/movies_end_points.dart';
-import 'package:movies_app/features/favorites/data/model/favorites_model.dart';
 import 'package:movies_app/features/home/data/model/movie_response.dart';
 import 'package:movies_app/features/home/data/model/search_response.dart';
 import 'package:movies_app/features/movie_details_screen/data/model/movie_details_response.dart';
@@ -148,28 +148,5 @@ class MoviesApiManager {
     } catch (e) {
       return [];
     }
-
-
-
-
   }
-
-
-  Future<List<FavoritesModel>> getFavorites() async {
-
-    final url = Uri.https(MoviesApiConstants.baseUrl, MoviesEndPoints.movieApi);
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      final jsonBody = jsonDecode(response.body);
-      final List moviesJson = jsonBody["data"];
-      return moviesJson.map((m) => FavoritesModel.fromJson(m)).toList();
-    } else {
-      throw Exception("Failed to fetch favorites");
-    }
-  }
-
-
-
-
 }

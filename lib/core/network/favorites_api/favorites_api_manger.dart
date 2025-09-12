@@ -29,4 +29,61 @@ class FavoritesApiManager {
       );
     }
   }
+  Future<void> deleteFavorite({
+    required String token,
+    required String movieId,
+  }) async {
+    final url = Uri.https(
+      FavoritesApiEndPoints.baseUrl,
+      "${FavoritesApiEndPoints.deleteFavoriteEndPoint}/$movieId",
+    );
+
+    final response = await http.delete(
+      url,
+      headers: {
+        "Authorization": "Bearer $token",
+        "Content-Type": "application/json",
+      }
+
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 204) {
+      throw Exception(
+        "Failed to delete favorite, statusCode: ${response.statusCode}",
+      );
+    }
+  }
+
+
+  Future<bool> checkIsFavorite({
+    required String token,
+    required String movieId,
+  }) async {
+    final url = Uri.https(
+      FavoritesApiEndPoints.baseUrl,
+      FavoritesApiEndPoints.isFavoriteEndPoint,
+      {"moviedId": movieId},
+    );
+
+    final response = await http.get(
+      url,
+      headers: {
+        "Authorization": "Bearer $token",
+        "Content-Type": "application/json",
+      },
+    );
+     if (response.statusCode == 200) {
+      final decoded = jsonDecode(response.body);
+      return decoded["data"] as bool;
+    } else {
+      throw Exception(
+        "Failed to check favorite status, statusCode: ${response.statusCode}",
+      );
+    }
+  }
+
 }
+
+
+
+

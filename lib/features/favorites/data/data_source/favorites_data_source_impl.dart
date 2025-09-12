@@ -12,4 +12,13 @@ class FavoritesDataSourceImpl implements FavoritesDataSource {
 
     return apiManager.getAllFavorites(token: token);
   }
+   @override
+  Future<bool> checkIsFavorite({required String token, required String movieId}) {
+    return apiManager.checkIsFavorite(token: token, movieId: movieId);
+  }
+  
+  @override
+  Future<void> deleteFavorite({required String token, required String movieId}) {
+    return apiManager.deleteFavorite(token: token, movieId: movieId);
+  }
 }
