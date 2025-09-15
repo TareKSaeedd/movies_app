@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/features/favorites/presentation/cubit/favorites_view_model.dart';
 
 import '../../../../../../../core/navigation/app_routes.dart';
 import '../../data/model/favorites_model.dart';
@@ -22,14 +24,19 @@ class FavoritesMoviesGrid extends StatelessWidget {
         mainAxisSpacing: height * 0.02,
       ),
       itemBuilder: (context, index) => GestureDetector(
-        onTap: () {
-          Navigator.of(context).pushNamed(
+        onTap: () async {
+          final navigation = await Navigator.of(context).pushNamed(
             AppRoutes.detailsScreenPageRouteName,
             arguments: int.parse(movies[index].movieId),
           );
+          if (navigation == true) {
+            if (context.mounted) {
+              context.read<FavoritesViewModel>().getAllFavorites();
+            }
+          }
         },
         child: MovieGridItem(
-          imageUrl: movies[index].imageURL ?? "",
+          imageUrl: movies[index].imageURL,
           rateValue: movies[index].rating.toString(),
         ),
       ),
