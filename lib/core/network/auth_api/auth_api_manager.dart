@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:movies_app/core/network/auth_api/auth_api_constants.dart';
 import 'package:movies_app/core/network/auth_api/auth_end_points.dart';
+import 'package:movies_app/features/auth/data/get_profile/model/get_profile_response.dart';
 import 'package:movies_app/features/auth/data/login/model/login_request.dart';
 import 'package:movies_app/features/auth/data/login/model/login_response.dart';
 import 'package:movies_app/features/auth/data/register/model/register_model_request.dart';
@@ -100,6 +101,26 @@ class AuthApiManager {
       var responseBody = response.body;
       var json = jsonDecode(responseBody);
       return UpdateProfileResponse.fromJson(json);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetProfileResponse?> getProfile(String token) async {
+    Uri url = Uri.https(AuthApiConstants.baseUrl, AuthEndPoints.profile);
+    try {
+      var response = await http.get(
+        url,
+        headers: {"Authorization": "Bearer $token", "Accept": "application/json"},
+      );
+
+      if (response.statusCode == 200) {
+        var responseBody = response.body;
+        var json = jsonDecode(responseBody);
+        return GetProfileResponse.fromJson(json);
+      } else {
+        throw Exception('Failed to load profile: ${response.statusCode}');
+      }
     } catch (e) {
       rethrow;
     }

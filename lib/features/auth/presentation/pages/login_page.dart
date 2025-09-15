@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController(text: "tarek50@gmail.com");
   TextEditingController passwordController = TextEditingController(text: "XyZ!123456");
   bool isPasswordSecured = true;
-  LoginCubit loginCubit = LoginCubit(loginRepository: injectLoginRepositoyr());
+  LoginCubit loginCubit = LoginCubit(loginRepository: injectLoginRepository());
   var formKey = GlobalKey<FormState>();
 
   @override

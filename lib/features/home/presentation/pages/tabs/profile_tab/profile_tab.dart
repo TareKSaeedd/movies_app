@@ -3,8 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/constants/app_assets.dart';
 import 'package:movies_app/core/constants/app_styles.dart';
 import 'package:movies_app/core/navigation/app_routes.dart';
+import 'package:movies_app/core/services/history_movie_services.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
+import 'package:movies_app/features/auth/data/get_profile/di/di.dart';
+import 'package:movies_app/features/auth/presentation/cubit/get_profile/get_profile_view_model.dart';
 import 'package:movies_app/features/favorites/data/di/favorites_di.dart';
+import 'package:movies_app/features/favorites/presentation/cubit/favorites_states.dart';
 import 'package:movies_app/features/favorites/presentation/cubit/favorites_view_model.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 
@@ -25,46 +29,78 @@ class _ProfileTabState extends State<ProfileTab> {
     favoritesRepository: injectFavoritesRepository(),
   );
 
+  GetProfileViewModel getProfileViewModel = GetProfileViewModel(
+    getProfileRepository: injectgetProfileRepository(),
+  );
+
+  HistoryMovieServices historyMovieServices = HistoryMovieServices();
+
+  @override
+  void initState() {
+    getProfileViewModel.getProfile();
+    favoritesViewModel.getAllFavorites();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var sizeScreen = MediaQuery.of(context).size;
-    return BlocProvider(
-      create: (context) => favoritesViewModel,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => favoritesViewModel),
+        BlocProvider(create: (context) => getProfileViewModel),
+      ],
       child: Scaffold(
         backgroundColor: AppColors.darkGreyColor,
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
+              BlocBuilder<FavoritesViewModel, FavoritesStates>(
+                builder: (context, state) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      CircleAvatar(radius: 55, backgroundImage: AssetImage(AppAssets.jackAvatar)),
-                      SizedBox(height: sizeScreen.height * 0.02),
-                      Text('John Safwat', style: AppStyles.robotoBold20White),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text('12', style: AppStyles.robotoBold36White),
-                      Text(
-                        AppLocalizations.of(context)!.watch_list,
-                        style: AppStyles.robotoBold24White,
+                      Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 55,
+                            backgroundImage: AssetImage(AppAssets.jackAvatar),
+                          ),
+                          SizedBox(height: sizeScreen.height * 0.02),
+                          Text(
+                            getProfileViewModel.userName ?? 'user name',
+                            style: AppStyles.robotoBold20White,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "${favoritesViewModel.favoriteMoviesNumber}",
+                            style: AppStyles.robotoBold36White,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.watch_list,
+                            style: AppStyles.robotoBold24White,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "${HistoryMovieServices.historyMoviesNumber}",
+                            style: AppStyles.robotoBold36White,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.histoyr,
+                            style: AppStyles.robotoBold24White,
+                          ),
+                        ],
                       ),
                     ],
-                  ),
-                  Column(
-                    children: [
-                      Text('10', style: AppStyles.robotoBold36White),
-                      Text(
-                        AppLocalizations.of(context)!.histoyr,
-                        style: AppStyles.robotoBold24White,
-                      ),
-                    ],
-                  ),
-                ],
+                  );
+                },
               ),
               Padding(
                 padding: EdgeInsets.symmetric(

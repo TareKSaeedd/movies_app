@@ -7,6 +7,7 @@ import 'favorites_states.dart';
 class FavoritesViewModel extends Cubit<FavoritesStates> {
   final FavoritesRepository favoritesRepository;
   bool isFav = false;
+  int favoriteMoviesNumber = 0;
   FavoritesViewModel({required this.favoritesRepository}) : super(FavoritesInitialState());
 
   Future<void> addToFavorites({required AddToFavoritesRequest favoriteRequest}) async {
@@ -29,9 +30,10 @@ class FavoritesViewModel extends Cubit<FavoritesStates> {
     emit(FavoritesLoadingState());
     try {
       String? token = await SharedPrefNetwork.getCurrentUserToken();
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(milliseconds: 500));
 
-      final movies = await favoritesRepository.getAllFavorites(token: token!);
+      var movies = await favoritesRepository.getAllFavorites(token: token!);
+      favoriteMoviesNumber = movies.length;
       emit(FavoritesSuccessState(movies: movies));
     } catch (e) {
       emit(FavoritesErrorState(message: e.toString()));

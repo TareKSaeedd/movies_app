@@ -6,6 +6,8 @@ import '../../features/movie_details_screen/data/model/movie_details_response.da
 class HistoryMovieServices {
   // static const String key = "history_movies";
 
+  static int? historyMoviesNumber;
+
   Future<void> addMovieToHistory(Movie movie) async {
     final prefs = await SharedPreferences.getInstance();
     String? key = await SharedPrefNetwork.getCurrentUserToken();
@@ -23,6 +25,11 @@ class HistoryMovieServices {
     final prefs = await SharedPreferences.getInstance();
     String? key = await SharedPrefNetwork.getCurrentUserToken();
     List<String> moviesJson = prefs.getStringList(key!) ?? [];
+
+    historyMoviesNumber = moviesJson
+        .map((movieStr) => Movie.fromJson(jsonDecode(movieStr)))
+        .toList()
+        .length;
 
     return moviesJson.map((movieStr) => Movie.fromJson(jsonDecode(movieStr))).toList();
   }

@@ -4,7 +4,7 @@ import 'package:movies_app/features/auth/data/login/data_source/login_data_sourc
 import 'package:movies_app/features/auth/data/login/repository/login_repository.dart';
 import 'package:movies_app/features/auth/data/login/repository/login_repository_impl.dart';
 
-LoginRepository injectLoginRepositoyr() {
+LoginRepository injectLoginRepository() {
   return LoginRepositoryImpl(loginDataSource: injectLoginDataSource());
 }
 
