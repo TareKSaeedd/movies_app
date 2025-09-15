@@ -70,7 +70,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   Stack(
                     children: [
                       state.movieDetails.largeCoverImage != null
-                          ? CachedNetworkImage(imageUrl: state.movieDetails.largeCoverImage ?? '')
+                          ? CachedNetworkImage(
+                              imageUrl:
+                                  state.movieDetails.largeCoverImage ??
+                                  'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png',
+                            )
                           : Text(
                               'No cover found for this movie',
                               style: AppStyles.interMedium36White,

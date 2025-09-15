@@ -16,7 +16,6 @@ import 'package:movies_app/l10n/app_localizations.dart';
 
 import '../../../../core/services/shared_prefrencies_services/preferences_service.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -25,8 +24,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController(text: 'tarek50@gmail.com');
+  TextEditingController passwordController = TextEditingController(text: 'XyZ!123456');
   bool isPasswordSecured = true;
   LoginCubit loginCubit = LoginCubit(loginRepository: injectLoginRepositoyr());
   var formKey = GlobalKey<FormState>();
@@ -47,7 +46,10 @@ class _LoginPageState extends State<LoginPage> {
               listener: (context, state) async {
                 // TODO: implement listener
                 if (state is LoginLoadingState) {
-                  DialogUtils.showLoading(context: context, loadingText:AppLocalizations.of(context)!.waiting);
+                  DialogUtils.showLoading(
+                    context: context,
+                    loadingText: AppLocalizations.of(context)!.waiting,
+                  );
                 } else if (state is LoginErrorState) {
                   DialogUtils.hideLoading(context: context);
                   DialogUtils.showMessage(
@@ -56,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                     negActionName: AppLocalizations.of(context)!.ok,
                   );
                 } else if (state is LoginSuccessState) {
-                 await OnBoardingPreferencesService.hideOnBoarding();
+                  await OnBoardingPreferencesService.hideOnBoarding();
                   DialogUtils.hideLoading(context: context);
                   DialogUtils.showMessage(
                     context: context,
@@ -106,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                     CustomTextFormField(
                       controller: emailController,
                       prefixIcon: Image.asset(AppAssets.emailIcon),
-                      hintText:  AppLocalizations.of(context)!.enter_email_hint,
+                      hintText: AppLocalizations.of(context)!.enter_email_hint,
                       hintStyle: AppStyles.robotoRegular16White,
                       keyboardType: TextInputType.emailAddress,
                       validator: (text) {
@@ -137,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                             ? Image.asset(AppAssets.eyeoffIcon)
                             : Icon(Icons.remove_red_eye, color: AppColors.whiteColor),
                       ),
-                      hintText:  AppLocalizations.of(context)!.enter_password_hint,
+                      hintText: AppLocalizations.of(context)!.enter_password_hint,
                       hintStyle: AppStyles.robotoRegular16White,
                       obscureText: isPasswordSecured,
                       obscuringCharacter: '•',
@@ -176,23 +178,25 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             );
                           }
-
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.yellowColor,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                         ),
-                        child: Text( AppLocalizations.of(context)!.login, style: AppStyles.robotoRegular20Black),
+                        child: Text(
+                          AppLocalizations.of(context)!.login,
+                          style: AppStyles.robotoRegular20Black,
+                        ),
                       ),
                     ),
                     SizedBox(height: height * 0.03),
                     RichText(
                       text: TextSpan(
-                        text:  AppLocalizations.of(context)!.dont_have_account,
+                        text: AppLocalizations.of(context)!.dont_have_account,
                         style: AppStyles.robotoRegular14White,
                         children: [
                           TextSpan(
-                            text:  AppLocalizations.of(context)!.create_one,
+                            text: AppLocalizations.of(context)!.create_one,
                             style: AppStyles.robotoBlack14Yellow,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
@@ -212,7 +216,10 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-                          child: Text( AppLocalizations.of(context)!.or, style: AppStyles.robotoRegular15Yellow),
+                          child: Text(
+                            AppLocalizations.of(context)!.or,
+                            style: AppStyles.robotoRegular15Yellow,
+                          ),
                         ),
                         SizedBox(
                           width: width * 0.2,
@@ -233,7 +240,10 @@ class _LoginPageState extends State<LoginPage> {
                           height: width * 0.1,
                           width: width * 0.1,
                         ),
-                        label: Text( AppLocalizations.of(context)!.login_with_google, style: AppStyles.robotoRegular16Black),
+                        label: Text(
+                          AppLocalizations.of(context)!.login_with_google,
+                          style: AppStyles.robotoRegular16Black,
+                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.yellowColor,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
