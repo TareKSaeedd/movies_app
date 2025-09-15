@@ -51,7 +51,9 @@ class MovieItem extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(15),
                       child: CachedNetworkImage(
-                        imageUrl: moviesList[index]!.mediumCoverImage ?? '',
+                        imageUrl:
+                            moviesList[index]!.mediumCoverImage ??
+                            'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png',
                         width: width,
                         height: height,
                         fit: BoxFit.fill,
